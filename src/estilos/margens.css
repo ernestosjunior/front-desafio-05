@@ -1,0 +1,36 @@
+.mb-sm {
+  margin-bottom: 0.3125em;
+}
+.mb-md {
+  margin-bottom: 0.625em;
+}
+.mb-lg {
+  margin-bottom: 0.9375em;
+}
+.mt-sm {
+  margin-top: 0.3125em;
+}
+.mt-md {
+  margin-top: 0.625em;
+}
+.mt-lg {
+  margin-top: 0.9375em;
+}
+.mx-sm {
+  margin: 0 0.3125em;
+}
+.mx-md {
+  margin: 0 0.625em;
+}
+.mx-lg {
+  margin: 0 0.9375em;
+}
+.my-sm {
+  margin: 0.3125em 0;
+}
+.my-md {
+  margin: 0.625em 0;
+}
+.my-lg {
+  margin: 0.9375em 0;
+}
