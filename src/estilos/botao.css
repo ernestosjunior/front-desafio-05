@@ -1,4 +1,6 @@
 .botao-principal {
+  all: unset;
+  cursor: pointer;
   padding: 13px 40px;
   color: #ffff;
   background-color: #d13201;

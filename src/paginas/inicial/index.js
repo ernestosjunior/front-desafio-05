@@ -1,12 +1,18 @@
+import "./style.css";
 import Header from "../../componentes/Header";
 import SemProdutos from "../../componentes/SemProdutos";
+import Produtos from "../../componentes/Produtos";
 
+import { useState } from "react";
 const Inicial = () => {
+  const [produtos, setProdutos] = useState([]);
   return (
-    <div>
+    <>
       <Header />
-      <SemProdutos />
-    </div>
+      <div className="container-produtos">
+        {!produtos.length ? <SemProdutos /> : <Produtos produtos={produtos} />}
+      </div>
+    </>
   );
 };
 
