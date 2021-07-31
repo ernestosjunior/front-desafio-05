@@ -14,7 +14,7 @@ function Rotas() {
           <Route path="/login" component={Login} />
           <Route path="/usuarios" component={Cadastro} />
           <Route path="/novo-produto" component={NovoProduto} />
-          <Route path="/editar-produto" component={EditarProduto} />
+          <Route path="/editar-produto/:id" component={EditarProduto} />
         </Switch>
       </Router>
     </div>
