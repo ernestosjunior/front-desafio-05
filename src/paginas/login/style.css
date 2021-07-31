@@ -5,10 +5,27 @@
   background-size: cover;
   width: 100vw;
   height: 100vh;
+  display: flex;
 }
 
 .forms-login {
   height: 612.7px;
   width: 488px;
   border-radius: 16px;
+  background-color: #ffff;
+  display: block;
+  padding: 40px;
+  margin-top: 169px;
+  margin-left: 320px;
+}
+
+.margem-titulo {
+  margin-bottom: 39px;
+}
+
+.cadastrar {
+  margin-top: 49px;
+  color: #6f7377;
+  font-family: Montserrat;
+  font-size: 12px;
 }
