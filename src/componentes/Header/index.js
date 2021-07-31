@@ -3,12 +3,13 @@ import "./style.css";
 import Logo from "../../assets/pizarria.png";
 
 const Header = () => {
+  const path = window.location.pathname;
   return (
     <header>
       <img src={Logo} className="logo" alt="Logo" />
       <div className="header-content">
         <h1>Pizza Pizzaria & Delivery</h1>
-        <button>Logout</button>
+        {!path.includes("/novo-produto") && <button>Logout</button>}
       </div>
     </header>
   );
