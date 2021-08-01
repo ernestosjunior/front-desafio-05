@@ -1,11 +1,11 @@
-.container {
+.sem-produtos {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 132px;
 }
 
-.container p {
+.sem-produtos p {
   color: #525459;
   font-size: 16px;
   text-align: center;
@@ -13,7 +13,7 @@
   margin-bottom: 32px;
 }
 
-.container button {
+.sem-produtos button {
   all: unset;
   cursor: pointer;
   background-color: #d13201;

@@ -6,10 +6,11 @@ import Produtos from "../../componentes/Produtos";
 import { useState } from "react";
 const Inicial = () => {
   const [produtos, setProdutos] = useState([]);
+
   return (
     <>
       <Header />
-      <div className="container-produtos">
+      <div className="container__produtos">
         {!produtos.length ? <SemProdutos /> : <Produtos produtos={produtos} />}
       </div>
     </>

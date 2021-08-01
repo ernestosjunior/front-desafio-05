@@ -6,3 +6,22 @@
   background-color: #d13201;
   border-radius: 20px;
 }
+
+.btn__laranja {
+  all: unset;
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #d13201;
+  padding: 11px 40px 11px 40px;
+  border-radius: 20px;
+}
+
+.btn__clean__laranja {
+  all: unset;
+  cursor: pointer;
+  color: #d13201;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  margin-right: 24px;
+}

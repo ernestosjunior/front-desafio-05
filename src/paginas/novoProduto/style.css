@@ -1,4 +1,4 @@
-.modal-novo-produto {
+.modal {
   width: 1008px;
   height: auto;
   background-color: #ffffff;
@@ -10,14 +10,14 @@
   z-index: 3;
 }
 
-.left-modal {
+.modal__esquerda {
   display: flex;
   flex-direction: column;
   gap: 32px;
   color: black;
 }
 
-.titulo-modal {
+.modal__esquerda__titulo {
   color: #d13201;
   font-size: 32px;
 }
@@ -29,7 +29,7 @@ label {
   color: black;
 }
 
-.input-nome {
+.input__nome {
   all: unset;
   border: 1px solid #bebebe;
   box-sizing: border-box;
@@ -39,7 +39,7 @@ label {
   padding: 8px;
 }
 
-.input-descricao {
+.input__descricao {
   all: unset;
   border: 1px solid #bebebe;
   box-sizing: border-box;
@@ -49,12 +49,12 @@ label {
   padding: 8px;
 }
 
-.descricao-obs {
+.descricao__obs {
   color: #6f7377;
   font-weight: normal;
 }
 
-.input-valor {
+.input__valor {
   all: unset;
   border: 1px solid #bebebe;
   box-sizing: border-box;
@@ -64,32 +64,13 @@ label {
   padding: 8px;
 }
 
-.form-checkbox {
+.input__checkbox {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.right-modal {
+.modal__direita {
   display: flex;
   align-items: flex-end;
-}
-
-.btn-cancelar {
-  all: unset;
-  cursor: pointer;
-  color: #d13201;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 100%;
-  margin-right: 24px;
-}
-
-.btn-adicionar {
-  all: unset;
-  cursor: pointer;
-  background-color: #d13201;
-  color: #ffffff;
-  padding: 11px 40px 11px 40px;
-  border-radius: 20px;
 }

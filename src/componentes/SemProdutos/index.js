@@ -1,8 +1,9 @@
 import "./style.css";
 import { Link } from "react-router-dom";
+
 const SemProdutos = () => {
   return (
-    <div className="container">
+    <div className="sem-produtos">
       <p>
         Você ainda não tem nenhum produto no seu cardápio. Gostaria de adicionar
         um novo produto?

@@ -1,14 +1,11 @@
-.card {
-  display: flex;
-}
-.btn-adicionar-prod {
+.produtos__btn__adicionar {
   display: flex;
   justify-content: flex-end;
   padding-right: 200px;
   margin-bottom: 105px;
 }
 
-.btn-adicionar-prod button {
+.produtos__btn__adicionar button {
   all: unset;
   cursor: pointer;
   background-color: #d13201;
@@ -17,7 +14,7 @@
   border-radius: 20px;
 }
 
-.lista-produtos {
+.produtos__lista {
   display: flex;
   gap: 32px;
   flex-wrap: wrap;

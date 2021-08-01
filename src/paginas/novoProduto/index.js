@@ -68,28 +68,28 @@ const NovoProduto = () => {
     <div>
       <Header />
       <Backdrop className={classes.backdrop} open={true}>
-        <div className="modal-novo-produto">
-          <div className="left-modal">
-            <h1 className="titulo-modal">Novo produto</h1>
+        <div className="modal">
+          <div className="modal__esquerda">
+            <h1 className="modal__esquerda__titulo">Novo produto</h1>
             <label>
               Nome
-              <input className="input-nome" />
+              <input className="input__nome" />
             </label>
             <label>
               Descrição
-              <textarea className="input-descricao" maxlength="80"></textarea>
-              <span className="descricao-obs">Máx.: 80 caracteres</span>
+              <textarea className="input__descricao" maxlength="80"></textarea>
+              <span className="descricao__obs">Máx.: 80 caracteres</span>
             </label>
             <label>
               Valor
               <input
                 type="number"
-                className="input-valor"
+                className="input__valor"
                 min="0"
                 placeholder="R$ 00,00"
               />
             </label>
-            <div className="form-checkbox">
+            <div className="input__checkbox">
               <AntSwitch
                 checked={state.checkedA}
                 onChange={handleChange}
@@ -97,7 +97,7 @@ const NovoProduto = () => {
               />
               <p>Ativar produto</p>
             </div>
-            <div className="form-checkbox">
+            <div className="input__checkbox">
               <AntSwitch
                 checked={state.checkedB}
                 onChange={handleChange}
@@ -106,13 +106,13 @@ const NovoProduto = () => {
               <p>Permitir observações</p>
             </div>
           </div>
-          <div className="right-modal">
+          <div className="modal__direita">
             <div></div>
             <div>
               <Link to="/">
-                <button className="btn-cancelar">Cancelar</button>
+                <button className="btn__clean__laranja">Cancelar</button>
               </Link>
-              <button className="btn-adicionar">
+              <button className="btn__laranja">
                 Adicionar produto ao cardápio
               </button>
             </div>

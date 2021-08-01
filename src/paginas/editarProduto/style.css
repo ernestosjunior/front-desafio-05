@@ -1,4 +1,4 @@
-.modal-novo-produto {
+.modal__editar {
   width: 1008px;
   height: auto;
   background-color: #ffffff;
@@ -10,14 +10,14 @@
   z-index: 3;
 }
 
-.left-modal {
+.modal__esquerda__editar {
   display: flex;
   flex-direction: column;
   gap: 32px;
   color: black;
 }
 
-.titulo-modal {
+.modal__esquerda__editar__titulo {
   color: #d13201;
   font-size: 32px;
 }
@@ -70,26 +70,7 @@ label {
   gap: 12px;
 }
 
-.right-modal {
+.modal__editar__direita {
   display: flex;
   align-items: flex-end;
-}
-
-.btn-cancelar {
-  all: unset;
-  cursor: pointer;
-  color: #d13201;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 100%;
-  margin-right: 24px;
-}
-
-.btn-adicionar {
-  all: unset;
-  cursor: pointer;
-  background-color: #d13201;
-  color: #ffffff;
-  padding: 11px 40px 11px 40px;
-  border-radius: 20px;
 }

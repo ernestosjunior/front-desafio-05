@@ -70,9 +70,9 @@ const EditarProduto = () => {
     <div>
       <Header />
       <Backdrop className={classes.backdrop} open={true}>
-        <div className="modal-novo-produto">
-          <div className="left-modal">
-            <h1 className="titulo-modal">Editar Produto</h1>
+        <div className="modal__editar">
+          <div className="modal__esquerda__editar">
+            <h1 className="modal__esquerda__editar__titulo">Editar Produto</h1>
             <label>
               Nome
               <input className="input-nome" />
@@ -108,13 +108,13 @@ const EditarProduto = () => {
               <p>Permitir observações</p>
             </div>
           </div>
-          <div className="right-modal">
+          <div className="modal__editar__direita">
             <div></div>
             <div>
               <Link to="/">
-                <button className="btn-cancelar">Cancelar</button>
+                <button className="btn__clean__laranja">Cancelar</button>
               </Link>
-              <button className="btn-adicionar">Salvar alterações</button>
+              <button className="btn__laranja">Salvar alterações</button>
             </div>
           </div>
         </div>
