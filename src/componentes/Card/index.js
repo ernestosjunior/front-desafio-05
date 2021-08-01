@@ -9,10 +9,12 @@ const Card = ({ nome, descricao, preco, imagem }) => {
   return (
     <div className="card" onClick={() => setVisivel(!visivel)}>
       {visivel && (
-        <div className="opcoes-card ">
-          <button className="btn-excluir">Excluir produto do catálogo</button>
+        <div className="card__opcoes">
+          <button className="card__opcoes__btn-excluir">
+            Excluir produto do catálogo
+          </button>
           <Link to="/editar-produto">
-            <button className="btn-editar">
+            <button className="card__opcoes__btn-editar">
               Editar produto <IconEditar />
             </button>
           </Link>
@@ -21,9 +23,9 @@ const Card = ({ nome, descricao, preco, imagem }) => {
       <div>
         <h1>{nome}</h1>
         <p>{descricao}</p>
-        <p className="card-preco">R$ {preco / 100}</p>
+        <p className="card__preco">R$ {preco / 100}</p>
       </div>
-      <div className="imagem"></div>
+      <div className="card__imagem"></div>
     </div>
   );
 };
