@@ -51,12 +51,9 @@ const AntSwitch = withStyles((theme) => ({
 const EditarProduto = () => {
   const classes = useStyles();
   const { id } = useParams();
-<<<<<<< HEAD
 
   console.log(id);
 
-=======
->>>>>>> c4ce9ca0d36a6424d1043e0b03bbd5bf05b326a6
   const [state, setState] = useState({
     checkedA: true,
     checkedB: true,
