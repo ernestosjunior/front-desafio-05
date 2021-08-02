@@ -57,6 +57,8 @@ const EditarProduto = () => {
 
   const { id } = useParams();
 
+  console.log(id);
+
   const [state, setState] = useState({
     checkedA: true,
     checkedB: true,
@@ -79,7 +81,7 @@ const EditarProduto = () => {
             </label>
             <label>
               Descrição
-              <textarea className="input-descricao" maxlength="80"></textarea>
+              <textarea className="input-descricao" maxLength="80"></textarea>
               <span className="descricao-obs">Máx.: 80 caracteres</span>
             </label>
             <label>

@@ -10,6 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -55,6 +56,8 @@ const AntSwitch = withStyles((theme) => ({
 const NovoProduto = () => {
   const classes = useStyles();
 
+  const { register, handleSubmit } = useForm();
+
   const [state, setState] = useState({
     checkedA: true,
     checkedB: true,
@@ -64,60 +67,69 @@ const NovoProduto = () => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
+  const handleAddProduto = (data) => {};
+
   return (
     <div>
       <Header />
       <Backdrop className={classes.backdrop} open={true}>
-        <div className="modal">
-          <div className="modal__esquerda">
-            <h1 className="modal__esquerda__titulo">Novo produto</h1>
-            <label>
-              Nome
-              <input className="input__nome" />
-            </label>
-            <label>
-              Descrição
-              <textarea className="input__descricao" maxlength="80"></textarea>
-              <span className="descricao__obs">Máx.: 80 caracteres</span>
-            </label>
-            <label>
-              Valor
-              <input
-                type="number"
-                className="input__valor"
-                min="0"
-                placeholder="R$ 00,00"
-              />
-            </label>
-            <div className="input__checkbox">
-              <AntSwitch
-                checked={state.checkedA}
-                onChange={handleChange}
-                name="checkedA"
-              />
-              <p>Ativar produto</p>
+        <form onSubmit={handleSubmit(handleAddProduto)}>
+          <div className="modal">
+            <div className="modal__esquerda">
+              <h1 className="modal__esquerda__titulo">Novo produto</h1>
+              <label>
+                Nome
+                <input className="input__nome" {...register("nome")} />
+              </label>
+              <label>
+                Descrição
+                <textarea
+                  className="input__descricao"
+                  maxLength="80"
+                  {...register("descricao")}
+                ></textarea>
+                <span className="descricao__obs">Máx.: 80 caracteres</span>
+              </label>
+              <label>
+                Valor
+                <input
+                  type="number"
+                  className="input__valor"
+                  min="0"
+                  placeholder="R$ 00,00"
+                  {...register("valor")}
+                />
+              </label>
+              <div className="input__checkbox">
+                <AntSwitch
+                  checked={state.checkedA}
+                  onChange={handleChange}
+                  name="checkedA"
+                />
+                <p>Ativar produto</p>
+              </div>
+              <div className="input__checkbox">
+                <AntSwitch
+                  checked={state.checkedB}
+                  onChange={handleChange}
+                  name="checkedB"
+                />
+                <p>Permitir observações</p>
+              </div>
             </div>
-            <div className="input__checkbox">
-              <AntSwitch
-                checked={state.checkedB}
-                onChange={handleChange}
-                name="checkedB"
-              />
-              <p>Permitir observações</p>
+            <div className="modal__direita">
+              <div></div>
+              <div>
+                <Link to="/">
+                  <button className="btn__clean__laranja">Cancelar</button>
+                </Link>
+                <button className="btn__laranja">
+                  Adicionar produto ao cardápio
+                </button>
+              </div>
             </div>
           </div>
-          <div className="modal__direita">
-            <div></div>
-            <div>
-              <Link to="/">
-                <button className="btn__clean__laranja">Cancelar</button>
-              </Link>
-              <button className="btn__laranja">
-                Adicionar produto ao cardápio
-              </button>
-            </div>
-          </div>
-        </div>
+        </form>
       </Backdrop>
     </div>
   );
