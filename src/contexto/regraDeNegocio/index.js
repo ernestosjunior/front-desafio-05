@@ -32,7 +32,7 @@ export function FetchProvider({ children }) {
         toast.error(login);
       } else {
         setGravarUsuario(login);
-        history.push("/produtos");
+        history.push("/");
         toast.success(`Olá, ${login.usuario.nome}`, {
           onClose: () => {},
         });
@@ -69,7 +69,7 @@ export function FetchProvider({ children }) {
       if (response.status !== 200) {
         toast.error(cadastro);
       } else {
-        toast.success(cadastro, {
+        toast.success("Cadastro feito!", {
           onClose: () => {
             history.push("/login");
           },
