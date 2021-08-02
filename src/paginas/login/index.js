@@ -1,19 +1,56 @@
 import { Link } from "react-router-dom";
 import Input from "../../componentes/Input";
+import InputSenha from "../../componentes/InputSenha";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { useEffect } from "react";
+import { UseFetch } from "../../contexto/regraDeNegocio";
 import "./style.css";
+import { toast } from "react-toastify";
 
 export default function Login() {
+  const [senhaLogin, setSenhaLogin] = useState("");
+  const { handleLogin } = UseFetch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    if (
+      errors.email?.type === "required" ||
+      errors.senha?.type === "required"
+    ) {
+      toast.error("Digite email e senha");
+    }
+  }, [errors.email, errors.senha]);
+
   return (
     <div className="login">
-      <forms className="forms-login">
-        <h1 className="titulos-paginas">Login</h1>
-        <Input nomeCampo="E-mail" idCampo="email" />
-        <Input nomeCampo="Senha" idCampo="senha" />
-        <button className="botao-principal">Enviar</button>
-        <spam>
-          Ainda não tem uma conta? <Link>Cadastre-se</Link>
-        </spam>
-      </forms>
+      <form className="forms-login" onSubmit={handleSubmit(handleLogin)}>
+        <h1 className="titulos-paginas margem-titulo">Login</h1>
+        <Input
+          nomeCampo="E-mail"
+          idCampo="email"
+          tipoCampo="text"
+          {...register("email", { required: true })}
+        />
+        <InputSenha
+          nomeCampo="Senha"
+          idCampo="senha"
+          tipoCampo="text"
+          value={senhaLogin}
+          setValue={setSenhaLogin}
+          {...register("senha", { required: true })}
+        />
+        <div className="flex-column item-center">
+          <button className="botao-principal">Enviar</button>
+          <spam className="cadastrar">
+            Ainda não tem uma conta? <Link to="/usuarios">Cadastre-se</Link>
+          </spam>
+        </div>
+      </form>
     </div>
   );
 }

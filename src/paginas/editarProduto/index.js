@@ -1,14 +1,10 @@
 import { useState } from "react";
 import "./style.css";
-
 import Header from "../../componentes/Header";
-
 import Backdrop from "@material-ui/core/Backdrop";
 import { makeStyles } from "@material-ui/core/styles";
-
 import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
-
 import { Link, useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -54,9 +50,7 @@ const AntSwitch = withStyles((theme) => ({
 
 const EditarProduto = () => {
   const classes = useStyles();
-
   const { id } = useParams();
-
   const [state, setState] = useState({
     checkedA: true,
     checkedB: true,
