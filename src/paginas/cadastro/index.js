@@ -8,12 +8,12 @@ import {
   Button,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
 import Input from "../../componentes/Input";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   root: {
