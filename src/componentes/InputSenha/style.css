@@ -1,26 +1,29 @@
-.inputs-login-cadastro {
-  height: 47px;
-  width: 408px;
-  border-radius: 7.15px;
+.label__login__cadastro {
+  box-sizing: border-box;
+  display: flex;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: #393c40;
 }
 
-.div-input-senha {
-  margin: 40px 0px;
+.input__senha {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 47px;
+  padding: 8px;
+}
+
+.div__input__senha {
   position: relative;
 }
 
 .eye-senha {
   position: absolute;
-  top: 3.2em;
-  right: 1em;
+  top: 2.5em;
+  right: 1.5em;
   cursor: pointer;
-}
-
-.label-login-cadastro {
-  margin: 8px 16px;
-  font-family: "Montserrat", sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  color: #393c40;
 }

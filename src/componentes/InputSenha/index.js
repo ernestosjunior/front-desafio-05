@@ -1,37 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { useState, forwardRef } from "react";
-import TextField from "@material-ui/core/TextField";
+import { useState, useEffect } from "react";
 import "./style.css";
 
-const InputSenha = forwardRef(
-  ({ nomeCampo, idCampo, value, setValue, name, onBlur }, ref) => {
-    const [verSenha, setVerSenha] = useState(false);
+const InputSenha = () => {
+  const [verSenha, setVerSenha] = useState(false);
 
-    return (
-      <div className="flex-column div-input-senha">
-        <label htmlFor={nomeCampo} className="label-login-cadastro">
-          {nomeCampo}
-        </label>
-        <TextField
-          type={verSenha ? "text" : "password"}
-          className="inputs-login-cadastro"
-          id={idCampo}
-          variant="outlined"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          name={name}
-          ref={ref}
-          onBlur={onBlur}
-        />
+  return (
+    <div className="div__input__senha">
+      <label className="label__login__cadastro">
+        Senha
+        <input className="input__senha" type={verSenha ? "text" : "password"} />
         <FontAwesomeIcon
           className="eye-senha"
           onClick={() => setVerSenha(!verSenha)}
           icon={verSenha ? faEye : faEyeSlash}
         />
-      </div>
-    );
-  }
-);
+      </label>
+    </div>
+  );
+};
 
 export default InputSenha;

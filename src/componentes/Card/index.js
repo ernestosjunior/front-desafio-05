@@ -4,7 +4,7 @@ import "./style.css";
 
 import { ReactComponent as IconEditar } from "../../assets/icon-editar.svg";
 
-const Card = ({ nome, descricao, preco, imagem }) => {
+const Card = ({ nome, descricao, preco, imagem, id }) => {
   const [visivel, setVisivel] = useState(false);
   return (
     <div className="card" onClick={() => setVisivel(!visivel)}>
@@ -13,7 +13,7 @@ const Card = ({ nome, descricao, preco, imagem }) => {
           <button className="card__opcoes__btn-excluir">
             Excluir produto do catálogo
           </button>
-          <Link to="/editar-produto">
+          <Link to={`/editar-produto/${id}`}>
             <button className="card__opcoes__btn-editar">
               Editar produto <IconEditar />
             </button>

@@ -1,10 +1,13 @@
-.botao-principal {
+.botao-principal-login {
   all: unset;
   cursor: pointer;
+  height: 16px;
   padding: 13px 40px;
   color: #ffff;
   background-color: #d13201;
   border-radius: 20px;
+  display: flex;
+  align-items: center;
 }
 
 .btn__laranja {

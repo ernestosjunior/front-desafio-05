@@ -3,10 +3,10 @@ import Header from "../../componentes/Header";
 import SemProdutos from "../../componentes/SemProdutos";
 import Produtos from "../../componentes/Produtos";
 
-import { useState } from "react";
-const Inicial = () => {
-  const [produtos, setProdutos] = useState([]);
+import { UseFetch } from "../../contexto/regraDeNegocio";
 
+const Inicial = () => {
+  const { produtos } = UseFetch();
   return (
     <>
       <Header />

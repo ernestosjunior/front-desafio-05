@@ -3,29 +3,35 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100vw;
   height: 100vh;
-  display: flex;
+  padding-left: 320px;
+  padding-top: 35px;
+}
+
+.inputs-login {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 47px;
+  padding: 8px;
 }
 
 .forms-login {
-  height: 580px;
+  height: auto;
   width: 488px;
   border-radius: 16px;
   background-color: #ffff;
-  display: block;
-  padding: 40px;
-  margin-top: 45px;
-  margin-left: 160px;
+  padding: 44px 40px 44px 40px;
 }
 
 .margem-titulo {
   margin-bottom: 39px;
+  font-size: 32px;
 }
 
 .cadastrar {
-  margin-top: 49px;
-  color: #6f7377;
-  font-family: Montserrat;
-  font-size: 12px;
+  margin-top: 39px;
+  gap: 39px;
 }

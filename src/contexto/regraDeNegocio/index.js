@@ -99,13 +99,21 @@ export function FetchProvider({ children }) {
 }
 
 export function UseFetch() {
-  const { handleLogin, handleCadastro, handleFornecedores, carregando } =
-    useContext(FetchContext);
+  const {
+    handleLogin,
+    handleCadastro,
+    handleFornecedores,
+    carregando,
+    produtos,
+    setProdutos,
+  } = useContext(FetchContext);
 
   return {
     handleLogin,
     handleCadastro,
     handleFornecedores,
     carregando,
+    produtos,
+    setProdutos,
   };
 }

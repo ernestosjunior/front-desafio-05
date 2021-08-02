@@ -8,7 +8,6 @@ import {
   Button,
 } from "@material-ui/core";
 import { useState, useEffect } from "react";
-import Input from "../../componentes/Input";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
@@ -105,12 +104,12 @@ export default function Cadastro() {
       case 0:
         return (
           <div>
-            <Input
+            <input
               nomeCampo="Nome de usuário"
               idCampo="nome"
               {...register("nome", { required: true })}
             />
-            <Input
+            <input
               nomeCampo="E-mail"
               idCampo="email"
               {...register("email", { required: true })}
@@ -134,7 +133,7 @@ export default function Cadastro() {
       case 1:
         return (
           <div>
-            <Input
+            <input
               nomeCampo="Nome do Restaurante"
               idCampo="restaurante"
               tipoCampo="text"
@@ -173,19 +172,19 @@ export default function Cadastro() {
       case 2:
         return (
           <div>
-            <Input
+            <input
               nomeCampo="Taxa de entrega"
               idCampo="taxa_entrega"
               tipoCampo="text"
               {...register("taxa_entrega", { required: true })}
             />
-            <Input
+            <input
               nomeCampo="Tempo estimado de entrega"
               idCampo="tempo_entrega_minutos"
               tipoCampo="text"
               {...register("tempo_entrega_minutos", { required: true })}
             />
-            <Input
+            <input
               nomeCampo="Valor minimo do pedido"
               idCampo="valor_minimo_pedido"
               tipoCampo="text"

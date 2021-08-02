@@ -13,7 +13,12 @@ const Produtos = ({ produtos }) => {
       </div>
       <div className="produtos__lista">
         {produtos.map((p) => (
-          <Card nome={p.nome} descricao={p.descricao} preco={p.preco} />
+          <Card
+            nome={p.nome}
+            descricao={p.descricao}
+            preco={p.preco}
+            id={p.id}
+          />
         ))}
       </div>
     </div>
