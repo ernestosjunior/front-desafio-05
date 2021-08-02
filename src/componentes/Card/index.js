@@ -4,10 +4,18 @@ import "./style.css";
 
 import { ReactComponent as IconEditar } from "../../assets/icon-editar.svg";
 
-const Card = ({ nome, descricao, preco, imagem, id }) => {
+const Card = ({
+  id,
+  nome,
+  descricao,
+  preco,
+  imagem,
+  ativo,
+  permite_observacoes,
+}) => {
   const [visivel, setVisivel] = useState(false);
   return (
-    <div className="card" onClick={() => setVisivel(!visivel)}>
+    <div className="card" onMouseEnter={() => setVisivel(!visivel)}>
       {visivel && (
         <div className="card__opcoes">
           <button className="card__opcoes__btn-excluir">

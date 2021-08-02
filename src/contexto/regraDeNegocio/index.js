@@ -1,7 +1,7 @@
 import { useState, createContext } from "react";
 import { UseAuth } from "../../contexto/autorizacao";
 import { useHistory } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const FetchContext = createContext();
@@ -10,7 +10,7 @@ export function FetchProvider({ children }) {
   const history = useHistory();
   const [carregando, setCarregando] = useState();
   const [produtos, setProdutos] = useState([]);
-  const { setGravarUsuario } = UseAuth();
+  const { setGravarUsuario, gravarUsuario } = UseAuth();
 
   async function handleLogin(data) {
     setCarregando(true);
@@ -82,6 +82,23 @@ export function FetchProvider({ children }) {
       setCarregando(false);
     }
   }
+
+  useEffect(() => {
+    fetch("https://desafio5back.herokuapp.com/produtos", {
+      headers: {
+        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI3OTQ0MTQ4fQ.a58UGgDnEYRsF-Dp3kdgux0pwXI5uqBC_qZg1MuRjWI`,
+        "content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setProdutos(data);
+          return;
+        }
+        return;
+      });
+  });
 
   return (
     <FetchContext.Provider
