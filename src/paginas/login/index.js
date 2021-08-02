@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import "./style.css";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [senhaLogin, setSenhaLogin] = useState("");
@@ -21,7 +22,7 @@ export default function Login() {
       errors.email?.type === "required" ||
       errors.senha?.type === "required"
     ) {
-      // toast.error("Digite email e senha");
+      toast.error("Digite email e senha");
     }
   }, [errors.email, errors.senha]);
 
@@ -32,11 +33,13 @@ export default function Login() {
         <Input
           nomeCampo="E-mail"
           idCampo="email"
+          tipoCampo="text"
           {...register("email", { required: true })}
         />
         <InputSenha
           nomeCampo="Senha"
           idCampo="senha"
+          tipoCampo="text"
           value={senhaLogin}
           setValue={setSenhaLogin}
           {...register("senha", { required: true })}
@@ -44,7 +47,7 @@ export default function Login() {
         <div className="flex-column item-center">
           <button className="botao-principal">Enviar</button>
           <spam className="cadastrar">
-            Ainda não tem uma conta? <Link>Cadastre-se</Link>
+            Ainda não tem uma conta? <Link to="/usuarios">Cadastre-se</Link>
           </spam>
         </div>
       </form>

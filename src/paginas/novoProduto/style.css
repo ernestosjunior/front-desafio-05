@@ -1,0 +1,76 @@
+.modal {
+  width: 1008px;
+  height: auto;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 4px 16px rgba(50, 50, 50, 0.4);
+  border-radius: 16px;
+  padding: 54px 94px 54px 54px;
+  z-index: 3;
+}
+
+.modal__esquerda {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  color: black;
+}
+
+.modal__esquerda__titulo {
+  color: #d13201;
+  font-size: 32px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: black;
+}
+
+.input__nome {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 47px;
+  padding: 8px;
+}
+
+.input__descricao {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 63px;
+  padding: 8px;
+}
+
+.descricao__obs {
+  color: #6f7377;
+  font-weight: normal;
+}
+
+.input__valor {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 176px;
+  height: 47px;
+  padding: 8px;
+}
+
+.input__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal__direita {
+  display: flex;
+  align-items: flex-end;
+}

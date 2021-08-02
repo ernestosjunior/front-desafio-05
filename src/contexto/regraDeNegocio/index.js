@@ -2,6 +2,7 @@ import { useState, createContext } from "react";
 import { UseAuth } from "../../contexto/autorizacao";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
+import { toast } from "react-toastify";
 
 const FetchContext = createContext();
 
@@ -27,18 +28,16 @@ export function FetchProvider({ children }) {
       const login = await response.json();
 
       if (response.status !== 200) {
-        //toast.error(login);
+        toast.error(login);
       } else {
         setGravarUsuario(login);
         history.push("/produtos");
-        // toast.success(`Olá, ${login.usuario.nome}`, {
-        //   onClose: () => {
-        //     ;
-        //   },
-        // });
+        toast.success(`Olá, ${login.usuario.nome}`, {
+          onClose: () => {},
+        });
       }
     } catch (error) {
-      //toast.error(error.message);
+      toast.error(error.message);
     } finally {
       setCarregando(false);
     }
@@ -46,7 +45,7 @@ export function FetchProvider({ children }) {
 
   async function handleCadastro(data) {
     if (data.senha !== data.confirmar_senha) {
-      //toast.error("As senhas devem ser iguais");
+      toast.error("As senhas devem ser iguais");
       return;
     }
 
@@ -67,17 +66,17 @@ export function FetchProvider({ children }) {
       const cadastro = await response.json();
 
       if (response.status !== 200) {
-        //toast.error(cadastro);
+        toast.error(cadastro);
       } else {
-        // toast.success(cadastro, {
-        //   onClose: () => {
-        //     history.push("/login");
-        //   },
-        // });
+        toast.success(cadastro, {
+          onClose: () => {
+            history.push("/login");
+          },
+        });
         history.push("/login");
       }
     } catch (error) {
-      //toast.error(error.message);
+      toast.error(error.message);
     } finally {
       setCarregando(false);
     }

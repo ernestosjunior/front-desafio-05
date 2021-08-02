@@ -1,0 +1,76 @@
+.modal__editar {
+  width: 1008px;
+  height: auto;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px 4px 16px rgba(50, 50, 50, 0.4);
+  border-radius: 16px;
+  padding: 54px 94px 54px 54px;
+  z-index: 3;
+}
+
+.modal__esquerda__editar {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  color: black;
+}
+
+.modal__esquerda__editar__titulo {
+  color: #d13201;
+  font-size: 32px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: black;
+}
+
+.input-nome {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 47px;
+  padding: 8px;
+}
+
+.input-descricao {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 63px;
+  padding: 8px;
+}
+
+.descricao-obs {
+  color: #6f7377;
+  font-weight: normal;
+}
+
+.input-valor {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 176px;
+  height: 47px;
+  padding: 8px;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal__editar__direita {
+  display: flex;
+  align-items: flex-end;
+}

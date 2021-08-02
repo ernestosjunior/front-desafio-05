@@ -4,6 +4,7 @@
 @import url("margens.css");
 
 * {
+  font-family: "Baloo 2", cursive;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -20,7 +21,6 @@ body {
   height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+a {
+  text-decoration: none;
 }

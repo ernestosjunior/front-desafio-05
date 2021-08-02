@@ -1,0 +1,35 @@
+header {
+  background-image: url("../../assets/bg-pizzaria.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-bottom-right-radius: 233px;
+  height: 187px;
+  width: 100%;
+  display: flex;
+}
+
+.header__logo {
+  border-radius: 50%;
+  width: 176px;
+  height: 176px;
+  border: 6px solid #ffffff;
+  margin-top: 92px;
+  margin-left: 112px;
+}
+
+.header__conteudo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 147px 216px 40px 32px;
+  color: #ffffff;
+  font-size: 28px;
+}
+
+.header__conteudo button {
+  all: unset;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 170%;
+}

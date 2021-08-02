@@ -1,0 +1,67 @@
+.cadastro {
+  background-image: url("../../assets/bg-cadastro.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.form-cadastro {
+  height: 720px;
+  width: 500px;
+  background-color: #ffff;
+  display: block;
+  border-radius: 17px;
+}
+
+.titulo-cadastro {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.inputs-cadastro {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.fazer-login {
+  margin-left: 10px;
+  color: #6f7377;
+  font-family: Montserrat;
+  font-size: 12px;
+}
+
+.div-input {
+  margin: 30px 0;
+}
+
+#categoria {
+  height: 40px;
+  width: 408px;
+}
+
+.textarea-cadastro {
+  height: 100px;
+  width: 408px;
+  border-radius: 7.15px;
+}
+
+.rodape-textarea {
+  margin-bottom: 50px;
+  margin-left: 10px;
+  color: #6f7377;
+  font-family: Montserrat;
+  font-size: 12px;
+}
+
+.label-select-textarea {
+  margin: 8px 16px;
+  margin-top: 40px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: #393c40;
+}
