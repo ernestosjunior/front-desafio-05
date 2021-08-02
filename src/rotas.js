@@ -29,11 +29,10 @@ function Rotas() {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/usuarios" component={Cadastro} />
-            <AuthPath>
-              <Route path="/" exact component={Inicial} />
-              <Route path="/novo-produto" component={NovoProduto} />
-              <Route path="/editar-produto/:id" component={EditarProduto} />
-            </AuthPath>
+            <Route path="/" exact component={Inicial} />
+            <Route path="/novo-produto" component={NovoProduto} />
+            <Route path="/editar-produto/:id" component={EditarProduto} />
+            <AuthPath></AuthPath>
           </Switch>
         </FetchProvider>
       </AuthProvider>

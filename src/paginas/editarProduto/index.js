@@ -7,8 +7,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -51,20 +49,10 @@ const AntSwitch = withStyles((theme) => ({
   checked: {},
 }))(Switch);
 
-const schema = yup.object().shape({});
-
 const EditarProduto = () => {
   const classes = useStyles();
   const { id } = useParams();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  console.log(id);
+  const { register, handleSubmit } = useForm();
 
   const [state, setState] = useState({
     checkedA: true,
@@ -75,7 +63,9 @@ const EditarProduto = () => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const handleEditarProduto = (data) => console.log(data);
+  const handleEditarProduto = (data) => {
+    console.log(id);
+  };
 
   return (
     <div>
@@ -89,11 +79,15 @@ const EditarProduto = () => {
               </h1>
               <label>
                 Nome
-                <input className="input-nome" />
+                <input className="input-nome" {...register("nome")} />
               </label>
               <label>
                 Descrição
-                <textarea className="input-descricao" maxLength="80"></textarea>
+                <textarea
+                  className="input-descricao"
+                  maxLength="80"
+                  {...register("descricao")}
+                ></textarea>
                 <span className="descricao-obs">Máx.: 80 caracteres</span>
               </label>
               <label>

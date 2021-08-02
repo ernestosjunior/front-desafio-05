@@ -1,14 +1,18 @@
 import "./style.css";
 import { useHistory } from "react-router-dom";
-import { useContext } from "react";
 
 import Logo from "../../assets/pizarria.png";
+
+import { UseAuth } from "../../contexto/autorizacao";
 
 const Header = () => {
   const path = window.location.pathname;
   const history = useHistory();
 
+  const { removeGravarUsuario } = UseAuth();
+
   const handleLogout = () => {
+    removeGravarUsuario();
     history.push("/login");
   };
 
