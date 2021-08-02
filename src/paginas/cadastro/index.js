@@ -195,7 +195,7 @@ export default function Cadastro() {
           </div>
         );
       default:
-        return "Erro";
+        return "Você será redirecionado a página de login";
     }
   }
   return (
