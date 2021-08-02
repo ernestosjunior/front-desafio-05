@@ -1,5 +1,6 @@
 import "./style.css";
 import { useHistory } from "react-router-dom";
+import { useContext } from "react";
 
 import Logo from "../../assets/pizarria.png";
 

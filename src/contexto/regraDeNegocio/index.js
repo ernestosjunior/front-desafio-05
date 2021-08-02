@@ -9,6 +9,7 @@ const FetchContext = createContext();
 export function FetchProvider({ children }) {
   const history = useHistory();
   const [carregando, setCarregando] = useState();
+  const [produtos, setProdutos] = useState([]);
   const { setGravarUsuario } = UseAuth();
 
   async function handleLogin(data) {
@@ -88,6 +89,8 @@ export function FetchProvider({ children }) {
         handleLogin,
         handleCadastro,
         carregando,
+        produtos,
+        setProdutos,
       }}
     >
       {children}

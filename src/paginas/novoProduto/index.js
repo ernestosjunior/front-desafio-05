@@ -7,6 +7,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -49,10 +51,21 @@ const AntSwitch = withStyles((theme) => ({
   checked: {},
 }))(Switch);
 
+const schema = yup.object().shape({
+  nome: yup.string().required("Campo obrigatório."),
+  valor: yup.string().required("Campo obrigatório."),
+});
+
 const NovoProduto = () => {
   const classes = useStyles();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const [state, setState] = useState({
     checkedA: true,
@@ -75,7 +88,12 @@ const NovoProduto = () => {
               <h1 className="modal__esquerda__titulo">Novo produto</h1>
               <label>
                 Nome
-                <input className="input__nome" {...register("nome")} />
+                <input
+                  className="input__nome"
+                  {...register("nome")}
+                  style={{ borderColor: errors.nome && "red" }}
+                />
+                <p className="erro__input">{errors.nome?.message}</p>
               </label>
               <label>
                 Descrição
@@ -94,7 +112,9 @@ const NovoProduto = () => {
                   min="0"
                   placeholder="R$ 00,00"
                   {...register("valor")}
+                  style={{ borderColor: errors.valor && "red" }}
                 />
+                <p className="erro__input">{errors.valor?.message}</p>
               </label>
               <div className="input__checkbox">
                 <AntSwitch
