@@ -1,0 +1,18 @@
+.inputs-login-cadastro {
+  height: 47px;
+  width: 408px;
+  border-radius: 7.15px;
+}
+
+.div-input {
+  margin: 40px 0px;
+}
+
+.label-login-cadastro {
+  margin: 8px 16px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: #393c40;
+}

@@ -1,0 +1,31 @@
+.login {
+  background-image: url("../../assets/bg-login.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+.forms-login {
+  height: 580px;
+  width: 488px;
+  border-radius: 16px;
+  background-color: #ffff;
+  display: block;
+  padding: 40px;
+  margin-top: 45px;
+  margin-left: 160px;
+}
+
+.margem-titulo {
+  margin-bottom: 39px;
+}
+
+.cadastrar {
+  margin-top: 49px;
+  color: #6f7377;
+  font-family: Montserrat;
+  font-size: 12px;
+}

@@ -1,0 +1,21 @@
+.produtos__btn__adicionar {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 200px;
+  margin-bottom: 105px;
+}
+
+.produtos__btn__adicionar button {
+  all: unset;
+  cursor: pointer;
+  background-color: #d13201;
+  color: #ffffff;
+  padding: 11px 40px 11px 40px;
+  border-radius: 20px;
+}
+
+.produtos__lista {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
