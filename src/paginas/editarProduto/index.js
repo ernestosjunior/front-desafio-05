@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./style.css";
 import Header from "../../componentes/Header";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -7,6 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { UseFetch } from "../../contexto/regraDeNegocio";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -53,6 +54,7 @@ const EditarProduto = () => {
   const classes = useStyles();
   const { id } = useParams();
   const { register, handleSubmit } = useForm();
+  const { produtos } = UseFetch();
 
   const [state, setState] = useState({
     checkedA: true,
@@ -62,6 +64,8 @@ const EditarProduto = () => {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
+
+  const produtoEdicao = produtos.filter((p) => p.id === Number(id));
 
   const handleEditarProduto = (data) => {
     console.log(id);
@@ -79,7 +83,11 @@ const EditarProduto = () => {
               </h1>
               <label>
                 Nome
-                <input className="input-nome" {...register("nome")} />
+                <input
+                  className="input-nome"
+                  {...register("nome")}
+                  value={produtoEdicao.length && produtoEdicao[0].nome}
+                />
               </label>
               <label>
                 Descrição
@@ -87,6 +95,7 @@ const EditarProduto = () => {
                   className="input-descricao"
                   maxLength="80"
                   {...register("descricao")}
+                  value={produtoEdicao.length ? produtoEdicao[0].descricao : ""}
                 ></textarea>
                 <span className="descricao-obs">Máx.: 80 caracteres</span>
               </label>
@@ -95,8 +104,14 @@ const EditarProduto = () => {
                 <input
                   type="number"
                   className="input-valor"
+                  pattern="[0-9]+([,\.][0-9]+)?"
                   min="0"
+                  step="any"
                   placeholder="R$ 00,00"
+                  value={
+                    produtoEdicao.length &&
+                    (produtoEdicao[0].preco / 100).toFixed(2)
+                  }
                 />
               </label>
               <div className="form-checkbox">

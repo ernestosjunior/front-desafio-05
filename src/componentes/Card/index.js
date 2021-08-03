@@ -67,7 +67,7 @@ const Card = ({
       <div>
         <h1>{nome}</h1>
         <p>{descricao}</p>
-        <p className="card__preco">R$ {preco / 100}</p>
+        <p className="card__preco">R$ {(preco / 100).toFixed(2)}</p>
       </div>
       <div className="card__imagem"></div>
     </div>

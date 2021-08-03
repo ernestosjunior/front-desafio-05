@@ -53,7 +53,7 @@ const AntSwitch = withStyles((theme) => ({
 
 const schema = yup.object().shape({
   nome: yup.string().required("Campo obrigatório."),
-  valor: yup.string().required("Campo obrigatório."),
+  preco: yup.string().required("Campo obrigatório."),
 });
 
 const NovoProduto = () => {
@@ -76,7 +76,9 @@ const NovoProduto = () => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const handleAddProduto = (data) => {};
+  const handleAddProduto = (data) => {
+    const valorFormatado = data.preco.replace(",", "").replace(".", "");
+  };
 
   return (
     <div>
@@ -109,12 +111,14 @@ const NovoProduto = () => {
                 <input
                   type="number"
                   className="input__valor"
+                  pattern="[0-9]+([,\.][0-9]+)?"
                   min="0"
+                  step="any"
                   placeholder="R$ 00,00"
-                  {...register("valor")}
-                  style={{ borderColor: errors.valor && "red" }}
+                  {...register("preco")}
+                  style={{ borderColor: errors.preco && "red" }}
                 />
-                <p className="erro__input">{errors.valor?.message}</p>
+                <p className="erro__input">{errors.preco?.message}</p>
               </label>
               <div className="input__checkbox">
                 <AntSwitch
