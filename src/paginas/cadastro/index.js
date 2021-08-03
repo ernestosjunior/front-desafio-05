@@ -1,18 +1,17 @@
 import "./style.css";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-  Stepper,
-  Step,
-  StepLabel,
-  Typography,
-  Button,
-} from "@material-ui/core";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
+
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     marginRight: theme.spacing(1),
-    padding: "11px 40px 11px 40px",
-    background: "#D13201",
-    borderRadius: "20px",
   },
   instructions: {
     marginTop: theme.spacing(1),
@@ -40,41 +36,11 @@ export default function Cadastro() {
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const steps = getSteps();
-  const [senhaCadastro, setSenhaCadastro] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  useEffect(() => {
-    if (
-      errors.email?.type === "required" ||
-      errors.nome?.type === "required" ||
-      errors.restaurante?.type === "required" ||
-      errors.taxa_entrega?.type === "required" ||
-      errors.tempo_entrega_minutos?.type === "required" ||
-      errors.valor_minimo_pedido?.type === "required" ||
-      errors.categoria?.type === "required" ||
-      errors.descricao?.type === "required" ||
-      errors.senha?.type === "required" ||
-      errors.confirmar_senha?.type === "required"
-    ) {
-      toast.error("Todos os campos são obrigatórios");
-    }
-  }, [
-    errors.email,
-    errors.senha,
-    errors.nome,
-    errors.restaurante,
-    errors.taxa_entrega,
-    errors.tempo_entrega_minutos,
-    errors.valor_minimo_pedido,
-    errors.categoria,
-    errors.descricao,
-    errors.confirmar_senha,
-  ]);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -104,41 +70,36 @@ export default function Cadastro() {
       case 0:
         return (
           <div>
-            <input
-              nomeCampo="Nome de usuário"
-              idCampo="nome"
-              {...register("nome", { required: true })}
-            />
-            <input
-              nomeCampo="E-mail"
-              idCampo="email"
-              {...register("email", { required: true })}
-            />
-            <InputSenha
-              nomeCampo="Senha"
-              idCampo="senha"
-              value={senhaCadastro}
-              setValue={setSenhaCadastro}
-              {...register("senha", { required: true })}
-            />
-            <InputSenha
-              nomeCampo="Confirmar Senha"
-              idCampo="confirmar_senha"
-              value={confirmarSenha}
-              setValue={setConfirmarSenha}
-              {...register("confirmar_senha", { required: true })}
-            />
+            <label>
+              Nome
+              <input
+                className="inputs-cadastro"
+                type="text"
+                {...register("nome", { required: true })}
+              />
+            </label>
+            <label>
+              Email
+              <input
+                className="inputs-cadastro"
+                {...register("email", { required: true })}
+              />
+            </label>
+            <InputSenha {...register("senha", { required: true })} />
+            <InputSenha {...register("confirmar_senha", { required: true })} />
           </div>
         );
       case 1:
         return (
           <div>
-            <input
-              nomeCampo="Nome do Restaurante"
-              idCampo="restaurante"
-              tipoCampo="text"
-              {...register("restaurante", { required: true })}
-            />
+            <label>
+              Nome do restaurante
+              <input
+                type="text"
+                className="inputs-cadastro"
+                {...register("restaurante", { required: true })}
+              />
+            </label>
             <h2 className="label-select-textarea">Categoria</h2>
             <select
               id="categoria"
@@ -172,25 +133,28 @@ export default function Cadastro() {
       case 2:
         return (
           <div>
-            <input
-              nomeCampo="Taxa de entrega"
-              idCampo="taxa_entrega"
-              tipoCampo="text"
-              {...register("taxa_entrega", { required: true })}
-            />
-            <input
-              nomeCampo="Tempo estimado de entrega"
-              idCampo="tempo_entrega_minutos"
-              tipoCampo="text"
-              {...register("tempo_entrega_minutos", { required: true })}
-            />
-            <input
-              nomeCampo="Valor minimo do pedido"
-              idCampo="valor_minimo_pedido"
-              tipoCampo="text"
-              placeholderCampo="R$ 0,00"
-              {...register("valor_minimo_pedido", { required: true })}
-            />
+            <label>
+              Taxa de entrega
+              <input
+                className="inputs-cadastro"
+                {...register("taxa_entrega", { required: true })}
+              />
+            </label>
+            <label>
+              Tempo de entrega
+              <input
+                className="inputs-cadastro"
+                {...register("tempo_entrega_minutos", { required: true })}
+              />
+            </label>
+            <label>
+              Valor mínimo do pedido
+              <input
+                className="inputs-cadastro"
+                placeholderCampo="R$ 0,00"
+                {...register("valor_minimo_pedido", { required: true })}
+              />
+            </label>
           </div>
         );
       default:
@@ -227,7 +191,7 @@ export default function Cadastro() {
             })}
           </Stepper>
 
-          <div className="inputs-cadastro">
+          <div>
             <Typography>{getStepContent(activeStep)}</Typography>
             <div>
               <Button

@@ -8,11 +8,19 @@
   display: flex;
 }
 
+.inputs-cadastro {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 47px;
+  padding: 8px;
+}
+
 .form-cadastro {
-  height: 720px;
-  width: 500px;
+  height: auto;
   background-color: #ffff;
-  display: block;
   border-radius: 17px;
 }
 
@@ -21,20 +29,11 @@
   margin-top: 20px;
 }
 
-.inputs-cadastro {
-  margin-left: 50px;
-  margin-right: 50px;
-}
-
 .fazer-login {
   margin-left: 10px;
   color: #6f7377;
   font-family: Montserrat;
   font-size: 12px;
-}
-
-.div-input {
-  margin: 30px 0;
 }
 
 #categoria {
@@ -52,14 +51,11 @@
   margin-bottom: 50px;
   margin-left: 10px;
   color: #6f7377;
-  font-family: Montserrat;
   font-size: 12px;
 }
 
 .label-select-textarea {
-  margin: 8px 16px;
   margin-top: 40px;
-  font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
