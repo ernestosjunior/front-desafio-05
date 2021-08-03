@@ -17,8 +17,22 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
-  button: {
+  buttonBack: {
+    backgroundColor: "transparent",
+    color: "#D13201",
+    textTransform: "none",
+    fontWeight: 600,
+    fontSize: "14px",
+    borderRadius: "20px",
+  },
+  buttonNext: {
     marginRight: theme.spacing(1),
+    backgroundColor: "#D13201",
+    color: "#FFFFFF",
+    textTransform: "none",
+    fontWeight: 600,
+    fontSize: "14px",
+    borderRadius: "20px",
   },
   instructions: {
     marginTop: theme.spacing(1),
@@ -197,7 +211,7 @@ export default function Cadastro() {
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                className={classes.button}
+                className={classes.buttonBack}
               >
                 Anterior
               </Button>
@@ -205,7 +219,7 @@ export default function Cadastro() {
                 variant="contained"
                 color="#"
                 onClick={handleNext}
-                className={classes.button}
+                className={classes.buttonNext}
               >
                 {activeStep === steps.length - 1 ? "Criar conta" : "Próximo"}
               </Button>
