@@ -89,7 +89,7 @@ export function FetchProvider({ children }) {
       {
         method: "DELETE",
         headers: {
-          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI3OTQ0MTQ4fQ.a58UGgDnEYRsF-Dp3kdgux0pwXI5uqBC_qZg1MuRjWI`,
+          authorization: `Bearer ${gravarUsuario}`,
           "content-type": "application/json",
         },
       }
@@ -101,7 +101,7 @@ export function FetchProvider({ children }) {
   useEffect(() => {
     fetch("https://desafio5back.herokuapp.com/produtos", {
       headers: {
-        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjI3OTQ0MTQ4fQ.a58UGgDnEYRsF-Dp3kdgux0pwXI5uqBC_qZg1MuRjWI`,
+        authorization: `Bearer ${gravarUsuario}`,
         "content-type": "application/json",
       },
     })
