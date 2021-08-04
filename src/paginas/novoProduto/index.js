@@ -9,6 +9,9 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { toast } from "react-toastify";
+import { UseFetch } from "../../contexto/regraDeNegocio";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -58,6 +61,8 @@ const schema = yup.object().shape({
 
 const NovoProduto = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { adicionarProduto, produtos, setProdutos } = UseFetch();
 
   const {
     register,
@@ -76,8 +81,42 @@ const NovoProduto = () => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
-  const handleAddProduto = (data) => {
+  const handleAddProduto = async (data) => {
     const valorFormatado = data.preco.replace(",", "").replace(".", "");
+    const corpo = {
+      nome: data.nome,
+      descricao: data.descricao,
+      preco: valorFormatado,
+      ativo: state.checkedA,
+      permite_observacoes: state.checkedB,
+    };
+    const resposta = await adicionarProduto(corpo);
+    console.log(resposta);
+    if (resposta.erro) {
+      toast.error(resposta.erro, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    toast.success("Produto cadastrado com sucesso!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    const novosProdutos = [...produtos];
+    novosProdutos.push(resposta);
+    setProdutos(novosProdutos);
+    history.push("/");
   };
 
   return (
@@ -143,7 +182,7 @@ const NovoProduto = () => {
                 <Link to="/">
                   <button className="btn__clean__laranja">Cancelar</button>
                 </Link>
-                <button className="btn__laranja">
+                <button className="btn__laranja" type="submit">
                   Adicionar produto ao cardápio
                 </button>
               </div>

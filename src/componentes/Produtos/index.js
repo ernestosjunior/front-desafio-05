@@ -14,6 +14,7 @@ const Produtos = ({ produtos }) => {
       <div className="produtos__lista">
         {produtos.map((p) => (
           <Card
+            key={p.id}
             nome={p.nome}
             descricao={p.descricao}
             preco={p.preco}

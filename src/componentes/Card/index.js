@@ -20,10 +20,9 @@ const Card = ({
   const { removerProduto, produtos, setProdutos } = UseFetch();
 
   const handleRemoverProduto = async () => {
-    const { erro } = await removerProduto(id);
-
-    if (erro) {
-      toast.error(erro, {
+    const resposta = await removerProduto(id);
+    if (resposta.erro) {
+      toast.error(resposta.erro, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
