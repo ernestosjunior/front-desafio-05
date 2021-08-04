@@ -17,7 +17,7 @@ export function FetchProvider({ children }) {
     const body = JSON.stringify(data);
 
     try {
-      const response = await fetch("http://localhost:3300/login", {
+      const response = await fetch("https://desafio5back.herokuapp.com/login", {
         method: "POST",
         headers: {
           accept: "application/json",
@@ -55,14 +55,17 @@ export function FetchProvider({ children }) {
     const body = JSON.stringify(dataRequerida);
 
     try {
-      const response = await fetch("http://localhost:3300/cadastro", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-        },
-        body,
-      });
+      const response = await fetch(
+        "https://desafio5back.herokuapp.com/cadastro",
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+          body,
+        }
+      );
 
       const cadastro = await response.json();
 
