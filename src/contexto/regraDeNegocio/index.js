@@ -45,7 +45,7 @@ export function FetchProvider({ children }) {
   }
 
   async function handleCadastro(data) {
-    if (data.senha !== data.confirmar_senha) {
+    if (data.senha !== data.confirmarSenha) {
       toast.error("As senhas devem ser iguais");
       return;
     }
@@ -92,7 +92,7 @@ export function FetchProvider({ children }) {
       {
         method: "POST",
         headers: {
-          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+          authorization: `Bearer ${gravarUsuario}`,
           "content-type": "application/json",
         },
         body: JSON.stringify(corpo),
@@ -108,7 +108,7 @@ export function FetchProvider({ children }) {
       {
         method: "DELETE",
         headers: {
-          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+          authorization: `Bearer ${gravarUsuario}`,
           "content-type": "application/json",
         },
       }
@@ -118,20 +118,22 @@ export function FetchProvider({ children }) {
   };
 
   useEffect(() => {
-    fetch("https://desafio5back.herokuapp.com/produtos", {
-      headers: {
-        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
-        "content-type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setProdutos(data);
+    if (gravarUsuario) {
+      fetch("https://desafio5back.herokuapp.com/produtos", {
+        headers: {
+          authorization: `Bearer ${gravarUsuario}`,
+          "content-type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (Array.isArray(data)) {
+            setProdutos(data);
+            return;
+          }
           return;
-        }
-        return;
-      });
+        });
+    }
   }, []);
 
   return (

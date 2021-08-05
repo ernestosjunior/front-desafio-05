@@ -14,10 +14,12 @@ import { UseAuth } from "./contexto/autorizacao";
 import { FetchProvider } from "./contexto/regraDeNegocio";
 
 function AuthPath(props) {
-  const { token } = UseAuth();
+  const { gravarUsuario } = UseAuth();
 
   return (
-    <Route render={() => (token ? props.children : <Redirect to="/login" />)} />
+    <Route
+      render={() => (gravarUsuario ? props.children : <Redirect to="/login" />)}
+    />
   );
 }
 

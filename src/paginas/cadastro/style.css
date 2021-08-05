@@ -24,10 +24,10 @@
   border-radius: 17px;
 }
 
-.titulo-cadastro {
+/* .titulo-cadastro {
   margin-left: 20px;
   margin-top: 20px;
-}
+} */
 
 .fazer-login {
   margin-left: 10px;
@@ -60,4 +60,23 @@
   font-style: normal;
   font-weight: 600;
   color: #393c40;
+}
+
+[class~="MuiStepIcon-root"] {
+  color: #9447 !important;
+}
+[class~="MuiStepIcon-active"] {
+  color: rgba(0, 38, 255) !important;
+}
+[class~="MuiStepConnector-line"] {
+  display: none !important;
+}
+[class~="MuiStepConnector-root"] {
+  flex: 0 !important;
+}
+
+.header-cadastro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

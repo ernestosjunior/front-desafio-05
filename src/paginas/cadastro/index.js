@@ -54,7 +54,12 @@ export default function Cadastro() {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
+
+  const valores = getValues();
+
+  console.log(valores);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -65,6 +70,15 @@ export default function Cadastro() {
   };
 
   const handleNext = () => {
+    if (
+      !valores.nome ||
+      !valores.email ||
+      !valores.senha ||
+      !valores.confirmarSenha
+    ) {
+      return;
+    }
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -99,8 +113,14 @@ export default function Cadastro() {
                 {...register("email", { required: true })}
               />
             </label>
-            <InputSenha {...register("senha", { required: true })} />
-            <InputSenha {...register("confirmar_senha", { required: true })} />
+            <InputSenha
+              label="Senha"
+              {...register("senha", { required: true })}
+            />
+            <InputSenha
+              label="Confirmar Senha"
+              {...register("confirmarSenha", { required: true })}
+            />
           </div>
         );
       case 1:
@@ -151,14 +171,14 @@ export default function Cadastro() {
               Taxa de entrega
               <input
                 className="inputs-cadastro"
-                {...register("taxa_entrega", { required: true })}
+                {...register("taxaEntrega", { required: true })}
               />
             </label>
             <label>
               Tempo de entrega
               <input
                 className="inputs-cadastro"
-                {...register("tempo_entrega_minutos", { required: true })}
+                {...register("tempoEntregaMinutos", { required: true })}
               />
             </label>
             <label>
@@ -166,7 +186,7 @@ export default function Cadastro() {
               <input
                 className="inputs-cadastro"
                 placeholderCampo="R$ 0,00"
-                {...register("valor_minimo_pedido", { required: true })}
+                {...register("valorMinimoPedido", { required: true })}
               />
             </label>
           </div>
@@ -180,11 +200,12 @@ export default function Cadastro() {
       <form
         className="form-cadastro"
         onSubmit={
-          activeStep === steps.length - 1 && handleSubmit(handleCadastro)
+          // activeStep === steps.length - 1 &&
+          handleSubmit(handleCadastro)
         }
       >
-        <h1 className="titulos-paginas titulo-cadastro">Cadastro</h1>
-        <div>
+        <div className="header-cadastro">
+          <h1 className="titulos-paginas titulo-cadastro">Cadastro</h1>
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
               const stepProps = {};
@@ -198,13 +219,14 @@ export default function Cadastro() {
                 stepProps.completed = false;
               }
               return (
-                <Step key={label} {...stepProps}>
+                <Step key={label} className="step" {...stepProps}>
                   <StepLabel {...labelProps}>{label}</StepLabel>
                 </Step>
               );
             })}
           </Stepper>
-
+        </div>
+        <div>
           <div>
             <Typography>{getStepContent(activeStep)}</Typography>
             <div>
@@ -220,6 +242,7 @@ export default function Cadastro() {
                 color="#"
                 onClick={handleNext}
                 className={classes.buttonNext}
+                type="submit"
               >
                 {activeStep === steps.length - 1 ? "Criar conta" : "Próximo"}
               </Button>
