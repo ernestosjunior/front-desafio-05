@@ -118,22 +118,20 @@ export function FetchProvider({ children }) {
   };
 
   useEffect(() => {
-    if (gravarUsuario) {
-      fetch("https://desafio5back.herokuapp.com/produtos", {
-        headers: {
-          authorization: `Bearer ${gravarUsuario}`,
-          "content-type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (Array.isArray(data)) {
-            setProdutos(data);
-            return;
-          }
+    fetch("https://desafio5back.herokuapp.com/produtos", {
+      headers: {
+        authorization: `Bearer ${gravarUsuario}`,
+        "content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setProdutos(data);
           return;
-        });
-    }
+        }
+        return;
+      });
   }, []);
 
   return (

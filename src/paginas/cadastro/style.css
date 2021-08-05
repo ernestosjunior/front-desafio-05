@@ -22,6 +22,7 @@
   height: auto;
   background-color: #ffff;
   border-radius: 17px;
+  padding: 30px;
 }
 
 /* .titulo-cadastro {
@@ -63,10 +64,10 @@
 }
 
 [class~="MuiStepIcon-root"] {
-  color: #9447 !important;
+  color: #c9ccd1 !important;
 }
 [class~="MuiStepIcon-active"] {
-  color: rgba(0, 38, 255) !important;
+  color: #d13201 !important;
 }
 [class~="MuiStepConnector-line"] {
   display: none !important;
