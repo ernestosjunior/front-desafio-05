@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import InputSenha from "../../componentes/InputSenha";
+import InputSenha from "../InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
+import "./style.css";
 
-export default function EditarPerfil() {
+export default function Perfil() {
   const { handleCategoria, categorias, abrirCard, setAbrirCard } = UseFetch();
   const {
     register,
@@ -13,6 +14,7 @@ export default function EditarPerfil() {
   } = useForm();
 
   useEffect(() => {
+    setAbrirCard(true);
     handleCategoria();
   }, []);
 
@@ -99,7 +101,12 @@ export default function EditarPerfil() {
           <img alt="logo do restaurante"></img>
           <div>
             <Link to="/">
-              <button className="btn__clean__laranja">Cancelar</button>
+              <button
+                className="btn__clean__laranja"
+                onClick={() => setAbrirCard(false)}
+              >
+                Cancelar
+              </button>
             </Link>
             <button type="submit" className="btn__laranja">
               Salvar alterações

@@ -24,7 +24,8 @@ const Header = () => {
         src={Logo}
         className="header__logo"
         alt="Logo"
-        onClick={setAbrirCard(true)}
+        onClick={() => setAbrirCard(true)}
+        style={{ cursor: "pointer" }}
       />
       <div className="header__conteudo">
         <h1>Pizza Pizzaria & Delivery</h1>
