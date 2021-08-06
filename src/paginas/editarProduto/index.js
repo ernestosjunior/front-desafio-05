@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 import Header from "../../componentes/Header";
 import Backdrop from "@material-ui/core/Backdrop";
 import { makeStyles } from "@material-ui/core/styles";
 import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 
 const useStyles = makeStyles((theme) => ({
@@ -53,22 +54,71 @@ const AntSwitch = withStyles((theme) => ({
 const EditarProduto = () => {
   const classes = useStyles();
   const { id } = useParams();
+  const history = useHistory();
   const { register, handleSubmit } = useForm();
-  const { produtos } = UseFetch();
+  const { produtos, setProdutos, editarProduto } = UseFetch();
 
-  const [state, setState] = useState({
-    checkedA: true,
-    checkedB: true,
-  });
+  const [ativo, setAtivo] = useState(true);
+  const [permiteObservacoes, setPerimiteObservacoes] = useState(true);
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+  const handleAtivo = (event) => {
+    if (event.target.name === "ativo") {
+      setAtivo(event.target.checked);
+      return;
+    }
+    return;
+  };
+
+  const handlePermiteObservacoes = (event) => {
+    if (event.target.name === "permiteObservacoes") {
+      setPerimiteObservacoes(event.target.checked);
+      return;
+    }
+    return;
   };
 
   const produtoEdicao = produtos.filter((p) => p.id === Number(id));
 
-  const handleEditarProduto = (data) => {
-    console.log(id);
+  useEffect(() => {
+    if (produtoEdicao.length) {
+      setAtivo(produtoEdicao[0].ativo);
+      setPerimiteObservacoes(produtoEdicao[0].permiteObservacoes);
+      return;
+    }
+  }, []);
+
+  const handleEditarProduto = async (data) => {
+    const corpo = {
+      nome: data.nome,
+      descricao: data.descricao,
+      preco: data.preco.replace(",", "").replace(".", ""),
+      ativo: ativo,
+      permite_observacoes: permiteObservacoes,
+    };
+
+    const resposta = await editarProduto(id, corpo);
+    if (resposta.erro) {
+      toast.error(resposta.erro, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    toast.success("Produto atualizado com sucesso!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    history.push("/");
   };
 
   return (
@@ -86,7 +136,7 @@ const EditarProduto = () => {
                 <input
                   className="input-nome"
                   {...register("nome")}
-                  value={produtoEdicao.length && produtoEdicao[0].nome}
+                  defaultValue={produtoEdicao.length && produtoEdicao[0].nome}
                 />
               </label>
               <label>
@@ -95,7 +145,9 @@ const EditarProduto = () => {
                   className="input-descricao"
                   maxLength="80"
                   {...register("descricao")}
-                  value={produtoEdicao.length ? produtoEdicao[0].descricao : ""}
+                  defaultValue={
+                    produtoEdicao.length ? produtoEdicao[0].descricao : ""
+                  }
                 ></textarea>
                 <span className="descricao-obs">Máx.: 80 caracteres</span>
               </label>
@@ -108,25 +160,26 @@ const EditarProduto = () => {
                   min="0"
                   step="any"
                   placeholder="R$ 00,00"
-                  value={
+                  defaultValue={
                     produtoEdicao.length &&
                     (produtoEdicao[0].preco / 100).toFixed(2)
                   }
+                  {...register("preco")}
                 />
               </label>
               <div className="form-checkbox">
                 <AntSwitch
-                  checked={state.checkedA}
-                  onChange={handleChange}
-                  name="checkedA"
+                  checked={ativo}
+                  onChange={handleAtivo}
+                  name="ativo"
                 />
                 <p>Ativar produto</p>
               </div>
               <div className="form-checkbox">
                 <AntSwitch
-                  checked={state.checkedB}
-                  onChange={handleChange}
-                  name="checkedB"
+                  checked={permiteObservacoes}
+                  onChange={handlePermiteObservacoes}
+                  name="permiteObservacoes"
                 />
                 <p>Permitir observações</p>
               </div>

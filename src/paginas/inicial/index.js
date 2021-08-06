@@ -1,4 +1,5 @@
 import "./style.css";
+import { useEffect } from "react";
 import Header from "../../componentes/Header";
 import SemProdutos from "../../componentes/SemProdutos";
 import Produtos from "../../componentes/Produtos";
@@ -6,7 +7,12 @@ import Produtos from "../../componentes/Produtos";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 
 const Inicial = () => {
-  const { produtos } = UseFetch();
+  const { produtos, listarProdutos } = UseFetch();
+
+  useEffect(() => {
+    listarProdutos();
+  }, []);
+
   return (
     <>
       <Header />

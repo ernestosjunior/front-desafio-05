@@ -91,7 +91,6 @@ const NovoProduto = () => {
       permite_observacoes: state.checkedB,
     };
     const resposta = await adicionarProduto(corpo);
-    console.log(resposta);
     if (resposta.erro) {
       toast.error(resposta.erro, {
         position: "top-right",
