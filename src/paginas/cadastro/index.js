@@ -12,6 +12,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +46,7 @@ function getSteps() {
 }
 
 export default function Cadastro() {
-  const { handleCadastro } = UseFetch();
+  const { handleCadastro, handleCategoria, categorias } = UseFetch();
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -54,7 +55,14 @@ export default function Cadastro() {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm();
+
+  useEffect(() => {
+    handleCategoria();
+  }, []);
+
+  const valores = getValues();
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -65,6 +73,15 @@ export default function Cadastro() {
   };
 
   const handleNext = () => {
+    if (
+      !valores.nome ||
+      !valores.email ||
+      !valores.senha ||
+      !valores.confirmarSenha
+    ) {
+      return;
+    }
+
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
@@ -83,7 +100,7 @@ export default function Cadastro() {
     switch (step) {
       case 0:
         return (
-          <div>
+          <div className="content-cadastro">
             <label>
               Nome
               <input
@@ -99,13 +116,19 @@ export default function Cadastro() {
                 {...register("email", { required: true })}
               />
             </label>
-            <InputSenha {...register("senha", { required: true })} />
-            <InputSenha {...register("confirmar_senha", { required: true })} />
+            <InputSenha
+              label="Senha"
+              {...register("senha", { required: true })}
+            />
+            <InputSenha
+              label="Confirmar Senha"
+              {...register("confirmarSenha", { required: true })}
+            />
           </div>
         );
       case 1:
         return (
-          <div>
+          <div className="content-cadastro">
             <label>
               Nome do restaurante
               <input
@@ -123,17 +146,9 @@ export default function Cadastro() {
               <option value="" disabled selected>
                 Escolha uma categoria
               </option>
-              <option value="Diversos">Diversos</option>
-              <option value="Lanches">Lanches</option>
-              <option value="Carnes">Carnes</option>
-              <option value="Massas">Massas</option>
-              <option value="Pizzas">Pizzas</option>
-              <option value="Japonesa">Japonesa</option>
-              <option value="Chinesa">Chinesa</option>
-              <option value="Mexicano">Mexicano</option>
-              <option value="Brasileira">Brasileira</option>
-              <option value="Italiana">Italiana</option>
-              <option value="Árabe">Árabe</option>
+              {categorias?.map((categoria) => (
+                <option value={categoria.id}>{categoria.nome}</option>
+              ))}
             </select>
             <h2 className="label-select-textarea">Descrição</h2>
             <textarea
@@ -146,19 +161,19 @@ export default function Cadastro() {
         );
       case 2:
         return (
-          <div>
+          <div className="content-cadastro">
             <label>
               Taxa de entrega
               <input
                 className="inputs-cadastro"
-                {...register("taxa_entrega", { required: true })}
+                {...register("taxaEntrega", { required: true })}
               />
             </label>
             <label>
               Tempo de entrega
               <input
                 className="inputs-cadastro"
-                {...register("tempo_entrega_minutos", { required: true })}
+                {...register("tempoEntregaMinutos", { required: true })}
               />
             </label>
             <label>
@@ -166,7 +181,7 @@ export default function Cadastro() {
               <input
                 className="inputs-cadastro"
                 placeholderCampo="R$ 0,00"
-                {...register("valor_minimo_pedido", { required: true })}
+                {...register("valorMinimoPedido", { required: true })}
               />
             </label>
           </div>
@@ -177,14 +192,9 @@ export default function Cadastro() {
   }
   return (
     <div className="cadastro">
-      <form
-        className="form-cadastro"
-        onSubmit={
-          activeStep === steps.length - 1 && handleSubmit(handleCadastro)
-        }
-      >
-        <h1 className="titulos-paginas titulo-cadastro">Cadastro</h1>
-        <div>
+      <form className="form-cadastro" onSubmit={handleSubmit(handleCadastro)}>
+        <div className="header-cadastro">
+          <h1 className="titulos-paginas titulo-cadastro">Cadastro</h1>
           <Stepper activeStep={activeStep}>
             {steps.map((label, index) => {
               const stepProps = {};
@@ -198,14 +208,15 @@ export default function Cadastro() {
                 stepProps.completed = false;
               }
               return (
-                <Step key={label} {...stepProps}>
+                <Step key={label} className="step" {...stepProps}>
                   <StepLabel {...labelProps}>{label}</StepLabel>
                 </Step>
               );
             })}
           </Stepper>
-
-          <div>
+        </div>
+        <div>
+          <div className="content-botoes">
             <Typography>{getStepContent(activeStep)}</Typography>
             <div>
               <Button
@@ -220,9 +231,11 @@ export default function Cadastro() {
                 color="#"
                 onClick={handleNext}
                 className={classes.buttonNext}
+                type="submit"
               >
                 {activeStep === steps.length - 1 ? "Criar conta" : "Próximo"}
               </Button>
+              <br />
               <br />
               <spam className="fazer-login">
                 Já tem uma conta? <Link to="/login">Login</Link>

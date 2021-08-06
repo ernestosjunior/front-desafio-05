@@ -11,6 +11,8 @@ export function FetchProvider({ children }) {
   const [carregando, setCarregando] = useState();
   const [produtos, setProdutos] = useState([]);
   const { setGravarUsuario, gravarUsuario } = UseAuth();
+  const [categorias, setCategorias] = useState([]);
+  const [abrirCard, setAbrirCard] = useState(false);
 
   async function handleLogin(data) {
     setCarregando(true);
@@ -43,9 +45,36 @@ export function FetchProvider({ children }) {
       setCarregando(false);
     }
   }
+  async function handleCategoria() {
+    setCarregando(true);
+
+    try {
+      const response = await fetch(
+        "https://desafio5back.herokuapp.com/categorias",
+        {
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      const tipoDeComida = await response.json();
+
+      if (response.status !== 200) {
+        toast.error(tipoDeComida);
+      } else {
+        setCategorias(tipoDeComida);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setCarregando(false);
+    }
+  }
 
   async function handleCadastro(data) {
-    if (data.senha !== data.confirmar_senha) {
+    if (data.senha !== data.confirmarSenha) {
       toast.error("As senhas devem ser iguais");
       return;
     }
@@ -154,6 +183,8 @@ export function FetchProvider({ children }) {
     <FetchContext.Provider
       value={{
         handleLogin,
+        handleCategoria,
+        categorias,
         handleCadastro,
         carregando,
         produtos,
@@ -162,6 +193,8 @@ export function FetchProvider({ children }) {
         adicionarProduto,
         editarProduto,
         removerProduto,
+        abrirCard,
+        setAbrirCard,
       }}
     >
       {children}
@@ -172,6 +205,8 @@ export function FetchProvider({ children }) {
 export function UseFetch() {
   const {
     handleLogin,
+    handleCategoria,
+    categorias,
     handleCadastro,
     handleFornecedores,
     carregando,
@@ -181,10 +216,14 @@ export function UseFetch() {
     adicionarProduto,
     editarProduto,
     removerProduto,
+    abrirCard,
+    setAbrirCard,
   } = useContext(FetchContext);
 
   return {
     handleLogin,
+    handleCategoria,
+    categorias,
     handleCadastro,
     handleFornecedores,
     carregando,
@@ -194,5 +233,7 @@ export function UseFetch() {
     adicionarProduto,
     editarProduto,
     removerProduto,
+    abrirCard,
+    setAbrirCard,
   };
 }

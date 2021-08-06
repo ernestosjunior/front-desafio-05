@@ -1,0 +1,23 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(10, 12, 28, 0.5);
+  display: grid;
+  place-content: center;
+}
+
+.fechado {
+  display: none;
+}
+
+.card {
+  background-color: #ffff;
+  color: #161932;
+  padding: 34px 40px 54px;
+  border-radius: 25px;
+  display: flex;
+  width: auto;
+}

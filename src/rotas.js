@@ -9,15 +9,18 @@ import Cadastro from "./paginas/cadastro";
 import Inicial from "./paginas/inicial";
 import NovoProduto from "./paginas/novoProduto";
 import EditarProduto from "./paginas/editarProduto";
+import EditarPerfil from "./paginas/editarPerfil";
 import { AuthProvider } from "./contexto/autorizacao";
 import { UseAuth } from "./contexto/autorizacao";
 import { FetchProvider } from "./contexto/regraDeNegocio";
 
 function AuthPath(props) {
-  const { token } = UseAuth();
+  const { gravarUsuario } = UseAuth();
 
   return (
-    <Route render={() => (token ? props.children : <Redirect to="/login" />)} />
+    <Route
+      render={() => (gravarUsuario ? props.children : <Redirect to="/login" />)}
+    />
   );
 }
 
@@ -33,6 +36,7 @@ function Rotas() {
               <Route path="/" exact component={Inicial} />
               <Route path="/novo-produto" component={NovoProduto} />
               <Route path="/editar-produto/:id" component={EditarProduto} />
+              <Route path="/editar-perfil" component={EditarPerfil} />
             </AuthPath>
           </Switch>
         </FetchProvider>
