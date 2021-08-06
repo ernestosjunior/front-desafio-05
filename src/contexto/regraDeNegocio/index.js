@@ -1,7 +1,7 @@
 import { useState, createContext } from "react";
 import { UseAuth } from "../../contexto/autorizacao";
 import { useHistory } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { toast } from "react-toastify";
 
 const FetchContext = createContext();
@@ -115,11 +115,44 @@ export function FetchProvider({ children }) {
     }
   }
 
+  const listarProdutos = async () => {
+    fetch("https://desafio5back.herokuapp.com/produtos", {
+      headers: {
+        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+        "content-type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setProdutos(data);
+          return;
+        }
+        return;
+      });
+  };
+
   const adicionarProduto = async (corpo) => {
     const response = await fetch(
       `https://desafio5back.herokuapp.com/produtos`,
       {
         method: "POST",
+        headers: {
+          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(corpo),
+      }
+    );
+    const data = response.json();
+    return data;
+  };
+
+  const editarProduto = async (id, corpo) => {
+    const response = await fetch(
+      `https://desafio5back.herokuapp.com/produtos/${id}`,
+      {
+        method: "PUT",
         headers: {
           authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
           "content-type": "application/json",
@@ -146,23 +179,6 @@ export function FetchProvider({ children }) {
     return data;
   };
 
-  useEffect(() => {
-    fetch("https://desafio5back.herokuapp.com/produtos", {
-      headers: {
-        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
-        "content-type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setProdutos(data);
-          return;
-        }
-        return;
-      });
-  }, []);
-
   return (
     <FetchContext.Provider
       value={{
@@ -173,7 +189,9 @@ export function FetchProvider({ children }) {
         carregando,
         produtos,
         setProdutos,
+        listarProdutos,
         adicionarProduto,
+        editarProduto,
         removerProduto,
         abrirCard,
         setAbrirCard,
@@ -194,7 +212,9 @@ export function UseFetch() {
     carregando,
     produtos,
     setProdutos,
+    listarProdutos,
     adicionarProduto,
+    editarProduto,
     removerProduto,
     abrirCard,
     setAbrirCard,
@@ -209,7 +229,9 @@ export function UseFetch() {
     carregando,
     produtos,
     setProdutos,
+    listarProdutos,
     adicionarProduto,
+    editarProduto,
     removerProduto,
     abrirCard,
     setAbrirCard,

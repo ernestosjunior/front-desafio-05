@@ -22,7 +22,11 @@
   height: auto;
   background-color: #ffff;
   border-radius: 17px;
+<<<<<<< HEAD
+  padding: 57px 92px 57px 42px;
+=======
   padding: 30px;
+>>>>>>> d03eb607344f7e3b7e8c26471f6cb95ffd071b69
 }
 
 .content-cadastro {
