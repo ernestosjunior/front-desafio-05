@@ -7,7 +7,6 @@ export function AuthProvider({ children }) {
   const [gravarUsuario, setGravarUsuario, removeGravarUsuario] =
     useLocalStorage("valorToken", "");
   const [carregando, setCarregando] = useState(false);
-  const token = gravarUsuario.token;
 
   return (
     <AuthContext.Provider
@@ -17,7 +16,6 @@ export function AuthProvider({ children }) {
         setGravarUsuario,
         carregando,
         setCarregando,
-        token,
       }}
     >
       {children}
@@ -32,7 +30,6 @@ export function UseAuth() {
     setGravarUsuario,
     carregando,
     setCarregando,
-    token,
   } = useContext(AuthContext);
 
   return {
@@ -41,6 +38,5 @@ export function UseAuth() {
     setGravarUsuario,
     carregando,
     setCarregando,
-    token,
   };
 }

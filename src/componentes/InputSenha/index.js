@@ -3,14 +3,18 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import "./style.css";
 
-const InputSenha = () => {
+const InputSenha = (props) => {
   const [verSenha, setVerSenha] = useState(false);
 
   return (
     <div className="div__input__senha">
       <label className="label__login__cadastro">
-        Senha
-        <input className="input__senha" type={verSenha ? "text" : "password"} />
+        {props.label}
+        <input
+          {...props}
+          className="input__senha"
+          type={verSenha ? "text" : "password"}
+        />
         <FontAwesomeIcon
           className="eye-senha"
           onClick={() => setVerSenha(!verSenha)}
