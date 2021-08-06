@@ -118,7 +118,7 @@ export function FetchProvider({ children }) {
   const listarProdutos = async () => {
     fetch("https://desafio5back.herokuapp.com/produtos", {
       headers: {
-        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+        authorization: `Bearer ${gravarUsuario}`,
         "content-type": "application/json",
       },
     })
@@ -138,7 +138,7 @@ export function FetchProvider({ children }) {
       {
         method: "POST",
         headers: {
-          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+          authorization: `Bearer ${gravarUsuario}`,
           "content-type": "application/json",
         },
         body: JSON.stringify(corpo),
@@ -154,7 +154,7 @@ export function FetchProvider({ children }) {
       {
         method: "PUT",
         headers: {
-          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+          authorization: `Bearer ${gravarUsuario}`,
           "content-type": "application/json",
         },
         body: JSON.stringify(corpo),
@@ -170,7 +170,7 @@ export function FetchProvider({ children }) {
       {
         method: "DELETE",
         headers: {
-          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
+          authorization: `Bearer ${gravarUsuario}`,
           "content-type": "application/json",
         },
       }

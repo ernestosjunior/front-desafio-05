@@ -7,13 +7,14 @@
   background: rgba(10, 12, 28, 0.5);
   display: grid;
   place-content: center;
+  overflow: auto;
 }
 
 .fechado {
   display: none;
 }
 
-.card {
+.modal_perfil {
   background-color: #ffff;
   color: #161932;
   padding: 34px 40px 54px;
