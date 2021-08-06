@@ -12,6 +12,7 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +46,7 @@ function getSteps() {
 }
 
 export default function Cadastro() {
-  const { handleCadastro } = UseFetch();
+  const { handleCadastro, handleCategoria, categorias } = UseFetch();
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -57,9 +58,11 @@ export default function Cadastro() {
     getValues,
   } = useForm();
 
-  const valores = getValues();
+  useEffect(() => {
+    handleCategoria();
+  }, []);
 
-  console.log(valores);
+  const valores = getValues();
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -97,7 +100,7 @@ export default function Cadastro() {
     switch (step) {
       case 0:
         return (
-          <div>
+          <div className="content-cadastro">
             <label>
               Nome
               <input
@@ -125,7 +128,7 @@ export default function Cadastro() {
         );
       case 1:
         return (
-          <div>
+          <div className="content-cadastro">
             <label>
               Nome do restaurante
               <input
@@ -143,17 +146,9 @@ export default function Cadastro() {
               <option value="" disabled selected>
                 Escolha uma categoria
               </option>
-              <option value="Diversos">Diversos</option>
-              <option value="Lanches">Lanches</option>
-              <option value="Carnes">Carnes</option>
-              <option value="Massas">Massas</option>
-              <option value="Pizzas">Pizzas</option>
-              <option value="Japonesa">Japonesa</option>
-              <option value="Chinesa">Chinesa</option>
-              <option value="Mexicano">Mexicano</option>
-              <option value="Brasileira">Brasileira</option>
-              <option value="Italiana">Italiana</option>
-              <option value="Árabe">Árabe</option>
+              {categorias?.map((categoria) => (
+                <option value={categoria.id}>{categoria.nome}</option>
+              ))}
             </select>
             <h2 className="label-select-textarea">Descrição</h2>
             <textarea
@@ -166,7 +161,7 @@ export default function Cadastro() {
         );
       case 2:
         return (
-          <div>
+          <div className="content-cadastro">
             <label>
               Taxa de entrega
               <input
@@ -197,13 +192,7 @@ export default function Cadastro() {
   }
   return (
     <div className="cadastro">
-      <form
-        className="form-cadastro"
-        onSubmit={
-          // activeStep === steps.length - 1 &&
-          handleSubmit(handleCadastro)
-        }
-      >
+      <form className="form-cadastro" onSubmit={handleSubmit(handleCadastro)}>
         <div className="header-cadastro">
           <h1 className="titulos-paginas titulo-cadastro">Cadastro</h1>
           <Stepper activeStep={activeStep}>
@@ -227,7 +216,7 @@ export default function Cadastro() {
           </Stepper>
         </div>
         <div>
-          <div>
+          <div className="content-botoes">
             <Typography>{getStepContent(activeStep)}</Typography>
             <div>
               <Button
@@ -246,6 +235,7 @@ export default function Cadastro() {
               >
                 {activeStep === steps.length - 1 ? "Criar conta" : "Próximo"}
               </Button>
+              <br />
               <br />
               <spam className="fazer-login">
                 Já tem uma conta? <Link to="/login">Login</Link>

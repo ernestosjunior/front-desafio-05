@@ -25,10 +25,18 @@
   padding: 30px;
 }
 
-/* .titulo-cadastro {
-  margin-left: 20px;
-  margin-top: 20px;
-} */
+.content-cadastro {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.content-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  justify-content: center;
+  align-items: center;
+}
 
 .fazer-login {
   margin-left: 10px;

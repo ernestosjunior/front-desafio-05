@@ -11,6 +11,8 @@ export function FetchProvider({ children }) {
   const [carregando, setCarregando] = useState();
   const [produtos, setProdutos] = useState([]);
   const { setGravarUsuario, gravarUsuario } = UseAuth();
+  const [categorias, setCategorias] = useState([]);
+  const [abrirCard, setAbrirCard] = useState(false);
 
   async function handleLogin(data) {
     setCarregando(true);
@@ -36,6 +38,33 @@ export function FetchProvider({ children }) {
         toast.success(`Olá, ${login.usuario.nome}`, {
           onClose: () => {},
         });
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setCarregando(false);
+    }
+  }
+  async function handleCategoria() {
+    setCarregando(true);
+
+    try {
+      const response = await fetch(
+        "https://desafio5back.herokuapp.com/categorias",
+        {
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+        }
+      );
+
+      const tipoDeComida = await response.json();
+
+      if (response.status !== 200) {
+        toast.error(tipoDeComida);
+      } else {
+        setCategorias(tipoDeComida);
       }
     } catch (error) {
       toast.error(error.message);
@@ -92,7 +121,7 @@ export function FetchProvider({ children }) {
       {
         method: "POST",
         headers: {
-          authorization: `Bearer ${gravarUsuario}`,
+          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
           "content-type": "application/json",
         },
         body: JSON.stringify(corpo),
@@ -108,7 +137,7 @@ export function FetchProvider({ children }) {
       {
         method: "DELETE",
         headers: {
-          authorization: `Bearer ${gravarUsuario}`,
+          authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
           "content-type": "application/json",
         },
       }
@@ -120,7 +149,7 @@ export function FetchProvider({ children }) {
   useEffect(() => {
     fetch("https://desafio5back.herokuapp.com/produtos", {
       headers: {
-        authorization: `Bearer ${gravarUsuario}`,
+        authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI4MDMyMDIwfQ.XLLqW2A_F-OatBhuvAWIWscXREHkEVjQq2MdvXYv-sc`,
         "content-type": "application/json",
       },
     })
@@ -138,12 +167,16 @@ export function FetchProvider({ children }) {
     <FetchContext.Provider
       value={{
         handleLogin,
+        handleCategoria,
+        categorias,
         handleCadastro,
         carregando,
         produtos,
         setProdutos,
         adicionarProduto,
         removerProduto,
+        abrirCard,
+        setAbrirCard,
       }}
     >
       {children}
@@ -154,6 +187,8 @@ export function FetchProvider({ children }) {
 export function UseFetch() {
   const {
     handleLogin,
+    handleCategoria,
+    categorias,
     handleCadastro,
     handleFornecedores,
     carregando,
@@ -161,10 +196,14 @@ export function UseFetch() {
     setProdutos,
     adicionarProduto,
     removerProduto,
+    abrirCard,
+    setAbrirCard,
   } = useContext(FetchContext);
 
   return {
     handleLogin,
+    handleCategoria,
+    categorias,
     handleCadastro,
     handleFornecedores,
     carregando,
@@ -172,5 +211,7 @@ export function UseFetch() {
     setProdutos,
     adicionarProduto,
     removerProduto,
+    abrirCard,
+    setAbrirCard,
   };
 }
