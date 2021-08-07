@@ -55,8 +55,7 @@ const EditarProduto = () => {
   useEffect(() => {
     if (produtoEdicao.length) {
       setAtivo(produtoEdicao[0].ativo);
-      setPerimiteObservacoes(produtoEdicao[0].permiteObservacoes);
-      setImagemBase(produtoEdicao[0].imagem);
+      setPerimiteObservacoes(produtoEdicao[0].permite_observacoes);
       return;
     }
   }, []);
@@ -68,7 +67,9 @@ const EditarProduto = () => {
       descricao: data.descricao,
       preco: data.preco.replace(",", "").replace(".", ""),
       ativo: ativo,
-      permite_observacoes: permiteObservacoes,
+      permiteObservacoes: permiteObservacoes,
+      imagem: imagemBase,
+      nome_imagem: imagemBaseNome,
     };
 
     const resposta = await editarProduto(id, corpo);

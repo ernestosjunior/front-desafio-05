@@ -17,15 +17,8 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Card = ({
-  id,
-  nome,
-  descricao,
-  preco,
-  imagem,
-  ativo,
-  permite_observacoes,
-}) => {
+const Card = ({ id, nome, descricao, preco, imagem }) => {
+  console.log(imagem);
   const [visivel, setVisivel] = useState(false);
   const [carregando, setCarregando] = useState(false);
 
@@ -79,12 +72,17 @@ const Card = ({
           </Link>
         </div>
       )}
-      <div>
-        <h1>{nome}</h1>
-        <p>{descricao}</p>
-        <p className="card__preco">R$ {(preco / 100).toFixed(2)}</p>
+      <div className="card__front">
+        <div>
+          <h1>{nome}</h1>
+          <p>{descricao}</p>
+          <p className="card__preco">R$ {(preco / 100).toFixed(2)}</p>
+        </div>
+        <div className="card__imagem">
+          <img src={imagem} />
+        </div>
       </div>
-      <div className="card__imagem"></div>
+
       <Backdrop className={classes.backdrop} open={carregando}>
         <CircularProgress color="inherit" />
       </Backdrop>

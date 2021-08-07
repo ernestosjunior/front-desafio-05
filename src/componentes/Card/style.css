@@ -61,6 +61,18 @@
 }
 
 .card__imagem {
-  height: 174px;
-  width: 174px;
+  height: 160px;
+  width: 160px;
+}
+
+.card__imagem img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.card__front {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

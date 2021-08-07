@@ -57,7 +57,7 @@ const NovoProduto = () => {
       descricao: data.descricao,
       preco: valorFormatado,
       ativo: ativo,
-      permite_observacoes: permiteObservacoes,
+      permiteObservacoes: permiteObservacoes,
       imagem: imagemBase,
       nomeImagem: imagemBaseNome,
     };
