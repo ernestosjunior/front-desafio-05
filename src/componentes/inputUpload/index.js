@@ -2,7 +2,7 @@ import "./style.css";
 import { ReactComponent as UploadIcon } from "../../assets/bg-upload.svg";
 import { ReactComponent as IconUpload } from "../../assets/icon-upload.svg";
 
-const InputUpload = ({ imagemBase, setImagemBase }) => {
+const InputUpload = ({ imagemBase, setImagemBase, setImagemBaseNome }) => {
   const converterBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -20,6 +20,7 @@ const InputUpload = ({ imagemBase, setImagemBase }) => {
   const imagemUpload = async (e) => {
     const file = e.target.files[0];
     const base64 = await converterBase64(file);
+    setImagemBaseNome(e.target.files[0].name);
     setImagemBase(base64);
   };
   return (

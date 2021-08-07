@@ -19,6 +19,7 @@ const NovoProduto = () => {
   const [permiteObservacoes, setPerimiteObservacoes] = useState(true);
   const [carregando, setCarregando] = useState(false);
   const [imagemBase, setImagemBase] = useState("");
+  const [imagemBaseNome, setImagemBaseNome] = useState("");
 
   const classes = useStyles();
   const history = useHistory();
@@ -149,6 +150,7 @@ const NovoProduto = () => {
               <InputUpload
                 imagemBase={imagemBase}
                 setImagemBase={setImagemBase}
+                setImagemBaseNome={setImagemBaseNome}
               />
               <div className="modal__direita__footer">
                 <Link to="/">

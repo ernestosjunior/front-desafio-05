@@ -11,11 +11,14 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Header from "../../componentes/Header";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { schema, useStyles, AntSwitch } from "./utils";
+import InputUpload from "../../componentes/inputUpload";
 
 const EditarProduto = () => {
   const [ativo, setAtivo] = useState(true);
   const [permiteObservacoes, setPerimiteObservacoes] = useState(true);
   const [carregando, setCarregando] = useState(false);
+  const [imagemBase, setImagemBase] = useState("");
+  const [imagemBaseNome, setImagemBaseNome] = useState("");
 
   const classes = useStyles();
   const history = useHistory();
@@ -162,7 +165,11 @@ const EditarProduto = () => {
               </div>
             </div>
             <div className="modal__editar__direita">
-              <div></div>
+              <InputUpload
+                imagemBase={imagemBase}
+                setImagemBase={setImagemBase}
+                setImagemBaseNome={setImagemBaseNome}
+              />
               <div>
                 <Link to="/">
                   <button className="btn__clean__laranja">Cancelar</button>

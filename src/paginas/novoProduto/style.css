@@ -79,9 +79,3 @@ label {
   justify-content: space-between;
   align-items: flex-end;
 }
-
-.modal__direita__footer {
-  display: flex;
-  align-items: center;
-  margin-top: 80px;
-}
