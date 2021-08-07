@@ -1,65 +1,25 @@
-import { useState } from "react";
 import "./style.css";
-import Header from "../../componentes/Header";
-import Backdrop from "@material-ui/core/Backdrop";
-import { makeStyles } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { toast } from "react-toastify";
+
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import Header from "../../componentes/Header";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { useHistory } from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
-  },
-}));
-
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    width: 28,
-    height: 16,
-    padding: 0,
-    display: "flex",
-  },
-  switchBase: {
-    padding: 2,
-    color: theme.palette.grey[500],
-    "&$checked": {
-      transform: "translateX(12px)",
-      color: "#0D8A4F",
-      "& + $track": {
-        opacity: 1,
-        backgroundColor: "rgba(42, 176, 113, 0.2)",
-        borderColor: "#0D8A4F",
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: "none",
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch);
-
-const schema = yup.object().shape({
-  nome: yup.string().required("Campo obrigatório."),
-  preco: yup.string().required("Campo obrigatório."),
-});
+import { schema, useStyles, AntSwitch } from "./utils";
+import InputUpload from "../../componentes/inputUpload";
 
 const NovoProduto = () => {
+  const [ativo, setAtivo] = useState(true);
+  const [permiteObservacoes, setPerimiteObservacoes] = useState(true);
+  const [carregando, setCarregando] = useState(false);
+  const [imagemBase, setImagemBase] = useState("");
+
   const classes = useStyles();
   const history = useHistory();
   const { adicionarProduto, produtos, setProdutos } = UseFetch();
@@ -72,26 +32,35 @@ const NovoProduto = () => {
     resolver: yupResolver(schema),
   });
 
-  const [state, setState] = useState({
-    checkedA: true,
-    checkedB: true,
-  });
+  const handleAtivo = (event) => {
+    if (event.target.name === "ativo") {
+      setAtivo(event.target.checked);
+      return;
+    }
+    return;
+  };
 
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+  const handlePermiteObservacoes = (event) => {
+    if (event.target.name === "permiteObservacoes") {
+      setPerimiteObservacoes(event.target.checked);
+      return;
+    }
+    return;
   };
 
   const handleAddProduto = async (data) => {
+    setCarregando(true);
     const valorFormatado = data.preco.replace(",", "").replace(".", "");
     const corpo = {
       nome: data.nome,
       descricao: data.descricao,
       preco: valorFormatado,
-      ativo: state.checkedA,
-      permite_observacoes: state.checkedB,
+      ativo: ativo,
+      permite_observacoes: permiteObservacoes,
     };
     const resposta = await adicionarProduto(corpo);
     if (resposta.erro) {
+      setCarregando(false);
       toast.error(resposta.erro, {
         position: "top-right",
         autoClose: 5000,
@@ -103,6 +72,7 @@ const NovoProduto = () => {
       });
       return;
     }
+    setCarregando(false);
     toast.success("Produto cadastrado com sucesso!", {
       position: "top-right",
       autoClose: 5000,
@@ -160,24 +130,27 @@ const NovoProduto = () => {
               </label>
               <div className="input__checkbox">
                 <AntSwitch
-                  checked={state.checkedA}
-                  onChange={handleChange}
-                  name="checkedA"
+                  checked={ativo}
+                  onChange={handleAtivo}
+                  name="ativo"
                 />
                 <p>Ativar produto</p>
               </div>
               <div className="input__checkbox">
                 <AntSwitch
-                  checked={state.checkedB}
-                  onChange={handleChange}
-                  name="checkedB"
+                  checked={permiteObservacoes}
+                  onChange={handlePermiteObservacoes}
+                  name="permiteObservacoes"
                 />
                 <p>Permitir observações</p>
               </div>
             </div>
             <div className="modal__direita">
-              <div></div>
-              <div>
+              <InputUpload
+                imagemBase={imagemBase}
+                setImagemBase={setImagemBase}
+              />
+              <div className="modal__direita__footer">
                 <Link to="/">
                   <button className="btn__clean__laranja">Cancelar</button>
                 </Link>
@@ -188,6 +161,9 @@ const NovoProduto = () => {
             </div>
           </div>
         </form>
+      </Backdrop>
+      <Backdrop className={classes.backdrop} open={carregando}>
+        <CircularProgress color="inherit" />
       </Backdrop>
     </div>
   );

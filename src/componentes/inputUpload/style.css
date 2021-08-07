@@ -1,0 +1,43 @@
+.input__upload__container {
+  cursor: pointer;
+}
+
+.input__upload {
+  width: 300px;
+  height: 300px;
+  background-color: #e5e5e5;
+  margin-top: 100px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input__upload img {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+}
+
+.input__upload input {
+  display: none;
+}
+
+.input__upload label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.alert {
+  font-size: 15px;
+  text-align: center;
+  color: #d13201;
+  font-weight: bold;
+}

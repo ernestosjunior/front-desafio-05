@@ -1,3 +1,6 @@
+.novo-produto {
+  padding: 100px;
+}
 .modal {
   width: 1008px;
   height: auto;
@@ -72,5 +75,13 @@ label {
 
 .modal__direita {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: flex-end;
+}
+
+.modal__direita__footer {
+  display: flex;
+  align-items: center;
+  margin-top: 80px;
 }

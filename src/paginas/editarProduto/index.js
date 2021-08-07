@@ -1,65 +1,35 @@
-import { useEffect, useState } from "react";
 import "./style.css";
-import Header from "../../componentes/Header";
-import Backdrop from "@material-ui/core/Backdrop";
-import { makeStyles } from "@material-ui/core/styles";
-import { withStyles } from "@material-ui/core/styles";
-import Switch from "@material-ui/core/Switch";
+import { useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { toast } from "react-toastify";
+
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import Header from "../../componentes/Header";
 import { UseFetch } from "../../contexto/regraDeNegocio";
-
-const useStyles = makeStyles((theme) => ({
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: "#fff",
-  },
-}));
-
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    width: 28,
-    height: 16,
-    padding: 0,
-    display: "flex",
-  },
-  switchBase: {
-    padding: 2,
-    color: theme.palette.grey[500],
-    "&$checked": {
-      transform: "translateX(12px)",
-      color: "#0D8A4F",
-      "& + $track": {
-        opacity: 1,
-        backgroundColor: "rgba(42, 176, 113, 0.2)",
-        borderColor: "#0D8A4F",
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: "none",
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch);
+import { schema, useStyles, AntSwitch } from "./utils";
 
 const EditarProduto = () => {
-  const classes = useStyles();
-  const { id } = useParams();
-  const history = useHistory();
-  const { register, handleSubmit } = useForm();
-  const { produtos, setProdutos, editarProduto } = UseFetch();
-
   const [ativo, setAtivo] = useState(true);
   const [permiteObservacoes, setPerimiteObservacoes] = useState(true);
+  const [carregando, setCarregando] = useState(false);
+
+  const classes = useStyles();
+  const history = useHistory();
+  const { id } = useParams();
+
+  const { produtos, editarProduto } = UseFetch();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const handleAtivo = (event) => {
     if (event.target.name === "ativo") {
@@ -88,6 +58,7 @@ const EditarProduto = () => {
   }, []);
 
   const handleEditarProduto = async (data) => {
+    setCarregando(true);
     const corpo = {
       nome: data.nome,
       descricao: data.descricao,
@@ -98,6 +69,7 @@ const EditarProduto = () => {
 
     const resposta = await editarProduto(id, corpo);
     if (resposta.erro) {
+      setCarregando(false);
       toast.error(resposta.erro, {
         position: "top-right",
         autoClose: 5000,
@@ -109,6 +81,7 @@ const EditarProduto = () => {
       });
       return;
     }
+    setCarregando(false);
     toast.success("Produto atualizado com sucesso!", {
       position: "top-right",
       autoClose: 5000,
@@ -137,7 +110,9 @@ const EditarProduto = () => {
                   className="input-nome"
                   {...register("nome")}
                   defaultValue={produtoEdicao.length && produtoEdicao[0].nome}
+                  style={{ borderColor: errors.nome && "red" }}
                 />
+                <p className="erro__input">{errors.nome?.message}</p>
               </label>
               <label>
                 Descrição
@@ -164,8 +139,10 @@ const EditarProduto = () => {
                     produtoEdicao.length &&
                     (produtoEdicao[0].preco / 100).toFixed(2)
                   }
+                  style={{ borderColor: errors.preco && "red" }}
                   {...register("preco")}
                 />
+                <p className="erro__input">{errors.preco?.message}</p>
               </label>
               <div className="form-checkbox">
                 <AntSwitch
@@ -195,6 +172,9 @@ const EditarProduto = () => {
             </div>
           </div>
         </form>
+      </Backdrop>
+      <Backdrop className={classes.backdrop} open={carregando}>
+        <CircularProgress color="inherit" />
       </Backdrop>
     </div>
   );
