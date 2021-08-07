@@ -58,6 +58,8 @@ const NovoProduto = () => {
       preco: valorFormatado,
       ativo: ativo,
       permite_observacoes: permiteObservacoes,
+      imagem: imagemBase,
+      nomeImagem: imagemBaseNome,
     };
     const resposta = await adicionarProduto(corpo);
     if (resposta.erro) {

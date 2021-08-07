@@ -56,6 +56,7 @@ const EditarProduto = () => {
     if (produtoEdicao.length) {
       setAtivo(produtoEdicao[0].ativo);
       setPerimiteObservacoes(produtoEdicao[0].permiteObservacoes);
+      setImagemBase(produtoEdicao[0].imagem);
       return;
     }
   }, []);

@@ -4,7 +4,18 @@ import { UseFetch } from "../../contexto/regraDeNegocio";
 import { toast } from "react-toastify";
 import "./style.css";
 
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { ReactComponent as IconEditar } from "../../assets/icon-editar.svg";
+
+export const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+  },
+}));
 
 const Card = ({
   id,
@@ -16,12 +27,16 @@ const Card = ({
   permite_observacoes,
 }) => {
   const [visivel, setVisivel] = useState(false);
+  const [carregando, setCarregando] = useState(false);
 
+  const classes = useStyles();
   const { removerProduto, produtos, setProdutos } = UseFetch();
 
   const handleRemoverProduto = async () => {
+    setCarregando(true);
     const resposta = await removerProduto(id);
     if (resposta.erro) {
+      setCarregando(false);
       toast.error(resposta.erro, {
         position: "top-right",
         autoClose: 5000,
@@ -35,6 +50,7 @@ const Card = ({
     }
     const novosProdutos = produtos.filter((p) => p.id !== id);
     setProdutos(novosProdutos);
+    setCarregando(false);
     toast.success("Produto removido com sucesso!", {
       position: "top-right",
       autoClose: 5000,
@@ -69,6 +85,9 @@ const Card = ({
         <p className="card__preco">R$ {(preco / 100).toFixed(2)}</p>
       </div>
       <div className="card__imagem"></div>
+      <Backdrop className={classes.backdrop} open={carregando}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 };

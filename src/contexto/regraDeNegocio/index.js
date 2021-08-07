@@ -143,7 +143,7 @@ export function FetchProvider({ children }) {
   const listarProdutos = async () => {
     fetch("https://desafio5back.herokuapp.com/produtos", {
       headers: {
-        authorization: `Bearer ${gravarUsuario}`,
+        authorization: `Bearer ${gravarUsuario.token}`,
         "content-type": "application/json",
       },
     })
@@ -163,7 +163,7 @@ export function FetchProvider({ children }) {
       {
         method: "POST",
         headers: {
-          authorization: `Bearer ${gravarUsuario}`,
+          authorization: `Bearer ${gravarUsuario.token}`,
           "content-type": "application/json",
         },
         body: JSON.stringify(corpo),
@@ -179,7 +179,7 @@ export function FetchProvider({ children }) {
       {
         method: "PUT",
         headers: {
-          authorization: `Bearer ${gravarUsuario}`,
+          authorization: `Bearer ${gravarUsuario.token}`,
           "content-type": "application/json",
         },
         body: JSON.stringify(corpo),
@@ -195,7 +195,7 @@ export function FetchProvider({ children }) {
       {
         method: "DELETE",
         headers: {
-          authorization: `Bearer ${gravarUsuario}`,
+          authorization: `Bearer ${gravarUsuario.token}`,
           "content-type": "application/json",
         },
       }
