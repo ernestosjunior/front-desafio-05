@@ -80,12 +80,38 @@ export function FetchProvider({ children }) {
     }
 
     setCarregando(true);
-    const { confirmar_senha, ...dataRequerida } = data;
+    const {
+      nome,
+      email,
+      senha,
+      confirmar_senha,
+      restaurante,
+      descricao,
+      categoria,
+      taxaEntrega,
+      tempoEntregaEmMinutos,
+      valorMinimoPedido,
+    } = data;
+
+    const dataRequerida = {
+      nome,
+      email,
+      senha,
+      restaurante: {
+        nome: restaurante,
+        descricao,
+        idCategoria: categoria,
+        taxaEntrega,
+        tempoEntregaEmMinutos,
+        valorMinimoPedido,
+      },
+    };
+
     const body = JSON.stringify(dataRequerida);
 
     try {
       const response = await fetch(
-        "https://desafio5back.herokuapp.com/cadastro",
+        "https://desafio5back.herokuapp.com/usuarios",
         {
           method: "POST",
           headers: {
@@ -106,7 +132,6 @@ export function FetchProvider({ children }) {
             history.push("/login");
           },
         });
-        history.push("/login");
       }
     } catch (error) {
       toast.error(error.message);
@@ -179,6 +204,72 @@ export function FetchProvider({ children }) {
     return data;
   };
 
+  async function handleEditarPerfil(data) {
+    if (data.senha !== data.confirmarSenha) {
+      toast.error("As senhas devem ser iguais");
+      return;
+    }
+
+    setCarregando(true);
+    const {
+      nome,
+      email,
+      senha,
+      confirmar_senha,
+      restaurante,
+      descricao,
+      categoria,
+      taxaEntrega,
+      tempoEntregaEmMinutos,
+      valorMinimoPedido,
+    } = data;
+
+    const dataRequerida = {
+      nome,
+      email,
+      senha,
+      restaurante: {
+        nome: restaurante,
+        descricao,
+        idCategoria: categoria,
+        taxaEntrega,
+        tempoEntregaEmMinutos,
+        valorMinimoPedido,
+      },
+    };
+    const body = JSON.stringify(dataRequerida);
+
+    try {
+      const response = await fetch(
+        "https://desafio5back.herokuapp.com/usuarios",
+        {
+          method: "PUT",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+          body,
+        }
+      );
+      const novoPerfil = await response.json();
+
+      if (response.status !== 200) {
+        toast.error(novoPerfil);
+      } else {
+        toast.success("Perfil atualizado!", {
+          onClose: () => {
+            setAbrirCard(false);
+            history.push("/");
+          },
+        });
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setCarregando(false);
+    }
+  }
+
   return (
     <FetchContext.Provider
       value={{
@@ -195,6 +286,7 @@ export function FetchProvider({ children }) {
         removerProduto,
         abrirCard,
         setAbrirCard,
+        handleEditarPerfil,
       }}
     >
       {children}
@@ -218,6 +310,7 @@ export function UseFetch() {
     removerProduto,
     abrirCard,
     setAbrirCard,
+    handleEditarPerfil,
   } = useContext(FetchContext);
 
   return {
@@ -235,5 +328,6 @@ export function UseFetch() {
     removerProduto,
     abrirCard,
     setAbrirCard,
+    handleEditarPerfil,
   };
 }
