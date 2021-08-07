@@ -4,29 +4,28 @@ import { useState } from "react";
 import { forwardRef } from "react";
 import "./style.css";
 
-const InputSenha = forwardRef(
-  (props, ref) => {
+const InputSenha = forwardRef((props, ref) => {
   const [verSenha, setVerSenha] = useState(false);
 
   return (
-      <div className="div__input__senha">
-        <label className="label__login__cadastro">
-          {props.label}
-          <input
+    <div className="div__input__senha">
+      <label className={`label__login__cadastro ${props.className}`}>
+        {props.label}
+        <input
           ref={ref}
-            {...props}
-            className="input__senha"
-            type={verSenha ? "text" : "password"}
-          />
-          <FontAwesomeIcon
-            className="eye-senha"
-            onClick={() => setVerSenha(!verSenha)}
-            icon={verSenha ? faEye : faEyeSlash}
-          />
-        </label>
-      </div>
-    );
-  }
-)
+          {...props}
+          className="input__senha"
+          style={props.style}
+          type={verSenha ? "text" : "password"}
+        />
+        <FontAwesomeIcon
+          className="eye-senha"
+          onClick={() => setVerSenha(!verSenha)}
+          icon={verSenha ? faEye : faEyeSlash}
+        />
+      </label>
+    </div>
+  );
+});
 
 export default InputSenha;

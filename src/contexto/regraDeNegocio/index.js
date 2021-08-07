@@ -240,29 +240,30 @@ export function FetchProvider({ children }) {
     const body = JSON.stringify(dataRequerida);
 
     try {
-      const response = await fetch(
-        "https://desafio5back.herokuapp.com/usuarios",
-        {
-          method: "PUT",
-          headers: {
-            accept: "application/json",
-            "content-type": "application/json",
-          },
-          body,
-        }
-      );
-      const novoPerfil = await response.json();
+      console.log(body);
+      // const response = await fetch(
+      //   "https://desafio5back.herokuapp.com/usuarios",
+      //   {
+      //     method: "PUT",
+      //     headers: {
+      //       accept: "application/json",
+      //       "content-type": "application/json",
+      //     },
+      //     body,
+      //   }
+      // );
+      // const novoPerfil = await response.json();
 
-      if (response.status !== 200) {
-        toast.error(novoPerfil);
-      } else {
-        toast.success("Perfil atualizado!", {
-          onClose: () => {
-            setAbrirCard(false);
-            history.push("/");
-          },
-        });
-      }
+      // if (response.status !== 200) {
+      //   toast.error(novoPerfil);
+      // } else {
+      //   toast.success("Perfil atualizado!", {
+      //     onClose: () => {
+      //       setAbrirCard(false);
+      //       history.push("/");
+      //     },
+      //   });
+      // }
     } catch (error) {
       toast.error(error.message);
     } finally {

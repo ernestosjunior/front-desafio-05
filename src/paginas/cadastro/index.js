@@ -100,16 +100,16 @@ export default function Cadastro() {
     ) {
       return;
     }
-    if (!valores.restaurante || !valores.categoria || !valores.descricao) {
-      return;
-    }
-    if (
-      !valores.tempoEntregaEmMinutos ||
-      !valores.taxaEntrega ||
-      !valores.valorMinimoPedido
-    ) {
-      return;
-    }
+    // if (!valores.restaurante || !valores.categoria || !valores.descricao) {
+    //   return;
+    // }
+    // if (
+    //   !valores.tempoEntregaEmMinutos ||
+    //   !valores.taxaEntrega ||
+    //   !valores.valorMinimoPedido
+    // ) {
+    //   return;
+    // }
 
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -130,94 +130,128 @@ export default function Cadastro() {
       case 0:
         return (
           <div className="content-cadastro">
-            <label>
+            <label className="label-cadastro">
               Nome
               <input
+                style={{ borderColor: errors.nome && "red" }}
                 className="inputs-cadastro"
                 type="text"
                 {...register("nome", { required: true })}
               />
+              <p className="erro__input">{errors.nome?.message}</p>
             </label>
-            <label>
+            <label className="label-cadastro">
               Email
               <input
+                style={{ borderColor: errors.email && "red" }}
                 className="inputs-cadastro"
                 {...register("email", { required: true })}
               />
+              <p className="erro__input">{errors.email?.message}</p>
             </label>
-            <InputSenha
-              label="Senha"
-              {...register("senha", { required: true })}
-            />
-            <InputSenha
-              label="Confirmar Senha"
-              {...register("confirmarSenha", { required: true })}
-            />
+            <div>
+              <InputSenha
+                label="Senha"
+                style={{ borderColor: errors.senha && "red" }}
+                {...register("senha", { required: true })}
+              />
+              <p className="erro__input">{errors.senha?.message}</p>
+            </div>
+
+            <div>
+              <InputSenha
+                label="Confirmar Senha"
+                style={{ borderColor: errors.confirmarSenha && "red" }}
+                {...register("confirmarSenha", { required: true })}
+              />
+              <p className="erro__input">{errors.confirmarSenha?.message}</p>
+            </div>
           </div>
         );
       case 1:
         return (
           <div className="content-cadastro">
-            <label>
+            <label className="label-cadastro">
               Nome do restaurante
               <Controller
                 name="restaurante"
                 rules={{ required: true }}
                 control={control}
                 render={({ field }) => (
-                  <input type="text" className="inputs-cadastro" {...field} />
+                  <input
+                    type="text"
+                    className="inputs-cadastro"
+                    style={{ borderColor: errors.restaurante && "red" }}
+                    {...field}
+                  />
                 )}
               />
+              <p className="erro__input">{errors.restaurante?.message}</p>
             </label>
-            <h2 className="label-select-textarea">Categoria</h2>
-            <select
-              id="categoria"
-              name="categoria"
-              defaultValue="-1"
-              {...register("categoria", { required: true })}
-            >
-              <option value="-1" disabled>
-                Escolha uma categoria
-              </option>
-              {categorias?.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>
-                  {categoria.nome}
+            <div>
+              {" "}
+              <h2 className="label-select-textarea">Categoria</h2>
+              <select
+                id="categoria"
+                name="categoria"
+                defaultValue="-1"
+                style={{ borderColor: errors.categoria && "red" }}
+                {...register("categoria", { required: true })}
+              >
+                <option value="-1" disabled>
+                  Escolha uma categoria
                 </option>
-              ))}
-            </select>
-            <h2 className="label-select-textarea">Descrição</h2>
-            <textarea
-              maxLength="50"
-              className="textarea-cadastro"
-              {...register("descricao", { required: true })}
-            />
-            <h3 className="rodape-textarea">Máx.: 50 caracteres</h3>
+                {categorias?.map((categoria) => (
+                  <option key={categoria.id} value={categoria.id}>
+                    {categoria.nome}
+                  </option>
+                ))}
+                <p className="erro__input">{errors.categoria?.message}</p>
+              </select>
+            </div>
+            <div>
+              <h2 className="label-select-textarea">Descrição</h2>
+              <textarea
+                maxLength="50"
+                className="textarea-cadastro"
+                {...register("descricao", { required: true })}
+              />
+              <h3 className="rodape-textarea">Máx.: 50 caracteres</h3>
+            </div>
           </div>
         );
       case 2:
         return (
           <div className="content-cadastro">
-            <label>
+            <label className="label-cadastro">
               Taxa de entrega
               <input
                 className="inputs-cadastro"
+                style={{ borderColor: errors.taxaEntrega && "red" }}
                 {...register("taxaEntrega", { required: true })}
               />
+              <p className="erro__input">{errors.taxaEntrega?.message}</p>
             </label>
-            <label>
+            <label className="label-cadastro">
               Tempo de entrega
               <input
                 className="inputs-cadastro"
+                style={{ borderColor: errors.tempoEntregaEmMinutos && "red" }}
                 {...register("tempoEntregaEmMinutos", { required: true })}
               />
+              <p className="erro__input">
+                {errors.tempoEntregaEmMinutos?.message}
+              </p>
             </label>
-            <label>
+            <label className="label-cadastro">
               Valor mínimo do pedido
               <input
                 className="inputs-cadastro"
+                style={{ borderColor: errors.valorMinimoPedido && "red" }}
                 placeholder="R$ 0,00"
                 {...register("valorMinimoPedido", { required: true })}
               />
+              <p className="erro__input">{errors.valorMinimoPedido?.message}</p>
             </label>
           </div>
         );

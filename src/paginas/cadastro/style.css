@@ -57,14 +57,14 @@
 }
 
 .rodape-textarea {
-  margin-bottom: 50px;
+  margin-bottom: 10px;
   margin-left: 10px;
   color: #6f7377;
   font-size: 12px;
 }
 
 .label-select-textarea {
-  margin-top: 40px;
+  margin-top: 20px;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -88,4 +88,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.label-cadastro {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: #393c40;
+}
+
+.label-cadastro > p {
+  font-weight: normal;
 }
