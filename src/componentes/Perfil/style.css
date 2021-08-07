@@ -22,3 +22,13 @@
   display: flex;
   width: auto;
 }
+
+.inputs-editar-perfil {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 47px;
+  padding: 8px;
+}

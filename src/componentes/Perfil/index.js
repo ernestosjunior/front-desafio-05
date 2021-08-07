@@ -3,24 +3,53 @@ import { useForm } from "react-hook-form";
 import InputSenha from "../InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import "./style.css";
 
+const schema = yup.object().shape({
+  nome: yup.string().required("Campo não pode ser nulo"),
+  email: yup.string().required("Campo não pode ser nulo"),
+  restaurante: yup.string().required("Campo não pode ser nulo"),
+  categoria: yup
+    .number()
+    .positive()
+    .integer()
+    .required("Campo não pode ser nulo"),
+  descricao: yup.string().required("Campo não pode ser nulo"),
+  taxaEntrega: yup.string().required("Campo não pode ser nulo"),
+  tempoEntregaEmMinutos: yup.string().required("Campo não pode ser nulo"),
+  valorMinimoPedido: yup.string().required("Campo não pode ser nulo"),
+  senha: yup.string().required("Campo não pode ser nulo"),
+  confirmarSenha: yup.string().required("Campo não pode ser nulo"),
+});
+
 export default function Perfil() {
-  const { handleCategoria, categorias, abrirCard, setAbrirCard } = UseFetch();
+  const {
+    handleCategoria,
+    categorias,
+    abrirCard,
+    setAbrirCard,
+    handleEditarPerfil,
+  } = UseFetch();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
-    setAbrirCard(true);
     handleCategoria();
   }, []);
 
   return (
     <div className={`overlay ${abrirCard ? "" : "fechado"}`}>
-      <div className="modal_perfil">
+      <form
+        className="modal_perfil"
+        onSubmit={handleSubmit(handleEditarPerfil)}
+      >
         <div className="modal_esquerda_perfil">
           <h1 className="modal__esquerda__editar__titulo">Editar Perfil</h1>
           <label>
@@ -77,7 +106,7 @@ export default function Perfil() {
             Tempo de entrega
             <input
               className="inputs-editar-perfil"
-              {...register("tempoEntregaMinutos", { required: true })}
+              {...register("tempoEntregaEmMinutos", { required: true })}
             />
           </label>
           <label>
@@ -113,7 +142,7 @@ export default function Perfil() {
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

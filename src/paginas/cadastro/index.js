@@ -1,18 +1,17 @@
 import "./style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-
-import React from "react";
+import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +44,23 @@ function getSteps() {
   return ["", "", ""];
 }
 
+const schema = yup.object().shape({
+  nome: yup.string().required("Campo não pode ser nulo"),
+  email: yup.string().required("Campo não pode ser nulo"),
+  restaurante: yup.string().required("Campo não pode ser nulo"),
+  categoria: yup
+    .number()
+    .positive()
+    .integer()
+    .required("Campo não pode ser nulo"),
+  descricao: yup.string().required("Campo não pode ser nulo"),
+  taxaEntrega: yup.string().required("Campo não pode ser nulo"),
+  tempoEntregaEmMinutos: yup.string().required("Campo não pode ser nulo"),
+  valorMinimoPedido: yup.string().required("Campo não pode ser nulo"),
+  senha: yup.string().required("Campo não pode ser nulo"),
+  confirmarSenha: yup.string().required("Campo não pode ser nulo"),
+});
+
 export default function Cadastro() {
   const { handleCadastro, handleCategoria, categorias } = UseFetch();
   const classes = useStyles();
@@ -56,13 +72,15 @@ export default function Cadastro() {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm();
+    control,
+  } = useForm({
+    defaultValues: { restaurante: "" },
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     handleCategoria();
   }, []);
-
-  const valores = getValues();
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -73,11 +91,22 @@ export default function Cadastro() {
   };
 
   const handleNext = () => {
+    const valores = getValues();
     if (
       !valores.nome ||
       !valores.email ||
       !valores.senha ||
       !valores.confirmarSenha
+    ) {
+      return;
+    }
+    if (!valores.restaurante || !valores.categoria || !valores.descricao) {
+      return;
+    }
+    if (
+      !valores.tempoEntregaEmMinutos ||
+      !valores.taxaEntrega ||
+      !valores.valorMinimoPedido
     ) {
       return;
     }
@@ -131,28 +160,34 @@ export default function Cadastro() {
           <div className="content-cadastro">
             <label>
               Nome do restaurante
-              <input
-                type="text"
-                className="inputs-cadastro"
-                {...register("restaurante", { required: true })}
+              <Controller
+                name="restaurante"
+                rules={{ required: true }}
+                control={control}
+                render={({ field }) => (
+                  <input type="text" className="inputs-cadastro" {...field} />
+                )}
               />
             </label>
             <h2 className="label-select-textarea">Categoria</h2>
             <select
               id="categoria"
               name="categoria"
+              defaultValue="-1"
               {...register("categoria", { required: true })}
             >
-              <option value="" disabled selected>
+              <option value="-1" disabled>
                 Escolha uma categoria
               </option>
               {categorias?.map((categoria) => (
-                <option value={categoria.id}>{categoria.nome}</option>
+                <option key={categoria.id} value={categoria.id}>
+                  {categoria.nome}
+                </option>
               ))}
             </select>
             <h2 className="label-select-textarea">Descrição</h2>
             <textarea
-              maxlength="50"
+              maxLength="50"
               className="textarea-cadastro"
               {...register("descricao", { required: true })}
             />
@@ -173,14 +208,14 @@ export default function Cadastro() {
               Tempo de entrega
               <input
                 className="inputs-cadastro"
-                {...register("tempoEntregaMinutos", { required: true })}
+                {...register("tempoEntregaEmMinutos", { required: true })}
               />
             </label>
             <label>
               Valor mínimo do pedido
               <input
                 className="inputs-cadastro"
-                placeholderCampo="R$ 0,00"
+                placeholder="R$ 0,00"
                 {...register("valorMinimoPedido", { required: true })}
               />
             </label>
@@ -208,7 +243,7 @@ export default function Cadastro() {
                 stepProps.completed = false;
               }
               return (
-                <Step key={label} className="step" {...stepProps}>
+                <Step key={`${index}`} className="step" {...stepProps}>
                   <StepLabel {...labelProps}>{label}</StepLabel>
                 </Step>
               );
@@ -217,29 +252,30 @@ export default function Cadastro() {
         </div>
         <div>
           <div className="content-botoes">
-            <Typography>{getStepContent(activeStep)}</Typography>
+            <div>{getStepContent(activeStep)}</div>
             <div>
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
                 className={classes.buttonBack}
+                type="button"
               >
                 Anterior
               </Button>
               <Button
                 variant="contained"
-                color="#"
                 onClick={handleNext}
                 className={classes.buttonNext}
                 type="submit"
+                // {activeStep === steps.length - 1 ? "submit" : "button"}
               >
                 {activeStep === steps.length - 1 ? "Criar conta" : "Próximo"}
               </Button>
               <br />
               <br />
-              <spam className="fazer-login">
+              <span className="fazer-login">
                 Já tem uma conta? <Link to="/login">Login</Link>
-              </spam>
+              </span>
             </div>
           </div>
         </div>
