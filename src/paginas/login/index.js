@@ -41,7 +41,11 @@ export default function Login() {
         </label>
         <p className="erro__input">{errors.email?.message}</p>
         <br />
-        <InputSenha label="Senha" {...register("senha", { required: true })} />
+        <InputSenha
+          label="Senha"
+          style={{ borderColor: errors.senha && "red" }}
+          {...register("senha", { required: true })}
+        />
         <p className="erro__input">{errors.senha?.message}</p>
         <div className="flex-column item-center cadastrar">
           <button className="botao-principal-login">Enviar</button>

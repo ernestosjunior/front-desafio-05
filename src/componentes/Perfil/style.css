@@ -15,6 +15,7 @@
 }
 
 .modal_perfil {
+  margin-top: 640px;
   background-color: #ffff;
   color: #161932;
   padding: 34px 40px 54px;
@@ -31,4 +32,40 @@
   width: 408px;
   height: 47px;
   padding: 8px;
+}
+
+.label-input-perfil {
+  margin-bottom: 40px;
+  margin-top: 40px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  color: #393c40;
+}
+
+.input-restaurante {
+  margin-bottom: 0;
+}
+
+.margem-titulo {
+  margin-top: 40px;
+}
+
+.margem-senha {
+  margin-bottom: 40px;
+}
+
+.textarea-editar-perfil {
+  height: 100px;
+  width: 408px;
+  border-radius: 7.15px;
+}
+
+.modal_direita_perfil {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 50px;
+  margin-bottom: 40px;
+  margin-left: 40px;
 }
