@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
@@ -10,8 +10,6 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,28 +42,8 @@ function getSteps() {
   return ["", "", ""];
 }
 
-const schema = yup.object().shape({
-  nome: yup.string().required("Campo não pode ser nulo"),
-  email: yup.string().required("Campo não pode ser nulo"),
-  restaurante: yup.string().required("Campo não pode ser nulo"),
-  categoria: yup
-    .number()
-    .positive()
-    .integer()
-    .required("Campo não pode ser nulo"),
-  descricao: yup.string().required("Campo não pode ser nulo"),
-  taxaEntrega: yup.string().required("Campo não pode ser nulo"),
-  tempoEntregaEmMinutos: yup.string().required("Campo não pode ser nulo"),
-  valorMinimoPedido: yup.string().required("Campo não pode ser nulo"),
-  senha: yup.string().required("Campo não pode ser nulo"),
-  confirmarSenha: yup
-    .string()
-    .required("Campo não pode ser nulo")
-    .oneOf([yup.ref("senha"), null], "As senhas devem ser iguais"),
-});
-
 export default function Cadastro() {
-  const { handleCadastro, handleCategoria, categorias } = UseFetch();
+  const { handleCadastro, categorias } = UseFetch();
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -78,12 +56,7 @@ export default function Cadastro() {
     control,
   } = useForm({
     defaultValues: { restaurante: "" },
-    resolver: yupResolver(schema),
   });
-
-  useEffect(() => {
-    handleCategoria();
-  }, []);
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -92,9 +65,8 @@ export default function Cadastro() {
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
-
+  const valores = getValues();
   const handleNext = () => {
-    const valores = getValues();
     if (activeStep === 0) {
       if (
         !valores.nome ||
@@ -142,38 +114,50 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Nome
               <input
+                {...register("nome", { required: true })}
                 style={{ borderColor: errors.nome && "red" }}
                 className="inputs-cadastro"
                 type="text"
-                {...register("nome", { required: true })}
               />
-              <p className="erro__input">{errors.nome?.message}</p>
+              <p className="erro__input">
+                {errors.nome && "Campo obrigatório"}
+              </p>
             </label>
             <label className="label-cadastro">
               Email
               <input
+                {...register("email", { required: true })}
                 style={{ borderColor: errors.email && "red" }}
                 className="inputs-cadastro"
-                {...register("email", { required: true })}
               />
-              <p className="erro__input">{errors.email?.message}</p>
+              <p className="erro__input">
+                {errors.email && "Campo obrigatório"}
+              </p>
             </label>
             <div>
               <InputSenha
+                {...register("senha", { required: true })}
                 label="Senha"
                 style={{ borderColor: errors.senha && "red" }}
-                {...register("senha", { required: true })}
               />
-              <p className="erro__input">{errors.senha?.message}</p>
+              <p className="erro__input">
+                {errors.senha && "Campo obrigatório"}
+              </p>
             </div>
 
             <div>
               <InputSenha
+                {...register("confirmarSenha", { required: true })}
                 label="Confirmar Senha"
                 style={{ borderColor: errors.confirmarSenha && "red" }}
-                {...register("confirmarSenha", { required: true })}
               />
-              <p className="erro__input">{errors.confirmarSenha?.message}</p>
+              <p className="erro__input">
+                {errors.confirmarSenha && "Campo obrigatório"}
+              </p>
+              <p className="erro__input">
+                {valores.confirmarSenha !== valores.senha &&
+                  "Campos senha e Confirmar senha devem ser iguais"}
+              </p>
             </div>
           </div>
         );
@@ -195,34 +179,40 @@ export default function Cadastro() {
                   />
                 )}
               />
-              <p className="erro__input">{errors.restaurante?.message}</p>
+              <p className="erro__input">
+                {errors.restaurante && "Campo obrigatório"}
+              </p>
             </label>
             <div>
               <h2 className="label-select-textarea">Categoria</h2>
-              <select
-                id="categoria"
-                name="categoria"
-                defaultValue="-1"
-                style={{ borderColor: errors.categoria && "red" }}
-                {...register("categoria", { required: true })}
-              >
-                <option value="-1" disabled>
-                  Escolha uma categoria
-                </option>
-                {categorias?.map((categoria) => (
-                  <option key={categoria.id} value={categoria.id}>
-                    {categoria.nome}
+              <div>
+                <select
+                  {...register("categoria", { required: true })}
+                  id="categoria"
+                  name="categoria"
+                  defaultValue="-1"
+                  style={{ borderColor: errors.categoria && "red" }}
+                >
+                  <option value="-1" disabled>
+                    Escolha uma categoria
                   </option>
-                ))}
-                <p className="erro__input">{errors.categoria?.message}</p>
-              </select>
+                  {categorias?.map((categoria) => (
+                    <option key={categoria.id} value={categoria.id}>
+                      {categoria.nome}
+                    </option>
+                  ))}
+                </select>
+                <p className="erro__input">
+                  {errors.categoria && "Campo obrigatório"}
+                </p>
+              </div>
             </div>
             <div>
               <h2 className="label-select-textarea">Descrição</h2>
               <textarea
+                {...register("descricao", { required: true })}
                 maxLength="50"
                 className="textarea-cadastro"
-                {...register("descricao", { required: true })}
               />
               <h3 className="rodape-textarea">Máx.: 50 caracteres</h3>
             </div>
@@ -234,32 +224,36 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Taxa de entrega
               <input
+                {...register("taxaEntrega", { required: true })}
                 className="inputs-cadastro"
                 style={{ borderColor: errors.taxaEntrega && "red" }}
-                {...register("taxaEntrega", { required: true })}
               />
-              <p className="erro__input">{errors.taxaEntrega?.message}</p>
+              <p className="erro__input">
+                {errors.taxaEntrega && "Campo obrigatório"}
+              </p>
             </label>
             <label className="label-cadastro">
               Tempo de entrega
               <input
+                {...register("tempoEntregaEmMinutos", { required: true })}
                 className="inputs-cadastro"
                 style={{ borderColor: errors.tempoEntregaEmMinutos && "red" }}
-                {...register("tempoEntregaEmMinutos", { required: true })}
               />
               <p className="erro__input">
-                {errors.tempoEntregaEmMinutos?.message}
+                {errors.tempoEntregaEmMinutos && "Campo obrigatório"}
               </p>
             </label>
             <label className="label-cadastro">
               Valor mínimo do pedido
               <input
+                {...register("valorMinimoPedido", { required: true })}
                 className="inputs-cadastro"
                 style={{ borderColor: errors.valorMinimoPedido && "red" }}
                 placeholder="R$ 0,00"
-                {...register("valorMinimoPedido", { required: true })}
               />
-              <p className="erro__input">{errors.valorMinimoPedido?.message}</p>
+              <p className="erro__input">
+                {errors.valorMinimoPedido && "Campo obrigatório"}
+              </p>
             </label>
           </div>
         );

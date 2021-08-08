@@ -3,6 +3,7 @@ import { UseAuth } from "../../contexto/autorizacao";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from "react-toastify";
+import { useLocalStorage } from "react-use";
 
 const FetchContext = createContext();
 
@@ -11,7 +12,10 @@ export function FetchProvider({ children }) {
   const [carregando, setCarregando] = useState();
   const [produtos, setProdutos] = useState([]);
   const { setGravarUsuario, gravarUsuario } = UseAuth();
-  const [categorias, setCategorias] = useState([]);
+  const [categorias, setCategorias, removeCategorias] = useLocalStorage(
+    "categorias",
+    []
+  );
   const [abrirCard, setAbrirCard] = useState(false);
 
   async function handleLogin(data) {
@@ -116,9 +120,7 @@ export function FetchProvider({ children }) {
           body,
         }
       );
-
       const cadastro = await response.json();
-
       if (response.status !== 200) {
         toast.error(cadastro);
       } else {
@@ -236,6 +238,7 @@ export function FetchProvider({ children }) {
           method: "PUT",
           headers: {
             accept: "application/json",
+            authorization: `Bearer ${gravarUsuario.token}`,
             "content-type": "application/json",
           },
           body,

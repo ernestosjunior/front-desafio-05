@@ -10,16 +10,23 @@ const Header = () => {
   const path = window.location.pathname;
   const history = useHistory();
 
-  const { removeGravarUsuario } = UseAuth();
-  const { setAbrirCard } = UseFetch();
+  const { removeGravarUsuario, gravarUsuario } = UseAuth();
+  const { setAbrirCard, categorias } = UseFetch();
 
   const handleLogout = () => {
     removeGravarUsuario();
     history.push("/login");
   };
+  const imagemBanner = categorias.filter(
+    (categoria) => categoria.id === gravarUsuario.restaurante[0].categoria_id
+  );
 
   return (
-    <header>
+    <header
+      style={{
+        backgroundImage: `url(${imagemBanner[0].imagem})`,
+      }}
+    >
       <img
         src={Logo}
         className="header__logo"
@@ -28,7 +35,7 @@ const Header = () => {
         style={{ cursor: "pointer" }}
       />
       <div className="header__conteudo">
-        <h1>Pizza Pizzaria & Delivery</h1>
+        <h1>{gravarUsuario.restaurante[0].nome}</h1>
         {!path.includes("/novo-produto") & !path.includes("/editar-produto") ? (
           <button onClick={() => handleLogout()}>Logout</button>
         ) : (

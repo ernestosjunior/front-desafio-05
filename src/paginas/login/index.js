@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import InputSenha from "../../componentes/InputSenha";
 import { useForm } from "react-hook-form";
 import { UseFetch } from "../../contexto/regraDeNegocio";
+import { useEffect } from "react";
 import "./style.css";
 
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -16,7 +17,11 @@ const schema = yup.object().shape({
 });
 
 export default function Login() {
-  const { handleLogin } = UseFetch();
+  const { handleLogin, handleCategoria } = UseFetch();
+
+  useEffect(() => {
+    handleCategoria();
+  }, []);
 
   const {
     register,

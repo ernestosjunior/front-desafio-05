@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputSenha from "../InputSenha";
 import InputUpload from "../inputUpload";
@@ -25,13 +25,8 @@ export default function Perfil() {
   const { gravarUsuario } = UseAuth();
   const [imagemBase, setImagemBase] = useState("");
   const [imagemBaseNome, setImagemBaseNome] = useState("");
-  const {
-    handleCategoria,
-    categorias,
-    abrirCard,
-    setAbrirCard,
-    handleEditarPerfil,
-  } = UseFetch();
+  const { categorias, abrirCard, setAbrirCard, handleEditarPerfil } =
+    UseFetch();
   const {
     register,
     handleSubmit,
@@ -39,10 +34,6 @@ export default function Perfil() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  useEffect(() => {
-    handleCategoria();
-  }, []);
 
   return (
     <div className={`overlay ${abrirCard ? "" : "fechado"}`}>
@@ -90,7 +81,7 @@ export default function Perfil() {
           <select
             id="categoria"
             name="categoria"
-            value={gravarUsuario.restaurante[0].categoria_id}
+            defaultValue={gravarUsuario.restaurante[0].categoria_id}
             {...register("categoria", { required: true })}
           >
             <option value="" disabled selected>
