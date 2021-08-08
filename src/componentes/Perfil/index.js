@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputSenha from "../InputSenha";
 import InputUpload from "../inputUpload";
-import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
+import { UseAuth } from "../../contexto/autorizacao";
+import { UseFetch } from "../../contexto/regraDeNegocio";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "./style.css";
@@ -12,19 +13,16 @@ const schema = yup.object().shape({
   nome: yup.string().required("Campo não pode ser nulo"),
   email: yup.string().required("Campo não pode ser nulo"),
   restaurante: yup.string().required("Campo não pode ser nulo"),
-  categoria: yup
-    .number()
-    .positive()
-    .integer()
-    .required("Campo não pode ser nulo"),
   taxaEntrega: yup.string().required("Campo não pode ser nulo"),
   tempoEntregaEmMinutos: yup.string().required("Campo não pode ser nulo"),
   valorMinimoPedido: yup.string().required("Campo não pode ser nulo"),
-  senha: yup.string().required("Campo não pode ser nulo"),
-  confirmarSenha: yup.string().required("Campo não pode ser nulo"),
+  confirmarSenha: yup
+    .string()
+    .oneOf([yup.ref("senha"), null], "As senhas devem ser iguais"),
 });
 
 export default function Perfil() {
+  const { gravarUsuario } = UseAuth();
   const [imagemBase, setImagemBase] = useState("");
   const [imagemBaseNome, setImagemBaseNome] = useState("");
   const { categorias, abrirCard, setAbrirCard, handleEditarPerfil } =
@@ -53,6 +51,7 @@ export default function Perfil() {
               className="inputs-editar-perfil"
               type="text"
               style={{ borderColor: errors.nome && "red" }}
+              defaultValue={gravarUsuario.usuario.nome}
               {...register("nome", { required: true })}
             />
             <p className="erro__input">{errors.nome?.message}</p>
@@ -62,6 +61,7 @@ export default function Perfil() {
             <input
               className="inputs-editar-perfil"
               style={{ borderColor: errors.email && "red" }}
+              defaultValue={gravarUsuario.usuario.email}
               {...register("email", { required: true })}
             />
             <p className="erro__input">{errors.email?.message}</p>
@@ -71,6 +71,7 @@ export default function Perfil() {
             <input
               type="text"
               style={{ borderColor: errors.restaurante && "red" }}
+              defaultValue={gravarUsuario.restaurante[0].nome}
               className="inputs-editar-perfil input-restaurante"
               {...register("restaurante", { required: true })}
             />
@@ -80,7 +81,7 @@ export default function Perfil() {
           <select
             id="categoria"
             name="categoria"
-            style={{ borderColor: errors.categoria && "red" }}
+            defaultValue={gravarUsuario.restaurante[0].categoria_id}
             {...register("categoria", { required: true })}
           >
             <option value="" disabled selected>
@@ -89,12 +90,12 @@ export default function Perfil() {
             {categorias?.map((categoria) => (
               <option value={categoria.id}>{categoria.nome}</option>
             ))}
-            <p className="erro__input">{errors.categoria?.message}</p>
           </select>
           <h2 className="label-select-textarea">Descrição</h2>
           <textarea
             maxlength="50"
             className="textarea-editar-perfil"
+            defaultValue={gravarUsuario.restaurante[0].descricao}
             style={{ borderColor: errors.descricao && "red" }}
             {...register("descricao", { required: true })}
           />
@@ -103,6 +104,7 @@ export default function Perfil() {
             Taxa de entrega
             <input
               className="inputs-editar-perfil"
+              defaultValue={gravarUsuario.restaurante[0].taxa_entrega}
               style={{ borderColor: errors.taxaEntrega && "red" }}
               {...register("taxaEntrega", { required: true })}
             />
@@ -112,7 +114,8 @@ export default function Perfil() {
             Tempo de entrega
             <input
               className="inputs-editar-perfil"
-              style={{ borderColor: errors.tempoEntregaEmMinutos && "red" }}
+              defaultValue={gravarUsuario.restaurante[0].tempo_entrega_minutos}
+              style={{ borderColor: errors.valor_minimo_pedido && "red" }}
               {...register("tempoEntregaEmMinutos", { required: true })}
             />
             <p className="erro__input">
@@ -123,22 +126,27 @@ export default function Perfil() {
             Valor mínimo do pedido
             <input
               className="inputs-editar-perfil"
+              defaultValue={gravarUsuario.restaurante[0].valor_minimo_pedido}
               style={{ borderColor: errors.valorMinimoPedido && "red" }}
               placeholderCampo="R$ 0,00"
               {...register("valorMinimoPedido", { required: true })}
             />
             <p className="erro__input">{errors.valorMinimoPedido?.message}</p>
           </label>
-          <InputSenha
-            className="margem-senha"
-            label="Senha"
-            {...register("senha", { required: true })}
-          />
-          <InputSenha
-            className="margem-senha"
-            label="Confirmar Senha"
-            {...register("confirmarSenha", { required: true })}
-          />
+          <div className="margem-senha">
+            <InputSenha
+              label="Senha"
+              {...register("senha", { required: true })}
+            />
+          </div>
+          <div className="margem-senha">
+            <InputSenha
+              label="Confirmar Senha"
+              style={{ borderColor: errors.confirmarSenha && "red" }}
+              {...register("confirmarSenha", { required: true })}
+            />
+            <p className="erro__input">{errors.confirmarSenha?.message}</p>
+          </div>
         </div>
         <div className="modal_direita_perfil">
           <InputUpload

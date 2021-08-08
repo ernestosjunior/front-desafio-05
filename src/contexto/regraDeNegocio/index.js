@@ -78,11 +78,6 @@ export function FetchProvider({ children }) {
   }
 
   async function handleCadastro(data) {
-    if (data.senha !== data.confirmarSenha) {
-      toast.error("As senhas devem ser iguais");
-      return;
-    }
-
     setCarregando(true);
     const {
       nome,
@@ -112,30 +107,29 @@ export function FetchProvider({ children }) {
     };
 
     const body = JSON.stringify(dataRequerida);
-    console.log(body);
 
     try {
-      // const response = await fetch(
-      //   "https://desafio5back.herokuapp.com/usuarios",
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       accept: "application/json",
-      //       "content-type": "application/json",
-      //     },
-      //     body,
-      //   }
-      // );
-      // const cadastro = await response.json();
-      // if (response.status !== 200) {
-      //   toast.error(cadastro);
-      // } else {
-      //   toast.success("Cadastro feito!", {
-      //     onClose: () => {
-      //       history.push("/login");
-      //     },
-      //   });
-      // }
+      const response = await fetch(
+        "https://desafio5back.herokuapp.com/usuarios",
+        {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+          body,
+        }
+      );
+      const cadastro = await response.json();
+      if (response.status !== 200) {
+        toast.error(cadastro);
+      } else {
+        toast.success("Cadastro feito!", {
+          onClose: () => {
+            history.push("/login");
+          },
+        });
+      }
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -208,11 +202,6 @@ export function FetchProvider({ children }) {
   };
 
   async function handleEditarPerfil(data) {
-    if (data.senha !== data.confirmarSenha) {
-      toast.error("As senhas devem ser iguais");
-      return;
-    }
-
     setCarregando(true);
     const {
       nome,
@@ -249,6 +238,7 @@ export function FetchProvider({ children }) {
           method: "PUT",
           headers: {
             accept: "application/json",
+            authorization: `Bearer ${gravarUsuario.token}`,
             "content-type": "application/json",
           },
           body,
@@ -259,6 +249,7 @@ export function FetchProvider({ children }) {
       if (response.status !== 200) {
         toast.error(novoPerfil);
       } else {
+        setGravarUsuario(novoPerfil);
         toast.success("Perfil atualizado!", {
           onClose: () => {
             setAbrirCard(false);
