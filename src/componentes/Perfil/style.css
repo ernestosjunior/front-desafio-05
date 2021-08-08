@@ -15,7 +15,8 @@
 }
 
 .modal_perfil {
-  margin-top: 640px;
+  margin-top: 850px;
+  margin-bottom: 10px;
   background-color: #ffff;
   color: #161932;
   padding: 34px 40px 54px;
@@ -68,4 +69,8 @@
   margin-top: 50px;
   margin-bottom: 40px;
   margin-left: 40px;
+}
+
+.label-input-perfil > p {
+  font-weight: normal;
 }

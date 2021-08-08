@@ -74,11 +74,6 @@ export function FetchProvider({ children }) {
   }
 
   async function handleCadastro(data) {
-    if (data.senha !== data.confirmarSenha) {
-      toast.error("As senhas devem ser iguais");
-      return;
-    }
-
     setCarregando(true);
     const {
       nome,
@@ -205,11 +200,6 @@ export function FetchProvider({ children }) {
   };
 
   async function handleEditarPerfil(data) {
-    if (data.senha !== data.confirmarSenha) {
-      toast.error("As senhas devem ser iguais");
-      return;
-    }
-
     setCarregando(true);
     const {
       nome,
@@ -240,30 +230,30 @@ export function FetchProvider({ children }) {
     const body = JSON.stringify(dataRequerida);
 
     try {
-      console.log(body);
-      // const response = await fetch(
-      //   "https://desafio5back.herokuapp.com/usuarios",
-      //   {
-      //     method: "PUT",
-      //     headers: {
-      //       accept: "application/json",
-      //       "content-type": "application/json",
-      //     },
-      //     body,
-      //   }
-      // );
-      // const novoPerfil = await response.json();
+      const response = await fetch(
+        "https://desafio5back.herokuapp.com/usuarios",
+        {
+          method: "PUT",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+          body,
+        }
+      );
+      const novoPerfil = await response.json();
 
-      // if (response.status !== 200) {
-      //   toast.error(novoPerfil);
-      // } else {
-      //   toast.success("Perfil atualizado!", {
-      //     onClose: () => {
-      //       setAbrirCard(false);
-      //       history.push("/");
-      //     },
-      //   });
-      // }
+      if (response.status !== 200) {
+        toast.error(novoPerfil);
+      } else {
+        setGravarUsuario(novoPerfil);
+        toast.success("Perfil atualizado!", {
+          onClose: () => {
+            setAbrirCard(false);
+            history.push("/");
+          },
+        });
+      }
     } catch (error) {
       toast.error(error.message);
     } finally {
