@@ -58,7 +58,10 @@ const schema = yup.object().shape({
   tempoEntregaEmMinutos: yup.string().required("Campo não pode ser nulo"),
   valorMinimoPedido: yup.string().required("Campo não pode ser nulo"),
   senha: yup.string().required("Campo não pode ser nulo"),
-  confirmarSenha: yup.string().required("Campo não pode ser nulo"),
+  confirmarSenha: yup
+    .string()
+    .required("Campo não pode ser nulo")
+    .oneOf([yup.ref("senha"), null], "As senhas devem ser iguais"),
 });
 
 export default function Cadastro() {
@@ -92,24 +95,30 @@ export default function Cadastro() {
 
   const handleNext = () => {
     const valores = getValues();
-    if (
-      !valores.nome ||
-      !valores.email ||
-      !valores.senha ||
-      !valores.confirmarSenha
-    ) {
-      return;
+    if (activeStep === 0) {
+      if (
+        !valores.nome ||
+        !valores.email ||
+        !valores.senha ||
+        !valores.confirmarSenha
+      ) {
+        return;
+      }
     }
-    // if (!valores.restaurante || !valores.categoria || !valores.descricao) {
-    //   return;
-    // }
-    // if (
-    //   !valores.tempoEntregaEmMinutos ||
-    //   !valores.taxaEntrega ||
-    //   !valores.valorMinimoPedido
-    // ) {
-    //   return;
-    // }
+    if (activeStep === 1) {
+      if (!valores.restaurante || !valores.categoria) {
+        return;
+      }
+    }
+    if (activeStep === 2) {
+      if (
+        !valores.tempoEntregaEmMinutos ||
+        !valores.taxaEntrega ||
+        !valores.valorMinimoPedido
+      ) {
+        return;
+      }
+    }
 
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -189,7 +198,6 @@ export default function Cadastro() {
               <p className="erro__input">{errors.restaurante?.message}</p>
             </label>
             <div>
-              {" "}
               <h2 className="label-select-textarea">Categoria</h2>
               <select
                 id="categoria"
