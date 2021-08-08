@@ -52,15 +52,17 @@ const NovoProduto = () => {
   const handleAddProduto = async (data) => {
     setCarregando(true);
     const valorFormatado = data.preco.replace(",", "").replace(".", "");
+    const imagemBaseFormatada = imagemBase.slice(23);
     const corpo = {
       nome: data.nome,
       descricao: data.descricao,
       preco: valorFormatado,
       ativo: ativo,
       permiteObservacoes: permiteObservacoes,
-      imagem: imagemBase,
+      imagem: imagemBaseFormatada,
       nomeImagem: imagemBaseNome,
     };
+
     const resposta = await adicionarProduto(corpo);
     if (resposta.erro) {
       setCarregando(false);
