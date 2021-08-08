@@ -62,14 +62,15 @@ const EditarProduto = () => {
 
   const handleEditarProduto = async (data) => {
     setCarregando(true);
+    const imagemBaseFormatada = imagemBase.slice(23);
     const corpo = {
       nome: data.nome,
       descricao: data.descricao,
       preco: data.preco.replace(",", "").replace(".", ""),
       ativo: ativo,
       permiteObservacoes: permiteObservacoes,
-      imagem: imagemBase,
-      nome_imagem: imagemBaseNome,
+      imagem: imagemBaseFormatada,
+      nomeImagem: imagemBaseNome,
     };
 
     const resposta = await editarProduto(id, corpo);
