@@ -20,10 +20,13 @@ const Header = () => {
   const imagemBanner = categorias.filter(
     (categoria) => categoria.id === gravarUsuario.restaurante[0].categoria_id
   );
-  const banner = `../../assets/${imagemBanner[0].imagem}`;
 
   return (
-    <header>
+    <header
+      style={{
+        backgroundImage: `url(${imagemBanner[0].imagem})`,
+      }}
+    >
       <img
         src={Logo}
         className="header__logo"
@@ -32,7 +35,7 @@ const Header = () => {
         style={{ cursor: "pointer" }}
       />
       <div className="header__conteudo">
-        <h1>Pizza Pizzaria & Delivery</h1>
+        <h1>{gravarUsuario.restaurante[0].nome}</h1>
         {!path.includes("/novo-produto") & !path.includes("/editar-produto") ? (
           <button onClick={() => handleLogout()}>Logout</button>
         ) : (
