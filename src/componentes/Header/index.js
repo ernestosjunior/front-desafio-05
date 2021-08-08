@@ -10,13 +10,17 @@ const Header = () => {
   const path = window.location.pathname;
   const history = useHistory();
 
-  const { removeGravarUsuario } = UseAuth();
-  const { setAbrirCard } = UseFetch();
+  const { removeGravarUsuario, gravarUsuario } = UseAuth();
+  const { setAbrirCard, categorias } = UseFetch();
 
   const handleLogout = () => {
     removeGravarUsuario();
     history.push("/login");
   };
+  const imagemBanner = categorias.filter(
+    (categoria) => categoria.id === gravarUsuario.restaurante[0].categoria_id
+  );
+  const banner = `../../assets/${imagemBanner[0].imagem}`;
 
   return (
     <header>

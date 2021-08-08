@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import InputSenha from "../InputSenha";
 import InputUpload from "../inputUpload";
@@ -27,13 +27,8 @@ const schema = yup.object().shape({
 export default function Perfil() {
   const [imagemBase, setImagemBase] = useState("");
   const [imagemBaseNome, setImagemBaseNome] = useState("");
-  const {
-    handleCategoria,
-    categorias,
-    abrirCard,
-    setAbrirCard,
-    handleEditarPerfil,
-  } = UseFetch();
+  const { categorias, abrirCard, setAbrirCard, handleEditarPerfil } =
+    UseFetch();
   const {
     register,
     handleSubmit,
@@ -41,10 +36,6 @@ export default function Perfil() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  useEffect(() => {
-    handleCategoria();
-  }, []);
 
   return (
     <div className={`overlay ${abrirCard ? "" : "fechado"}`}>

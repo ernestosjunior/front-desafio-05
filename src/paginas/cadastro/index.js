@@ -1,5 +1,5 @@
 import "./style.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link } from "react-router-dom";
@@ -62,7 +62,7 @@ const schema = yup.object().shape({
 });
 
 export default function Cadastro() {
-  const { handleCadastro, handleCategoria, categorias } = UseFetch();
+  const { handleCadastro, categorias } = UseFetch();
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
@@ -77,10 +77,6 @@ export default function Cadastro() {
     defaultValues: { restaurante: "" },
     resolver: yupResolver(schema),
   });
-
-  useEffect(() => {
-    handleCategoria();
-  }, []);
 
   const isStepOptional = (step) => {
     return step === 1;

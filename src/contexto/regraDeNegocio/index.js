@@ -3,6 +3,7 @@ import { UseAuth } from "../../contexto/autorizacao";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from "react-toastify";
+import { useLocalStorage } from "react-use";
 
 const FetchContext = createContext();
 
@@ -11,7 +12,10 @@ export function FetchProvider({ children }) {
   const [carregando, setCarregando] = useState();
   const [produtos, setProdutos] = useState([]);
   const { setGravarUsuario, gravarUsuario } = UseAuth();
-  const [categorias, setCategorias] = useState([]);
+  const [categorias, setCategorias, removeCategorias] = useLocalStorage(
+    "categorias",
+    []
+  );
   const [abrirCard, setAbrirCard] = useState(false);
 
   async function handleLogin(data) {
@@ -108,31 +112,30 @@ export function FetchProvider({ children }) {
     };
 
     const body = JSON.stringify(dataRequerida);
+    console.log(body);
 
     try {
-      const response = await fetch(
-        "https://desafio5back.herokuapp.com/usuarios",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "content-type": "application/json",
-          },
-          body,
-        }
-      );
-
-      const cadastro = await response.json();
-
-      if (response.status !== 200) {
-        toast.error(cadastro);
-      } else {
-        toast.success("Cadastro feito!", {
-          onClose: () => {
-            history.push("/login");
-          },
-        });
-      }
+      // const response = await fetch(
+      //   "https://desafio5back.herokuapp.com/usuarios",
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       accept: "application/json",
+      //       "content-type": "application/json",
+      //     },
+      //     body,
+      //   }
+      // );
+      // const cadastro = await response.json();
+      // if (response.status !== 200) {
+      //   toast.error(cadastro);
+      // } else {
+      //   toast.success("Cadastro feito!", {
+      //     onClose: () => {
+      //       history.push("/login");
+      //     },
+      //   });
+      // }
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -240,30 +243,29 @@ export function FetchProvider({ children }) {
     const body = JSON.stringify(dataRequerida);
 
     try {
-      console.log(body);
-      // const response = await fetch(
-      //   "https://desafio5back.herokuapp.com/usuarios",
-      //   {
-      //     method: "PUT",
-      //     headers: {
-      //       accept: "application/json",
-      //       "content-type": "application/json",
-      //     },
-      //     body,
-      //   }
-      // );
-      // const novoPerfil = await response.json();
+      const response = await fetch(
+        "https://desafio5back.herokuapp.com/usuarios",
+        {
+          method: "PUT",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/json",
+          },
+          body,
+        }
+      );
+      const novoPerfil = await response.json();
 
-      // if (response.status !== 200) {
-      //   toast.error(novoPerfil);
-      // } else {
-      //   toast.success("Perfil atualizado!", {
-      //     onClose: () => {
-      //       setAbrirCard(false);
-      //       history.push("/");
-      //     },
-      //   });
-      // }
+      if (response.status !== 200) {
+        toast.error(novoPerfil);
+      } else {
+        toast.success("Perfil atualizado!", {
+          onClose: () => {
+            setAbrirCard(false);
+            history.push("/");
+          },
+        });
+      }
     } catch (error) {
       toast.error(error.message);
     } finally {
