@@ -16,6 +16,7 @@ const schema = yup.object().shape({
   taxaEntrega: yup.string().required("Campo não pode ser nulo"),
   tempoEntregaEmMinutos: yup.string().required("Campo não pode ser nulo"),
   valorMinimoPedido: yup.string().required("Campo não pode ser nulo"),
+  senha: yup.string(),
   confirmarSenha: yup
     .string()
     .oneOf([yup.ref("senha"), null], "As senhas devem ser iguais"),
