@@ -34,7 +34,7 @@ export default function Perfil() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
+  console.log(gravarUsuario);
   return (
     <div className={`overlay ${abrirCard ? "" : "fechado"}`}>
       <form
@@ -51,7 +51,7 @@ export default function Perfil() {
               className="inputs-editar-perfil"
               type="text"
               style={{ borderColor: errors.nome && "red" }}
-              defaultValue={gravarUsuario.usuario.nome}
+              defaultValue={gravarUsuario.usuario?.nome}
               {...register("nome", { required: true })}
             />
             <p className="erro__input">{errors.nome?.message}</p>
@@ -61,7 +61,7 @@ export default function Perfil() {
             <input
               className="inputs-editar-perfil"
               style={{ borderColor: errors.email && "red" }}
-              defaultValue={gravarUsuario.usuario.email}
+              defaultValue={gravarUsuario.usuario?.email}
               {...register("email", { required: true })}
             />
             <p className="erro__input">{errors.email?.message}</p>
@@ -71,7 +71,7 @@ export default function Perfil() {
             <input
               type="text"
               style={{ borderColor: errors.restaurante && "red" }}
-              defaultValue={gravarUsuario.restaurante[0].nome}
+              defaultValue={gravarUsuario.restaurante[0]?.nome}
               className="inputs-editar-perfil input-restaurante"
               {...register("restaurante", { required: true })}
             />
@@ -81,7 +81,7 @@ export default function Perfil() {
           <select
             id="categoria"
             name="categoria"
-            defaultValue={gravarUsuario.restaurante[0].categoria_id}
+            defaultValue={gravarUsuario.restaurante[0]?.categoria_id}
             {...register("categoria", { required: true })}
           >
             <option value="" disabled selected>
@@ -95,7 +95,7 @@ export default function Perfil() {
           <textarea
             maxlength="50"
             className="textarea-editar-perfil"
-            defaultValue={gravarUsuario.restaurante[0].descricao}
+            defaultValue={gravarUsuario.restaurante[0]?.descricao}
             style={{ borderColor: errors.descricao && "red" }}
             {...register("descricao", { required: true })}
           />
@@ -104,7 +104,7 @@ export default function Perfil() {
             Taxa de entrega
             <input
               className="inputs-editar-perfil"
-              defaultValue={gravarUsuario.restaurante[0].taxa_entrega}
+              defaultValue={gravarUsuario.restaurante[0]?.taxa_entrega}
               style={{ borderColor: errors.taxaEntrega && "red" }}
               {...register("taxaEntrega", { required: true })}
             />
@@ -114,7 +114,7 @@ export default function Perfil() {
             Tempo de entrega
             <input
               className="inputs-editar-perfil"
-              defaultValue={gravarUsuario.restaurante[0].tempo_entrega_minutos}
+              defaultValue={gravarUsuario.restaurante[0]?.tempo_entrega_minutos}
               style={{ borderColor: errors.valor_minimo_pedido && "red" }}
               {...register("tempoEntregaEmMinutos", { required: true })}
             />
@@ -126,7 +126,7 @@ export default function Perfil() {
             Valor mínimo do pedido
             <input
               className="inputs-editar-perfil"
-              defaultValue={gravarUsuario.restaurante[0].valor_minimo_pedido}
+              defaultValue={gravarUsuario.restaurante[0]?.valor_minimo_pedido}
               style={{ borderColor: errors.valorMinimoPedido && "red" }}
               placeholderCampo="R$ 0,00"
               {...register("valorMinimoPedido", { required: true })}

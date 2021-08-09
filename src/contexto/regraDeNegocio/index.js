@@ -223,12 +223,13 @@ export function FetchProvider({ children }) {
       restaurante: {
         nome: restaurante,
         descricao,
-        idCategoria: categoria,
-        taxaEntrega,
-        tempoEntregaEmMinutos,
-        valorMinimoPedido,
+        categoria_id: categoria,
+        taxa_entrega: taxaEntrega,
+        tempo_entrega_minutos: tempoEntregaEmMinutos,
+        valor_minimo_pedido: valorMinimoPedido,
       },
     };
+
     const body = JSON.stringify(dataRequerida);
 
     try {
