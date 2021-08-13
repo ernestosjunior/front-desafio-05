@@ -20,7 +20,6 @@ const schema = yup.object().shape({
     .string()
     .oneOf([yup.ref("senha"), null], "As senhas devem ser iguais"),
 });
-
 export default function Perfil() {
   const { gravarUsuario } = UseAuth();
   const [imagemBase, setImagemBase] = useState("");
@@ -31,10 +30,16 @@ export default function Perfil() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
-  console.log(gravarUsuario);
+
+  function FecharModal() {
+    reset();
+    setAbrirCard(false);
+  }
+
   return (
     <div className={`overlay ${abrirCard ? "" : "fechado"}`}>
       <form
@@ -158,7 +163,7 @@ export default function Perfil() {
             <Link to="/">
               <button
                 className="btn__clean__laranja"
-                onClick={() => setAbrirCard(false)}
+                onClick={() => FecharModal()}
               >
                 Cancelar
               </button>
