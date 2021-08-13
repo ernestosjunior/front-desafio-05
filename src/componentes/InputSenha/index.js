@@ -17,6 +17,7 @@ const InputSenha = forwardRef((props, ref) => {
           className="input__senha"
           style={props.style}
           type={verSenha ? "text" : "password"}
+          value={props.value}
         />
         <FontAwesomeIcon
           className="eye-senha"

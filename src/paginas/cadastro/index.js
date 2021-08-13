@@ -2,52 +2,54 @@ import "./style.css";
 import { useState } from "react";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
-import { Link } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
-import { makeStyles } from "@material-ui/core/styles";
+import { Link, useHistory } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-  },
-  buttonBack: {
-    backgroundColor: "transparent",
-    color: "#D13201",
-    textTransform: "none",
-    fontWeight: 600,
-    fontSize: "14px",
-    borderRadius: "20px",
-  },
-  buttonNext: {
-    marginRight: theme.spacing(1),
-    backgroundColor: "#D13201",
-    color: "#FFFFFF",
-    textTransform: "none",
-    fontWeight: 600,
-    fontSize: "14px",
-    borderRadius: "20px",
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
+import Backdrop from "@material-ui/core/Backdrop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-function getSteps() {
-  return ["", "", ""];
-}
+import { isStepOptional, getSteps, useStyles } from "./utils";
 
 export default function Cadastro() {
   const { handleCadastro, categorias } = UseFetch();
   const classes = useStyles();
+  const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set());
   const steps = getSteps();
+  const [carregando, setCarregando] = useState(false);
+  const [form, setForm] = useState({
+    nomeUsuario: "",
+    email: "",
+    senha: "",
+    confirmarSenha: "",
+    nomeRestaurante: "",
+    categoria: -1,
+    descricao: "",
+    taxaEntrega: "",
+    valorMinimo: "",
+    tempoEntrega: "",
+  });
+  const [erro, setErro] = useState({
+    nomeUsuario: false,
+    email: false,
+    senha: false,
+    confirmarSenha: false,
+    nomeRestaurante: false,
+    categoria: false,
+    descricao: false,
+    taxaEntrega: false,
+    valorMinimo: false,
+    tempoEntrega: false,
+  });
+  console.log(erro);
+
   const {
     register,
     handleSubmit,
@@ -58,10 +60,6 @@ export default function Cadastro() {
     defaultValues: { restaurante: "" },
   });
 
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
-
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
@@ -69,25 +67,30 @@ export default function Cadastro() {
   const handleNext = () => {
     if (activeStep === 0) {
       if (
-        !valores.nome ||
-        !valores.email ||
-        !valores.senha ||
-        !valores.confirmarSenha
+        !form.nomeUsuario ||
+        !form.email ||
+        !form.senha ||
+        !form.confirmarSenha
       ) {
+        setErro((prevErro) => {
+          return {
+            ...prevErro,
+            nomeUsuario: !form.nomeUsuario && true,
+            email: !form.email && true,
+            senha: !form.senha && true,
+            confirmarSenha: !form.confirmarSenha && true,
+          };
+        });
         return;
       }
     }
     if (activeStep === 1) {
-      if (!valores.restaurante || !valores.categoria) {
+      if (!form.nomeRestaurante || !form.categoria) {
         return;
       }
     }
     if (activeStep === 2) {
-      if (
-        !valores.tempoEntregaEmMinutos ||
-        !valores.taxaEntrega ||
-        !valores.valorMinimoPedido
-      ) {
+      if (!form.tempoEntrega || !form.taxaEntrega || !form.valorMinimo) {
         return;
       }
     }
@@ -112,50 +115,78 @@ export default function Cadastro() {
         return (
           <div className="content-cadastro">
             <label className="label-cadastro">
-              Nome
+              Nome usuário
               <input
-                {...register("nome", { required: true })}
-                style={{ borderColor: errors.nome && "red" }}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      nomeUsuario: e.target.value,
+                    };
+                  })
+                }
+                style={{ borderColor: erro.nomeUsuario && "red" }}
                 className="inputs-cadastro"
                 type="text"
+                value={form.nomeUsuario}
               />
               <p className="erro__input">
-                {errors.nome && "Campo obrigatório"}
+                {erro.nomeUsuario && "Campo obrigatório"}
               </p>
             </label>
             <label className="label-cadastro">
               Email
               <input
-                {...register("email", { required: true })}
-                style={{ borderColor: errors.email && "red" }}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      email: e.target.value,
+                    };
+                  })
+                }
+                style={{ borderColor: erro.email && "red" }}
                 className="inputs-cadastro"
+                value={form.email}
               />
-              <p className="erro__input">
-                {errors.email && "Campo obrigatório"}
-              </p>
+              <p className="erro__input">{erro.email && "Campo obrigatório"}</p>
             </label>
             <div>
               <InputSenha
-                {...register("senha", { required: true })}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      senha: e.target.value,
+                    };
+                  })
+                }
                 label="Senha"
-                style={{ borderColor: errors.senha && "red" }}
+                style={{ borderColor: erro.senha && "red" }}
+                value={form.senha}
               />
-              <p className="erro__input">
-                {errors.senha && "Campo obrigatório"}
-              </p>
+              <p className="erro__input">{erro.senha && "Campo obrigatório"}</p>
             </div>
 
             <div>
               <InputSenha
-                {...register("confirmarSenha", { required: true })}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      confirmarSenha: e.target.value,
+                    };
+                  })
+                }
                 label="Confirmar Senha"
-                style={{ borderColor: errors.confirmarSenha && "red" }}
+                style={{ borderColor: erro.confirmarSenha && "red" }}
+                value={form.confirmarSenha}
               />
               <p className="erro__input">
-                {errors.confirmarSenha && "Campo obrigatório"}
+                {erro.confirmarSenha && "Campo obrigatório"}
               </p>
               <p className="erro__input">
-                {valores.confirmarSenha !== valores.senha &&
+                {form.confirmarSenha !== form.senha &&
                   "Campos senha e Confirmar senha devem ser iguais"}
               </p>
             </div>
@@ -166,18 +197,19 @@ export default function Cadastro() {
           <div className="content-cadastro">
             <label className="label-cadastro">
               Nome do restaurante
-              <Controller
-                name="restaurante"
-                rules={{ required: true }}
-                control={control}
-                render={({ field }) => (
-                  <input
-                    type="text"
-                    className="inputs-cadastro"
-                    style={{ borderColor: errors.restaurante && "red" }}
-                    {...field}
-                  />
-                )}
+              <input
+                type="text"
+                className="inputs-cadastro"
+                style={{ borderColor: errors.restaurante && "red" }}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      nomeRestaurante: e.target.value,
+                    };
+                  })
+                }
+                value={form.nomeRestaurante}
               />
               <p className="erro__input">
                 {errors.restaurante && "Campo obrigatório"}
@@ -187,10 +219,17 @@ export default function Cadastro() {
               <h2 className="label-select-textarea">Categoria</h2>
               <div>
                 <select
-                  {...register("categoria", { required: true })}
+                  onChange={(e) =>
+                    setForm((prevForm) => {
+                      return {
+                        ...prevForm,
+                        categoria: e.target.value,
+                      };
+                    })
+                  }
                   id="categoria"
                   name="categoria"
-                  defaultValue="-1"
+                  value={form.categoria}
                   style={{ borderColor: errors.categoria && "red" }}
                 >
                   <option value="-1" disabled>
@@ -210,9 +249,17 @@ export default function Cadastro() {
             <div>
               <h2 className="label-select-textarea">Descrição</h2>
               <textarea
-                {...register("descricao", { required: true })}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      descricao: e.target.value,
+                    };
+                  })
+                }
                 maxLength="50"
                 className="textarea-cadastro"
+                value={form.descricao}
               />
               <h3 className="rodape-textarea">Máx.: 50 caracteres</h3>
             </div>
@@ -224,9 +271,18 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Taxa de entrega
               <input
-                {...register("taxaEntrega", { required: true })}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      taxaEntrega: e.target.value,
+                    };
+                  })
+                }
                 className="inputs-cadastro"
                 style={{ borderColor: errors.taxaEntrega && "red" }}
+                value={form.taxaEntrega}
+                placeholder="R$ 0,00"
               />
               <p className="erro__input">
                 {errors.taxaEntrega && "Campo obrigatório"}
@@ -235,9 +291,18 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Tempo de entrega
               <input
-                {...register("tempoEntregaEmMinutos", { required: true })}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      tempoEntrega: e.target.value,
+                    };
+                  })
+                }
                 className="inputs-cadastro"
                 style={{ borderColor: errors.tempoEntregaEmMinutos && "red" }}
+                value={form.tempoEntrega}
+                placeholder="Em minutos"
               />
               <p className="erro__input">
                 {errors.tempoEntregaEmMinutos && "Campo obrigatório"}
@@ -246,10 +311,18 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Valor mínimo do pedido
               <input
-                {...register("valorMinimoPedido", { required: true })}
+                onChange={(e) =>
+                  setForm((prevForm) => {
+                    return {
+                      ...prevForm,
+                      valorMinimo: e.target.value,
+                    };
+                  })
+                }
                 className="inputs-cadastro"
                 style={{ borderColor: errors.valorMinimoPedido && "red" }}
                 placeholder="R$ 0,00"
+                value={form.valorMinimo}
               />
               <p className="erro__input">
                 {errors.valorMinimoPedido && "Campo obrigatório"}
@@ -261,9 +334,40 @@ export default function Cadastro() {
         return "Você será redirecionado a página de login";
     }
   }
+
+  const handleCadastrar = async (e) => {
+    e.preventDefault();
+    setCarregando(true);
+    const resposta = await handleCadastro(form);
+    if (resposta.erro) {
+      setCarregando(false);
+      toast.error(resposta.erro, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      return;
+    }
+    setCarregando(false);
+    toast.success("Usuário cadastrado com sucesso!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    history.push("/login");
+  };
+
   return (
     <div className="cadastro">
-      <form className="form-cadastro" onSubmit={handleSubmit(handleCadastro)}>
+      <form className="form-cadastro" onSubmit={(e) => handleCadastrar(e)}>
         <div className="header-cadastro">
           <h1 className="titulos-paginas titulo-cadastro">Cadastro</h1>
           <Stepper activeStep={activeStep}>
@@ -302,8 +406,7 @@ export default function Cadastro() {
                 variant="contained"
                 onClick={handleNext}
                 className={classes.buttonNext}
-                type="submit"
-                // {activeStep === steps.length - 1 ? "submit" : "button"}
+                type={activeStep === steps.length ? "submit" : "button"}
               >
                 {activeStep === steps.length - 1 ? "Criar conta" : "Próximo"}
               </Button>
@@ -316,6 +419,9 @@ export default function Cadastro() {
           </div>
         </div>
       </form>
+      <Backdrop className={classes.backdrop} open={carregando}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </div>
   );
 }
