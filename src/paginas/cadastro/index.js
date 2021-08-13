@@ -48,7 +48,6 @@ export default function Cadastro() {
     valorMinimo: false,
     tempoEntrega: false,
   });
-  console.log(erro);
 
   const {
     register,
@@ -86,6 +85,13 @@ export default function Cadastro() {
     }
     if (activeStep === 1) {
       if (!form.nomeRestaurante || !form.categoria) {
+        setErro((prevErro) => {
+          return {
+            ...prevErro,
+            nomeRestaurante: !form.nomeRestaurante && true,
+            categoria: !form.categoria && true,
+          };
+        });
         return;
       }
     }
@@ -200,7 +206,7 @@ export default function Cadastro() {
               <input
                 type="text"
                 className="inputs-cadastro"
-                style={{ borderColor: errors.restaurante && "red" }}
+                style={{ borderColor: erro.nomeRestaurante && "red" }}
                 onChange={(e) =>
                   setForm((prevForm) => {
                     return {
@@ -212,7 +218,7 @@ export default function Cadastro() {
                 value={form.nomeRestaurante}
               />
               <p className="erro__input">
-                {errors.restaurante && "Campo obrigatório"}
+                {erro.nomeRestaurante && "Campo obrigatório"}
               </p>
             </label>
             <div>
@@ -230,7 +236,7 @@ export default function Cadastro() {
                   id="categoria"
                   name="categoria"
                   value={form.categoria}
-                  style={{ borderColor: errors.categoria && "red" }}
+                  style={{ borderColor: erro.categoria && "red" }}
                 >
                   <option value="-1" disabled>
                     Escolha uma categoria
@@ -242,7 +248,7 @@ export default function Cadastro() {
                   ))}
                 </select>
                 <p className="erro__input">
-                  {errors.categoria && "Campo obrigatório"}
+                  {erro.categoria && "Campo obrigatório"}
                 </p>
               </div>
             </div>
@@ -280,12 +286,12 @@ export default function Cadastro() {
                   })
                 }
                 className="inputs-cadastro"
-                style={{ borderColor: errors.taxaEntrega && "red" }}
+                style={{ borderColor: erro.taxaEntrega && "red" }}
                 value={form.taxaEntrega}
                 placeholder="R$ 0,00"
               />
               <p className="erro__input">
-                {errors.taxaEntrega && "Campo obrigatório"}
+                {erro.taxaEntrega && "Campo obrigatório"}
               </p>
             </label>
             <label className="label-cadastro">
@@ -300,12 +306,12 @@ export default function Cadastro() {
                   })
                 }
                 className="inputs-cadastro"
-                style={{ borderColor: errors.tempoEntregaEmMinutos && "red" }}
+                style={{ borderColor: erro.tempoEntrega && "red" }}
                 value={form.tempoEntrega}
                 placeholder="Em minutos"
               />
               <p className="erro__input">
-                {errors.tempoEntregaEmMinutos && "Campo obrigatório"}
+                {erro.tempoEntrega && "Campo obrigatório"}
               </p>
             </label>
             <label className="label-cadastro">
@@ -320,12 +326,12 @@ export default function Cadastro() {
                   })
                 }
                 className="inputs-cadastro"
-                style={{ borderColor: errors.valorMinimoPedido && "red" }}
+                style={{ borderColor: erro.valorMinimo && "red" }}
                 placeholder="R$ 0,00"
                 value={form.valorMinimo}
               />
               <p className="erro__input">
-                {errors.valorMinimoPedido && "Campo obrigatório"}
+                {erro.valorMinimo && "Campo obrigatório"}
               </p>
             </label>
           </div>
