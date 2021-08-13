@@ -80,61 +80,51 @@ export function FetchProvider({ children }) {
   async function handleCadastro(data) {
     setCarregando(true);
     const {
-      nome,
+      nomeUsuario,
       email,
       senha,
-      confirmar_senha,
-      restaurante,
-      descricao,
+      nomeRestaurante,
       categoria,
+      descricao,
       taxaEntrega,
-      tempoEntregaEmMinutos,
-      valorMinimoPedido,
+      valorMinimo,
+      tempoEntrega,
     } = data;
 
+    const formatTaxa = taxaEntrega.replace(",", "").replace(".", "");
+    const formatValorMin = valorMinimo.replace(",", "").replace(".", "");
+
     const dataRequerida = {
-      nome,
+      nome: nomeUsuario,
       email,
       senha,
       restaurante: {
-        nome: restaurante,
+        nome: nomeRestaurante,
         descricao,
         idCategoria: categoria,
-        taxaEntrega,
-        tempoEntregaEmMinutos,
-        valorMinimoPedido,
+        taxaEntrega: formatTaxa,
+        tempoEntregaEmMinutos: tempoEntrega,
+        valorMinimoPedido: formatValorMin,
       },
     };
 
     const body = JSON.stringify(dataRequerida);
 
-    try {
-      const response = await fetch(
-        "https://desafio5back.herokuapp.com/usuarios",
-        {
-          method: "POST",
-          headers: {
-            accept: "application/json",
-            "content-type": "application/json",
-          },
-          body,
-        }
-      );
-      const cadastro = await response.json();
-      if (response.status !== 200) {
-        toast.error(cadastro);
-      } else {
-        toast.success("Cadastro feito!", {
-          onClose: () => {
-            history.push("/login");
-          },
-        });
+    const response = await fetch(
+      "https://desafio5back.herokuapp.com/usuarios",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body,
       }
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setCarregando(false);
-    }
+    );
+
+    const cadastro = await response.json();
+
+    return cadastro;
   }
 
   const listarProdutos = async () => {
