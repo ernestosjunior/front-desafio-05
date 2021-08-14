@@ -40,11 +40,28 @@ export default function Perfil() {
     setAbrirCard(false);
   }
 
+  const getDadosForm = async (data) => {
+    const corpo = {
+      nome: data.nome,
+      email: data.email,
+      senha: data.senha,
+      restaurante: data.restaurante,
+      descricao: data.descricao,
+      categoria: data.categoria,
+      taxaEntrega: data.taxaEntrega,
+      tempoEntregaEmMinutos: data.tempoEntregaEmMinutos,
+      valorMinimoPedido: data.valorMinimoPedido,
+      imagemBase,
+      imagemBaseNome,
+    }
+    const resp = await handleEditarPerfil(corpo);
+  }
+
   return (
     <div className={`overlay ${abrirCard ? "" : "fechado"}`}>
       <form
         className="modal_perfil"
-        onSubmit={handleSubmit(handleEditarPerfil)}
+        onSubmit={handleSubmit(getDadosForm)}
       >
         <div className="modal_esquerda_perfil">
           <h1 className="modal__esquerda__editar__titulo margem-titulo">
@@ -155,6 +172,7 @@ export default function Perfil() {
         </div>
         <div className="modal_direita_perfil">
           <InputUpload
+            imagemUrl={gravarUsuario.restaurante[0].imagem ? gravarUsuario.restaurante[0].imagem : ""}
             imagemBase={imagemBase}
             setImagemBase={setImagemBase}
             setImagemBaseNome={setImagemBaseNome}
