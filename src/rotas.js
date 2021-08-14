@@ -12,6 +12,8 @@ import EditarProduto from "./paginas/editarProduto";
 import { AuthProvider } from "./contexto/autorizacao";
 import { UseAuth } from "./contexto/autorizacao";
 import { FetchProvider } from "./contexto/regraDeNegocio";
+import ConsumidorLogin from "./paginas/loginConsumidor";
+import ConsumidorCadastro from "./paginas/cadastroConsumidor";
 
 function AuthPath(props) {
   const { gravarUsuario } = UseAuth();
@@ -31,6 +33,8 @@ function Rotas() {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/usuarios" component={Cadastro} />
+            <Route path="/consumidor-login" component={ConsumidorLogin} />
+            <Route path="/consumidor-cadastro" component={ConsumidorCadastro} />
             <AuthPath>
               <Route path="/" exact component={Inicial} />
               <Route path="/novo-produto" component={NovoProduto} />

@@ -1,0 +1,50 @@
+.login-consumidor {
+  background-image: url("../../assets/login-consumidor-bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  padding-left: 320px;
+  padding-top: 35px;
+}
+
+.inputs-login-consumidor {
+  all: unset;
+  border: 1px solid #bebebe;
+  box-sizing: border-box;
+  border-radius: 7.14512px;
+  width: 408px;
+  height: 47px;
+  padding: 8px;
+}
+
+
+.forms-login-consumidor {
+  margin-top: 50px;
+  height: auto;
+  width: 488px;
+  border-radius: 16px;
+  background-color: #ffff;
+  padding: 44px 40px 44px 40px;
+}
+
+.margem-titulo-consumidor {
+  display: flex;
+  margin-bottom: 39px;
+  font-size: 12px;
+  justify-content: space-between;
+}
+
+.barril {
+  color: black;
+}
+
+.barril span{
+  color: #FB3B00;
+}
+
+.cadastrar {
+  margin-top: 39px;
+  gap: 5px;
+}
