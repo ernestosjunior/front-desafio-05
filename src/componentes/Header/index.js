@@ -1,7 +1,7 @@
 import "./style.css";
 import { useHistory } from "react-router-dom";
 
-import Logo from "../../assets/pizarria.png";
+import Logo from "../../assets/logo_padrao.png";
 
 import { UseAuth } from "../../contexto/autorizacao";
 import { UseFetch } from "../../contexto/regraDeNegocio";
@@ -28,16 +28,16 @@ const Header = () => {
       }}
     >
       <img
-        src={Logo}
+        src={gravarUsuario.restaurante[0].imagem ? gravarUsuario.restaurante[0].imagem : Logo}
         className="header__logo"
         alt="Logo"
         onClick={() => setAbrirCard(true)}
         style={{ cursor: "pointer" }}
       />
       <div className="header__conteudo">
-        <h1>{gravarUsuario.restaurante[0].nome}</h1>
+        <h1 className="nome_restaurante">{gravarUsuario.restaurante[0].nome}</h1>
         {!path.includes("/novo-produto") & !path.includes("/editar-produto") ? (
-          <button onClick={() => handleLogout()}>Logout</button>
+          <button onClick={() => handleLogout()}><span className="logout_btn">Logout</span></button>
         ) : (
           ""
         )}

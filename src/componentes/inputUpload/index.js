@@ -1,8 +1,11 @@
 import "./style.css";
+import { useState } from "react";
 import { ReactComponent as UploadIcon } from "../../assets/bg-upload.svg";
 import { ReactComponent as IconUpload } from "../../assets/icon-upload.svg";
 
-const InputUpload = ({ imagemBase, setImagemBase, setImagemBaseNome }) => {
+const InputUpload = ({ imagemBase, setImagemBase, setImagemBaseNome, imagemUrl }) => {
+  const [imgUrl, setImgUrl] = useState(imagemUrl);
+
   const converterBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -26,27 +29,43 @@ const InputUpload = ({ imagemBase, setImagemBase, setImagemBaseNome }) => {
   return (
     <div className="input__upload__container" onClick={() => setImagemBase("")}>
       <div className="input__upload">
-        {imagemBase ? (
-          <img src={imagemBase} height="200px" alt="" />
-        ) : (
-          <>
-            <UploadIcon className="input__upload__icon" />
-            <label>
-              <IconUpload />
-              Clique para adicionar uma imagem
-              <input
-                type="file"
-                onChange={(e) => {
-                  imagemUpload(e);
-                }}
-              />
-            </label>
-          </>
-        )}
+
+        {
+          imgUrl !== "" ?
+            (
+              <img src={imgUrl} height="200px" alt="" onClick={() => { setImgUrl("") }} />
+            )
+            :
+            (
+              imagemBase ? (
+                <img src={imagemBase} height="200px" alt="" />
+              ) : (
+                <>
+                  <UploadIcon className="input__upload__icon" />
+                  <label>
+                    <IconUpload />
+                    Clique para adicionar uma imagem
+                    <input
+                      type="file"
+                      onChange={(e) => {
+                        imagemUpload(e);
+                      }}
+                    />
+                  </label>
+                </>
+              )
+            )
+        }
       </div>
-      {imagemBase && (
-        <p className="alert">Clique para remover e enviar nova imagem</p>
-      )}
+      {imagemBase || imgUrl ?
+        (
+          <p className="alert">Clique para remover e enviar nova imagem</p>
+        )
+        :
+        (
+          <></>
+        )
+      }
     </div>
   );
 };

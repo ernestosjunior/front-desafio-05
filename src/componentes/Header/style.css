@@ -32,3 +32,13 @@ header {
   font-size: 16px;
   line-height: 170%;
 }
+
+.nome_restaurante, .logout_btn {
+  color: rgb(255, 255, 255);
+  text-shadow: 0 0 15px rgb(0, 0, 0), 0 0 10px rgb(0, 0, 0);
+  font-weight: bolder;
+}
+
+.logout_btn {
+  font-size: 14pt;
+}

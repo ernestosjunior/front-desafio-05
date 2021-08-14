@@ -152,6 +152,7 @@ const NovoProduto = () => {
             </div>
             <div className="modal__direita">
               <InputUpload
+                imagemUrl={""}
                 imagemBase={imagemBase}
                 setImagemBase={setImagemBase}
                 setImagemBaseNome={setImagemBaseNome}

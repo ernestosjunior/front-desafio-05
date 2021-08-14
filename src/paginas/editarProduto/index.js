@@ -73,6 +73,8 @@ const EditarProduto = () => {
       nomeImagem: imagemBaseNome,
     };
 
+    console.log(corpo);
+
     const resposta = await editarProduto(id, corpo);
     if (resposta.erro) {
       setCarregando(false);
@@ -169,6 +171,7 @@ const EditarProduto = () => {
             </div>
             <div className="modal__editar__direita">
               <InputUpload
+                imagemUrl={produtoEdicao[0].imagem}
                 imagemBase={imagemBase}
                 setImagemBase={setImagemBase}
                 setImagemBaseNome={setImagemBaseNome}

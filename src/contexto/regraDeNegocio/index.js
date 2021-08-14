@@ -190,7 +190,13 @@ export function FetchProvider({ children }) {
       taxaEntrega,
       tempoEntregaEmMinutos,
       valorMinimoPedido,
+      imagemBase,
+      imagemBaseNome,
     } = data;
+
+    console.log(data);
+
+    // if (imagemBase === "" && imagemBaseNome === "") { }
 
     const dataRequerida = {
       nome,
@@ -203,6 +209,8 @@ export function FetchProvider({ children }) {
         taxa_entrega: taxaEntrega,
         tempo_entrega_minutos: tempoEntregaEmMinutos,
         valor_minimo_pedido: valorMinimoPedido,
+        imagem: imagemBase.slice(23),
+        nome_imagem: imagemBaseNome,
       },
     };
 
