@@ -66,6 +66,7 @@ export default function Login() {
       return;
     }
     setGravarUsuario(resposta);
+    setCarregando(false);
     history.push("/");
     toast.success(`Olá, ${resposta.usuario.nome}`, {
       position: "top-right",
@@ -76,7 +77,6 @@ export default function Login() {
       draggable: true,
       progress: undefined,
     });
-    setCarregando(false);
   };
 
   return (
