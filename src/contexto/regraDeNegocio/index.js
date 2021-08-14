@@ -19,36 +19,22 @@ export function FetchProvider({ children }) {
   const [abrirCard, setAbrirCard] = useState(false);
 
   async function handleLogin(data) {
-    setCarregando(true);
     const body = JSON.stringify(data);
 
-    try {
-      const response = await fetch("https://desafio5back.herokuapp.com/login", {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-        },
-        body,
-      });
+    const response = await fetch("https://desafio5back.herokuapp.com/login", {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+      },
+      body,
+    });
 
-      const login = await response.json();
+    const login = await response.json();
 
-      if (response.status !== 200) {
-        toast.error(login);
-      } else {
-        setGravarUsuario(login);
-        history.push("/");
-        toast.success(`Olá, ${login.usuario.nome}`, {
-          onClose: () => {},
-        });
-      }
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setCarregando(false);
-    }
+    return login;
   }
+
   async function handleCategoria() {
     setCarregando(true);
 

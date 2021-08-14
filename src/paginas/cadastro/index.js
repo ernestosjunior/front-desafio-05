@@ -30,7 +30,7 @@ export default function Cadastro() {
     senha: "",
     confirmarSenha: "",
     nomeRestaurante: "",
-    categoria: -1,
+    categoria: 0,
     descricao: "",
     taxaEntrega: "",
     valorMinimo: "",
@@ -49,20 +49,10 @@ export default function Cadastro() {
     tempoEntrega: false,
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    control,
-  } = useForm({
-    defaultValues: { restaurante: "" },
-  });
-
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
-  const valores = getValues();
+
   const handleNext = () => {
     if (activeStep === 0) {
       if (
@@ -89,7 +79,7 @@ export default function Cadastro() {
           return {
             ...prevErro,
             nomeRestaurante: !form.nomeRestaurante && true,
-            categoria: !form.categoria && true,
+            categoria: form.categoria === 0 && true,
           };
         });
         return;
@@ -97,6 +87,14 @@ export default function Cadastro() {
     }
     if (activeStep === 2) {
       if (!form.tempoEntrega || !form.taxaEntrega || !form.valorMinimo) {
+        setErro((prevErro) => {
+          return {
+            ...prevErro,
+            tempoEntrega: !form.tempoEntrega && true,
+            taxaEntrega: !form.taxaEntrega && true,
+            valorMinimo: !form.valorMinimo && true,
+          };
+        });
         return;
       }
     }
@@ -123,14 +121,20 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Nome usuário
               <input
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       nomeUsuario: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      nomeUsuario: false,
+                    };
+                  });
+                }}
                 style={{ borderColor: erro.nomeUsuario && "red" }}
                 className="inputs-cadastro"
                 type="text"
@@ -143,14 +147,20 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Email
               <input
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       email: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      email: false,
+                    };
+                  });
+                }}
                 style={{ borderColor: erro.email && "red" }}
                 className="inputs-cadastro"
                 value={form.email}
@@ -159,14 +169,20 @@ export default function Cadastro() {
             </label>
             <div>
               <InputSenha
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       senha: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      senha: false,
+                    };
+                  });
+                }}
                 label="Senha"
                 style={{ borderColor: erro.senha && "red" }}
                 value={form.senha}
@@ -176,14 +192,20 @@ export default function Cadastro() {
 
             <div>
               <InputSenha
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       confirmarSenha: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      confirmarSenha: false,
+                    };
+                  });
+                }}
                 label="Confirmar Senha"
                 style={{ borderColor: erro.confirmarSenha && "red" }}
                 value={form.confirmarSenha}
@@ -207,14 +229,20 @@ export default function Cadastro() {
                 type="text"
                 className="inputs-cadastro"
                 style={{ borderColor: erro.nomeRestaurante && "red" }}
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       nomeRestaurante: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      nomeRestaurante: false,
+                    };
+                  });
+                }}
                 value={form.nomeRestaurante}
               />
               <p className="erro__input">
@@ -225,20 +253,28 @@ export default function Cadastro() {
               <h2 className="label-select-textarea">Categoria</h2>
               <div>
                 <select
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setForm((prevForm) => {
                       return {
                         ...prevForm,
                         categoria: e.target.value,
                       };
-                    })
-                  }
+                    });
+                    setErro((prevErro) => {
+                      return {
+                        ...prevErro,
+                        categoria: false,
+                      };
+                    });
+                  }}
                   id="categoria"
                   name="categoria"
                   value={form.categoria}
-                  style={{ borderColor: erro.categoria && "red" }}
+                  style={{
+                    borderColor: erro.categoria && "red",
+                  }}
                 >
-                  <option value="-1" disabled>
+                  <option value="0" disabled>
                     Escolha uma categoria
                   </option>
                   {categorias?.map((categoria) => (
@@ -277,14 +313,20 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Taxa de entrega
               <input
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       taxaEntrega: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      taxaEntrega: false,
+                    };
+                  });
+                }}
                 className="inputs-cadastro"
                 style={{ borderColor: erro.taxaEntrega && "red" }}
                 value={form.taxaEntrega}
@@ -297,14 +339,20 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Tempo de entrega
               <input
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       tempoEntrega: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      tempoEntrega: false,
+                    };
+                  });
+                }}
                 className="inputs-cadastro"
                 style={{ borderColor: erro.tempoEntrega && "red" }}
                 value={form.tempoEntrega}
@@ -317,14 +365,20 @@ export default function Cadastro() {
             <label className="label-cadastro">
               Valor mínimo do pedido
               <input
-                onChange={(e) =>
+                onChange={(e) => {
                   setForm((prevForm) => {
                     return {
                       ...prevForm,
                       valorMinimo: e.target.value,
                     };
-                  })
-                }
+                  });
+                  setErro((prevErro) => {
+                    return {
+                      ...prevErro,
+                      valorMinimo: false,
+                    };
+                  });
+                }}
                 className="inputs-cadastro"
                 style={{ borderColor: erro.valorMinimo && "red" }}
                 placeholder="R$ 0,00"
