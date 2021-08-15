@@ -3,7 +3,6 @@ import { useState } from "react";
 import InputSenha from "../../componentes/InputSenha";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 import { Link, useHistory } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
