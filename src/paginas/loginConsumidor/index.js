@@ -2,7 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import InputSenha from "../../componentes/InputSenha";
 import { useForm } from "react-hook-form";
 import { UseFetch } from "../../contexto/regraDeNegocio";
-import { UseAuth } from "../../contexto/autorizacao";
+import { UseClientAuth } from "../../contexto/autorizacaoConsumidores";
 import "./style.css";
 import Backdrop from "@material-ui/core/Backdrop";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ConsumidorLogin() {
   const { handleLoginConsumidor } = UseFetch();
-  const { setGravarConsumidor } = UseAuth();
+  const { setGravarConsumidor } = UseClientAuth();
   const history = useHistory();
   const [carregando, setCarregando] = useState(false);
   const classes = useStyles();
@@ -60,8 +60,8 @@ export default function ConsumidorLogin() {
     }
     setGravarConsumidor(resposta);
     setCarregando(false);
-    history.push("/lista-produtos");
-    toast.success(`Olá, ${resposta.usuario.nome}`, {
+    history.push("/lista-restaurantes");
+    toast.success(`Olá, ${resposta.consumidor.nome}`, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,

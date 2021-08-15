@@ -16,6 +16,7 @@ import ConsumidorLogin from "./paginas/loginConsumidor";
 import ConsumidorCadastro from "./paginas/cadastroConsumidor";
 import { ClientAuthProvider } from "./contexto/autorizacaoConsumidores";
 import { UseClientAuth } from "./contexto/autorizacaoConsumidores";
+import ListaRestaurantes from "./paginas/listaRestaurantes";
 
 function AuthPath(props) {
   const { gravarUsuario } = UseAuth();
@@ -60,8 +61,8 @@ function Rotas() {
               </AuthPath>
               <ClientAuthPath>
                 <Route
-                  path="/lista-produtos"
-                  //component={}
+                  path="/lista-restaurantes"
+                  component={ListaRestaurantes}
                 />
               </ClientAuthPath>
             </Switch>

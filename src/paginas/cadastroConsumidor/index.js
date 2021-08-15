@@ -67,7 +67,7 @@ export default function ConsumidorCadastro() {
       draggable: true,
       progress: undefined,
     });
-    history.push("/login");
+    history.push("/consumidor-login");
   };
 
   return (

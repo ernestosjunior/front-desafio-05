@@ -39,7 +39,7 @@ export function FetchProvider({ children }) {
     const body = JSON.stringify(data);
 
     const response = await fetch(
-      "https://git.heroku.com/desafio5backconsumidor.git/login_consumidor",
+      "https://desafio5backconsumidor.herokuapp.com/login_consumidor",
       {
         method: "POST",
         headers: {
@@ -145,7 +145,7 @@ export function FetchProvider({ children }) {
     const body = JSON.stringify(dataRequerida);
 
     const response = await fetch(
-      "https://git.heroku.com/desafio5backconsumidor.git/consumidores",
+      "https://desafio5backconsumidor.herokuapp.com/consumidores",
       {
         method: "POST",
         headers: {
@@ -157,7 +157,6 @@ export function FetchProvider({ children }) {
     );
 
     const cadastro = await response.json();
-    console.log(cadastro);
 
     return cadastro;
   }
