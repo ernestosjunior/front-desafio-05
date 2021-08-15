@@ -35,6 +35,26 @@ export function FetchProvider({ children }) {
     return login;
   }
 
+  async function handleLoginConsumidor(data) {
+    const body = JSON.stringify(data);
+
+    const response = await fetch(
+      "https://git.heroku.com/desafio5backconsumidor.git/login_consumidor",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body,
+      }
+    );
+
+    const login = await response.json();
+
+    return login;
+  }
+
   async function handleCategoria() {
     setCarregando(true);
 
@@ -109,6 +129,35 @@ export function FetchProvider({ children }) {
     );
 
     const cadastro = await response.json();
+
+    return cadastro;
+  }
+  async function handleCadastroConsumidor(data) {
+    const { nome, email, senha, confirmarSenha, telefone } = data;
+
+    const dataRequerida = {
+      nome,
+      email,
+      senha,
+      telefone,
+    };
+
+    const body = JSON.stringify(dataRequerida);
+
+    const response = await fetch(
+      "https://git.heroku.com/desafio5backconsumidor.git/consumidores",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+        },
+        body,
+      }
+    );
+
+    const cadastro = await response.json();
+    console.log(cadastro);
 
     return cadastro;
   }
@@ -190,13 +239,7 @@ export function FetchProvider({ children }) {
       taxaEntrega,
       tempoEntregaEmMinutos,
       valorMinimoPedido,
-      imagemBase,
-      imagemBaseNome,
     } = data;
-
-    console.log(data);
-
-    // if (imagemBase === "" && imagemBaseNome === "") { }
 
     const dataRequerida = {
       nome,
@@ -209,8 +252,6 @@ export function FetchProvider({ children }) {
         taxa_entrega: taxaEntrega,
         tempo_entrega_minutos: tempoEntregaEmMinutos,
         valor_minimo_pedido: valorMinimoPedido,
-        imagem: imagemBase.slice(23),
-        nome_imagem: imagemBaseNome,
       },
     };
 
@@ -266,6 +307,8 @@ export function FetchProvider({ children }) {
         abrirCard,
         setAbrirCard,
         handleEditarPerfil,
+        handleLoginConsumidor,
+        handleCadastroConsumidor,
       }}
     >
       {children}
@@ -290,6 +333,8 @@ export function UseFetch() {
     abrirCard,
     setAbrirCard,
     handleEditarPerfil,
+    handleLoginConsumidor,
+    handleCadastroConsumidor,
   } = useContext(FetchContext);
 
   return {
@@ -308,5 +353,7 @@ export function UseFetch() {
     abrirCard,
     setAbrirCard,
     handleEditarPerfil,
+    handleLoginConsumidor,
+    handleCadastroConsumidor,
   };
 }
