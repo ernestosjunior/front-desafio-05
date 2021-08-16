@@ -1,0 +1,28 @@
+.restaurantes__input {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 200px;
+  margin-bottom: 105px;
+}
+
+.restaurantes__lista {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.restaurantes__input__busca {
+  width: 488px;
+  height: 40px;
+  background-color: #f5f5f5;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding-left: 33px;
+}
+
+.restaurantes__input__busca input {
+  all: unset;
+  width: 100%;
+}
