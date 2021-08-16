@@ -47,21 +47,30 @@ function Rotas() {
         <ClientAuthProvider>
           <FetchProvider>
             <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/usuarios" component={Cadastro} />
-              <Route path="/consumidor-login" component={ConsumidorLogin} />
+              <Route path="/login" exact component={Login} />
+              <Route path="/usuarios" exact component={Cadastro} />
+              <Route
+                path="/consumidor-login"
+                exact
+                component={ConsumidorLogin}
+              />
               <Route
                 path="/consumidor-cadastro"
                 component={ConsumidorCadastro}
               />
               <AuthPath>
                 <Route path="/" exact component={Inicial} />
-                <Route path="/novo-produto" component={NovoProduto} />
-                <Route path="/editar-produto/:id" component={EditarProduto} />
+                <Route path="/novo-produto" exact component={NovoProduto} />
+                <Route
+                  path="/editar-produto/:id"
+                  exact
+                  component={EditarProduto}
+                />
               </AuthPath>
               <ClientAuthPath>
                 <Route
                   path="/lista-restaurantes"
+                  exact
                   component={ListaRestaurantes}
                 />
               </ClientAuthPath>
