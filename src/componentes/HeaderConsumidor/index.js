@@ -7,15 +7,14 @@ import { UseAuth } from "../../contexto/autorizacao";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 
 const HeaderConsumidor = () => {
-  const path = window.location.pathname;
   const history = useHistory();
 
   const { removeGravarUsuario, gravarUsuario } = UseAuth();
-  const { setAbrirCard, categorias } = UseFetch();
+  const { setAbrirCard } = UseFetch();
 
   const handleLogout = () => {
     removeGravarUsuario();
-    history.push("/login");
+    history.push("/consumidor-login");
   };
 
   return (

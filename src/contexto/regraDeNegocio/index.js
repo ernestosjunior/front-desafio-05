@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { useLocalStorage } from "react-use";
+import { UseClientAuth } from "../autorizacaoConsumidores";
 
 const FetchContext = createContext();
 
@@ -11,7 +12,9 @@ export function FetchProvider({ children }) {
   const history = useHistory();
   const [carregando, setCarregando] = useState();
   const [produtos, setProdutos] = useState([]);
+  const [restaurantes, setRestaurantes] = useState([]);
   const { setGravarUsuario, gravarUsuario } = UseAuth();
+  const { gravarConsumidor } = UseClientAuth();
   const [categorias, setCategorias, removeCategorias] = useLocalStorage(
     "categorias",
     []
@@ -289,6 +292,20 @@ export function FetchProvider({ children }) {
     }
   }
 
+  const handleListarRestaurantes = async () => {
+    const response = await fetch(
+      "https://desafio5backconsumidor.herokuapp.com/restaurantes",
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${gravarConsumidor.token}`,
+        },
+      }
+    );
+    const data = await response.json();
+    setRestaurantes(data);
+  };
+
   return (
     <FetchContext.Provider
       value={{
@@ -308,6 +325,9 @@ export function FetchProvider({ children }) {
         handleEditarPerfil,
         handleLoginConsumidor,
         handleCadastroConsumidor,
+        restaurantes,
+        setRestaurantes,
+        handleListarRestaurantes,
       }}
     >
       {children}
@@ -334,6 +354,9 @@ export function UseFetch() {
     handleEditarPerfil,
     handleLoginConsumidor,
     handleCadastroConsumidor,
+    restaurantes,
+    setRestaurantes,
+    handleListarRestaurantes,
   } = useContext(FetchContext);
 
   return {
@@ -354,5 +377,8 @@ export function UseFetch() {
     handleEditarPerfil,
     handleLoginConsumidor,
     handleCadastroConsumidor,
+    restaurantes,
+    setRestaurantes,
+    handleListarRestaurantes,
   };
 }
