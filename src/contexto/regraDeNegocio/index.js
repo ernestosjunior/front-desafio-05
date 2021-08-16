@@ -231,13 +231,15 @@ export function FetchProvider({ children }) {
       nome,
       email,
       senha,
-      confirmar_senha,
       restaurante,
       descricao,
       categoria,
       taxaEntrega,
       tempoEntregaEmMinutos,
       valorMinimoPedido,
+      imagemBase,
+      imagemBaseNome,
+
     } = data;
 
     const dataRequerida = {
@@ -251,6 +253,8 @@ export function FetchProvider({ children }) {
         taxa_entrega: taxaEntrega,
         tempo_entrega_minutos: tempoEntregaEmMinutos,
         valor_minimo_pedido: valorMinimoPedido,
+        imagem: imagemBase.slice(23),
+        nome_imagem: imagemBaseNome,
       },
     };
 
