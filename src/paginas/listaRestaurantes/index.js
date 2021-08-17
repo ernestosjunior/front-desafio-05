@@ -3,7 +3,7 @@ import HeaderConsumidor from "../../componentes/HeaderConsumidor";
 import Restaurantes from "../../componentes/Restaurantes";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 
-const Inicial = () => {
+const ListaRestaurantes = () => {
   return (
     <>
       <HeaderConsumidor />
@@ -14,4 +14,4 @@ const Inicial = () => {
   );
 };
 
-export default Inicial;
+export default ListaRestaurantes;
