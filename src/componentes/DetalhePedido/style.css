@@ -1,0 +1,73 @@
+.detalhe-pedido-container {
+  background-color: #999494;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detalhe-pedido-modal {
+  background-color: #E5E5E5;
+  width: 600px;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 80px;
+}
+
+.detalhe-pedido-modal span {
+  color: #D13201;
+  font-weight: bolder;
+}
+
+.fechar-modal {
+  font-size: 25pt;
+  margin: 20px 0px 0px auto;
+  cursor: pointer;
+}
+
+.pedido-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detalhe-pedido-modal .container-enviar-pedido {
+  border-top: 1px solid #D4D4D4;
+  display: flex;
+  flex-direction: column;
+}
+
+.detalhe-pedido-modal .container-enviar-pedido .preco {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 13px;
+  font-weight: bolder;
+}
+
+.container-enviar-pedido button {
+  padding: 11px 40px 11px 40px;
+  margin: 40px auto 30px auto;
+  border-radius: 20px;
+  text-align: center;
+  width: 30%;
+  color: white;
+}
+
+.btn-nao-entregue{
+  all: unset;
+  cursor: pointer;
+  background-color: #D13201;
+}
+
+.btn-entregue{
+  all: unset;
+  cursor: not-allowed;
+  background-color:#A8A8A8;
+}
+
+.produtos {
+  height:250px;
+  overflow:auto;
+}

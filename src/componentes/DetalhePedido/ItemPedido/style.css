@@ -1,0 +1,42 @@
+.margem-y {
+  margin: 28px 0;
+}
+.imagem-item {
+  width: 77px;
+  height: 77px;
+  border-radius: 8px;
+  margin-right: 24px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.nome-produto {
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  color: #525459;
+}
+
+.quantidade-produto {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  color: #525459;
+}
+
+.preco-produto {
+  background: linear-gradient(
+      0deg,
+      rgba(13, 138, 79, 0.1),
+      rgba(13, 138, 79, 0.1)
+    ),
+    linear-gradient(0deg, #ffffff, #ffffff);
+
+  padding: 4px 15px;
+  color: #006335;
+  font-size: 10px;
+  font-weight: 600;
+  width: fit-content;
+}
