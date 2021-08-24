@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { useLocalStorage } from "react-use";
-import { UseClientAuth } from "../autorizacaoConsumidores";
 
 const FetchContext = createContext();
 
@@ -12,9 +11,7 @@ export function FetchProvider({ children }) {
   const history = useHistory();
   const [carregando, setCarregando] = useState();
   const [produtos, setProdutos] = useState([]);
-  const [restaurantes, setRestaurantes] = useState([]);
   const { setGravarUsuario, gravarUsuario } = UseAuth();
-  const { gravarConsumidor } = UseClientAuth();
   const [categorias, setCategorias, removeCategorias] = useLocalStorage(
     "categorias",
     []
@@ -38,25 +35,6 @@ export function FetchProvider({ children }) {
     return login;
   }
 
-  async function handleLoginConsumidor(data) {
-    const body = JSON.stringify(data);
-
-    const response = await fetch(
-      "https://desafio5backconsumidor.herokuapp.com/login_consumidor",
-      {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-        },
-        body,
-      }
-    );
-
-    const login = await response.json();
-
-    return login;
-  }
 
   async function handleCategoria() {
     setCarregando(true);
@@ -121,34 +99,6 @@ export function FetchProvider({ children }) {
 
     const response = await fetch(
       "https://desafio5back.herokuapp.com/usuarios",
-      {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-        },
-        body,
-      }
-    );
-
-    const cadastro = await response.json();
-
-    return cadastro;
-  }
-  async function handleCadastroConsumidor(data) {
-    const { nome, email, senha, confirmarSenha, telefone } = data;
-
-    const dataRequerida = {
-      nome,
-      email,
-      senha,
-      telefone,
-    };
-
-    const body = JSON.stringify(dataRequerida);
-
-    const response = await fetch(
-      "https://desafio5backconsumidor.herokuapp.com/consumidores",
       {
         method: "POST",
         headers: {
@@ -296,19 +246,6 @@ export function FetchProvider({ children }) {
     }
   }
 
-  const handleListarRestaurantes = async () => {
-    const response = await fetch(
-      "https://desafio5backconsumidor.herokuapp.com/restaurantes",
-      {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${gravarConsumidor.token}`,
-        },
-      }
-    );
-    const data = await response.json();
-    setRestaurantes(data);
-  };
 
   return (
     <FetchContext.Provider
@@ -327,11 +264,6 @@ export function FetchProvider({ children }) {
         abrirCard,
         setAbrirCard,
         handleEditarPerfil,
-        handleLoginConsumidor,
-        handleCadastroConsumidor,
-        restaurantes,
-        setRestaurantes,
-        handleListarRestaurantes,
       }}
     >
       {children}
@@ -356,11 +288,6 @@ export function UseFetch() {
     abrirCard,
     setAbrirCard,
     handleEditarPerfil,
-    handleLoginConsumidor,
-    handleCadastroConsumidor,
-    restaurantes,
-    setRestaurantes,
-    handleListarRestaurantes,
   } = useContext(FetchContext);
 
   return {
@@ -379,10 +306,5 @@ export function UseFetch() {
     abrirCard,
     setAbrirCard,
     handleEditarPerfil,
-    handleLoginConsumidor,
-    handleCadastroConsumidor,
-    restaurantes,
-    setRestaurantes,
-    handleListarRestaurantes,
   };
 }
