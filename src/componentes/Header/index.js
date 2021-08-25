@@ -35,7 +35,13 @@ const Header = () => {
         style={{ cursor: "pointer" }}
       />
       <div className="header__conteudo">
-        <h1 className="nome_restaurante">{gravarUsuario.restaurante[0].nome}</h1>
+        <div className="header_items">
+          <h1 className="nome_restaurante">{gravarUsuario.restaurante[0].nome}</h1>
+          <div className="header_buttons">
+            <button className="btn btn_cardapio">Cardápio</button>
+            <button className="btn btn_pedidos">Pedidos</button>
+          </div>
+        </div>
         {!path.includes("/novo-produto") & !path.includes("/editar-produto") ? (
           <button onClick={() => handleLogout()}><span className="logout_btn">Logout</span></button>
         ) : (

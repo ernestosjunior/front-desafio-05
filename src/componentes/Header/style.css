@@ -16,6 +16,47 @@ header {
   margin-left: 112px;
 }
 
+.header_items {
+  display: flex;
+  width: 50%;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+
+.header_buttons{
+  display: flex;
+  justify-content: start;
+}
+
+.header_buttons .btn{
+  all: unset;
+  background-color: white;
+  box-shadow: 0 0 2px rgb(0, 0, 0), 0 0 10px rgb(0, 0, 0);
+  padding: 5px;
+  font-size: 12pt;
+  width: 120px;
+  text-align: center;
+  border-radius: 20px;
+  color: #D13201;
+  margin-bottom: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.header_buttons .btn:hover {
+  background-color: #D13201;
+  color: white;
+}
+
+.header_buttons .btn_cardapio {
+  margin-right: 9px;
+}
+
+.header_buttons .btn_pedidos {
+  margin-left: 9px;
+}
+
 .header__conteudo {
   display: flex;
   align-items: center;
@@ -32,6 +73,7 @@ header {
   font-size: 16px;
   line-height: 170%;
 }
+
 
 .nome_restaurante, .logout_btn {
   color: rgb(255, 255, 255);
