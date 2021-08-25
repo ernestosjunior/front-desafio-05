@@ -1,0 +1,54 @@
+.modal-pedidos {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+}
+
+.modal-pedidos .buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 90%;
+  margin: 20px 0;
+}
+
+.modal-pedidos .btn {
+  all: unset;
+  padding: 12px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 10pt;
+  cursor: pointer;
+}
+
+.modal-pedidos .btn-não-entregue{
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.modal-pedidos  .btn-entregue{
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.grid {
+  margin: 0 30px;
+  min-width: 90%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.grid > span {
+  padding: 8px 4px;
+}
+
+.grid-header {
+  text-align: center;
+  background-color:  #F0F0F0;
+  font-weight: bolder;
+}
+
+.grid-items {
+  text-align: center;
+}
