@@ -1,8 +1,8 @@
 .produtos__btn__adicionar {
   display: flex;
   justify-content: flex-end;
-  padding-right: 200px;
-  margin-bottom: 105px;
+  padding-right: 100px;
+  margin-bottom: 80px;
 }
 
 .produtos__btn__adicionar button {

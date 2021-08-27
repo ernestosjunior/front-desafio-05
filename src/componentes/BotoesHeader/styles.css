@@ -1,0 +1,16 @@
+.header__btns__container {
+  display: flex;
+  gap: 18px;
+}
+.header__btns__opcoes {
+  all: unset;
+  cursor: pointer;
+  background-color: #ffffff;
+  color: #d13201;
+  width: 119px;
+  height: 27px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 20px;
+  text-align: center;
+}

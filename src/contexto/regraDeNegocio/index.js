@@ -35,7 +35,6 @@ export function FetchProvider({ children }) {
     return login;
   }
 
-
   async function handleCategoria() {
     setCarregando(true);
 
@@ -192,7 +191,6 @@ export function FetchProvider({ children }) {
       valorMinimoPedido,
       imagemBase,
       imagemBaseNome,
-
     } = data;
 
     const dataRequerida = {
@@ -246,6 +244,17 @@ export function FetchProvider({ children }) {
     }
   }
 
+  const handleListarPedidos = async () => {
+    const response = await fetch("https://desafio5back.herokuapp.com/pedidos", {
+      headers: {
+        authorization: `Bearer ${gravarUsuario.token}`,
+        "content-type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    return data;
+  };
 
   return (
     <FetchContext.Provider
@@ -264,6 +273,8 @@ export function FetchProvider({ children }) {
         abrirCard,
         setAbrirCard,
         handleEditarPerfil,
+        removeCategorias,
+        handleListarPedidos,
       }}
     >
       {children}
@@ -288,6 +299,8 @@ export function UseFetch() {
     abrirCard,
     setAbrirCard,
     handleEditarPerfil,
+    removeCategorias,
+    handleListarPedidos,
   } = useContext(FetchContext);
 
   return {
@@ -306,5 +319,7 @@ export function UseFetch() {
     abrirCard,
     setAbrirCard,
     handleEditarPerfil,
+    removeCategorias,
+    handleListarPedidos,
   };
 }
