@@ -9,6 +9,7 @@ import Cadastro from "./paginas/cadastro";
 import Inicial from "./paginas/inicial";
 import NovoProduto from "./paginas/novoProduto";
 import EditarProduto from "./paginas/editarProduto";
+import Pedidos from "./paginas/pedidos";
 import { AuthProvider } from "./contexto/autorizacao";
 import { UseAuth } from "./contexto/autorizacao";
 import { FetchProvider } from "./contexto/regraDeNegocio";
@@ -27,17 +28,18 @@ function Rotas() {
   return (
     <Router>
       <AuthProvider>
-          <FetchProvider>
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/usuarios" component={Cadastro} />
-              <AuthPath>
-                <Route path="/" exact component={Inicial} />
-                <Route path="/novo-produto" component={NovoProduto} />
-                <Route path="/editar-produto/:id" component={EditarProduto} />
-              </AuthPath>
-            </Switch>
-          </FetchProvider>
+        <FetchProvider>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/usuarios" component={Cadastro} />
+            <AuthPath>
+              <Route path="/" exact component={Inicial} />
+              <Route path="/novo-produto" component={NovoProduto} />
+              <Route path="/editar-produto/:id" component={EditarProduto} />
+              <Route path="/pedidos" component={Pedidos} />
+            </AuthPath>
+          </Switch>
+        </FetchProvider>
       </AuthProvider>
     </Router>
   );
