@@ -5,7 +5,7 @@ const ClientAuthContext = createContext();
 
 export function ClientAuthProvider({ children }) {
   const [gravarConsumidor, setGravarConsumidor, removeGravarConsumidor] =
-    useLocalStorage("valorToken", "");
+    useLocalStorage("valorTokenConsumidor", "");
 
   return (
     <ClientAuthContext.Provider
