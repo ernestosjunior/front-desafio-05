@@ -1,0 +1,64 @@
+.pedidos__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
+}
+.pedidos__btns__opcoes {
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 60px;
+  margin-bottom: 45px;
+}
+
+.pedidos__btns__opcoes button {
+  all: unset;
+  cursor: pointer;
+  width: 120px;
+  height: 41px;
+  background-color: #f9f9f9;
+  text-align: center;
+  color: #121212cc;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#btn-op1 {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+#btn-op2 {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.grid {
+  margin: 0 30px;
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.grid > span {
+  padding: 8px 4px;
+}
+
+.grid-header {
+  text-align: center;
+  background-color: #f0f0f0;
+  font-weight: bolder;
+}
+
+.grid-items {
+  text-align: center;
+}
+
+ul {
+  text-align: start;
+}
+
+li {
+  all: unset;
+}
