@@ -53,7 +53,7 @@
 
 .grid-items {
   text-align: center;
-  border-bottom: 1px solid #F0F0F0;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 ul {
@@ -64,7 +64,7 @@ li {
   all: unset;
 }
 
-.id-item{
+.id-item {
   display: flex;
   justify-content: center;
   text-align: center;
@@ -74,7 +74,7 @@ li {
   font-weight: bolder;
 }
 
-.btn-info{
+.btn-info {
   height: 25px;
   cursor: pointer;
   margin-left: -30px;
@@ -83,7 +83,7 @@ li {
 
 .ver-mais {
   all: unset;
-  color: #D13201;
+  color: #d13201;
   font-weight: bold;
   cursor: pointer;
 }

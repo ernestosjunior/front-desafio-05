@@ -1,33 +1,25 @@
 import "./styles.css";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "../../componentes/Header";
 import SemPedidos from "../../componentes/SemPedidos";
 import info from "../../assets/info.png";
+import DetalhePedido from "../../componentes/DetalhePedido";
+import filtros from "../../utils/filtros";
 
 import { UseFetch } from "../../contexto/regraDeNegocio";
 
-const filtros = [
-  {
-    id: 1,
-    label: "Não Entregues",
-    valor: "naoentregues",
-    bool: false,
-  },
-  {
-    id: 2,
-    label: "Entregues",
-    valor: "entregues",
-    bool: true,
-  },
-];
-
 const Pedidos = () => {
-  const [filtro, setFiltro] = useState("naoentregues");
-  const [filtroBool, setFiltroBool] = useState(false);
-  const [pedidos, setPedidos] = useState([]);
-  const [verMais, setVerMais] = useState(false);
-
-  const { handleListarPedidos } = UseFetch();
+  const [verMais, setVerMais] = useState();
+  const {
+    handleListarPedidos,
+    setAbrirPedido,
+    setPedidos,
+    filtro,
+    setFiltro,
+    setFiltroBool,
+    pedidosFiltrados,
+    setPedidoDetalhado,
+  } = UseFetch();
 
   useEffect(async () => {
     const resposta = await handleListarPedidos();
@@ -37,13 +29,16 @@ const Pedidos = () => {
     }
   }, []);
 
-  const pedidosFiltrados = pedidos.filter((p) => p.entregue === filtroBool);
-
   const slicer = (array, size) => {
     const resp = array.slice(0, size);
     console.log(resp);
     return resp;
-  }
+  };
+
+  const DetalharPedido = (p) => {
+    setAbrirPedido(true);
+    setPedidoDetalhado(p);
+  };
 
   return (
     <div className="pedidos">
@@ -75,72 +70,67 @@ const Pedidos = () => {
 
           {pedidosFiltrados.length
             ? pedidosFiltrados.map((p) => (
-              <>
-                <span className="grid-items">
-                  {" "}
-                  <div className="id-item">
-                    <img src={info} className="btn-info" alt="btn_info" />
-                    <span>{p.id}</span>
-                  </div>
-                </span>
-                <span className="grid-items grid-produtos">
-                  {!verMais && p.produtos.length > 2
-                    ?
-                    (
-                      slicer(p.produtos, 1).map((i) => (
-                        <ul>
-                          <li>
-                            {i.nome} - {i.quantidade} uni
-                          </li>
-                          <br />
-                        </ul>
-                      ))
-                    )
-                    :
-                    (
-                      p.produtos.map((i) => (
-                        <ul>
-                          <li>
-                            {i.nome} - {i.quantidade} uni
-                          </li>
-                        </ul>
-                      ))
-                    )
-                  }
-                  {
-                    p.produtos.length > 2 ?
+                <>
+                  <span className="grid-items">
+                    {" "}
+                    <div className="id-item">
+                      <img
+                        src={info}
+                        className="btn-info"
+                        alt="btn_info"
+                        onClick={() => DetalharPedido(p)}
+                      />
+                      <span>{p.id}</span>
+                    </div>
+                  </span>
+                  <span className="grid-items grid-produtos">
+                    {!verMais && p.produtos.length > 2
+                      ? slicer(p.produtos, 1).map((i) => (
+                          <ul>
+                            <li>
+                              {i.nome} - {i.quantidade} uni
+                            </li>
+                            <br />
+                          </ul>
+                        ))
+                      : p.produtos.map((i) => (
+                          <ul>
+                            <li>
+                              {i.nome} - {i.quantidade} uni
+                            </li>
+                          </ul>
+                        ))}
+                    {p.produtos.length > 2 ? (
                       <button
                         onClick={() => setVerMais(!verMais)}
                         className={
-                          p.produtos.length < 2
-                            ? "ver-menos"
-                            : "ver-mais"
+                          p.produtos.length < 2 ? "ver-menos" : "ver-mais"
                         }
                       >
                         {verMais ? "ver menos" : "ver mais"}
                       </button>
-
-                      :
+                    ) : (
                       ""
-                  }
-                </span>
-                <span className="grid-items">
-                  {
-                    (p.consumidor_endereco.endereco,
+                    )}
+                  </span>
+                  <span className="grid-items">
+                    {
+                      (p.consumidor_endereco.endereco,
                       p.consumidor_endereco.complemento,
                       p.consumidor_endereco.cep)
-                  }
-                </span>
-                <span className="grid-items">{p.consumidor.nome}</span>
-                <span className="grid-items">
-                  <strong>R$ {(p.valor_total / 100).toFixed(2)}</strong>
-                </span>
-              </>
-            ))
+                    }
+                  </span>
+                  <span className="grid-items">{p.consumidor.nome}</span>
+                  <span className="grid-items">
+                    <strong>R$ {(p.valor_total / 100).toFixed(2)}</strong>
+                  </span>
+                </>
+              ))
             : ""}
         </div>
         {!pedidosFiltrados.length && <SemPedidos />}
       </div>
+      <DetalhePedido />
     </div>
   );
 };
