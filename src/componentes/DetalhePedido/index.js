@@ -2,17 +2,39 @@ import ItemCarrinho from "./ItemPedido";
 import "./style.css";
 
 import Logo from "../../assets/logo_padrao.png";
+import { UseFetch } from "../../contexto/regraDeNegocio";
+import filtros from "../../utils/filtros";
 
 const DetalhePedido = () => {
+  const {
+    abrirPedido,
+    setAbrirPedido,
+    pedidos,
+    setPedidos,
+    filtro,
+    setFiltro,
+    filtroBool,
+    setFiltroBool,
+    pedidosFiltrados,
+  } = UseFetch();
+
+  console.log(pedidosFiltrados);
+
   return (
-    <div className="detalhe-pedido-container">
+    <div className={abrirPedido ? "detalhe-pedido-container" : "fechado"}>
       <div className="detalhe-pedido-modal">
-        <span className="fechar-modal">&times;</span>
+        <span className="fechar-modal" onClick={() => setAbrirPedido(false)}>
+          &times;
+        </span>
         <div className="pedido-info">
           <h1 className="pedido-id">0001</h1>
           <h3 className="nome-consumidor">Nome Consumidor</h3>
         </div>
-        <p className="endereco"><span>Endereço de Entrega: </span>Av. Tancredo Neves, 2227, ed. Salvador Prime, sala 901:906; 917:920 - Caminho das Árvores, Salvador - BA, 41820-021</p>
+        <p className="endereco">
+          <span>Endereço de Entrega: </span>Av. Tancredo Neves, 2227, ed.
+          Salvador Prime, sala 901:906; 917:920 - Caminho das Árvores, Salvador
+          - BA, 41820-021
+        </p>
         <div className="produtos">
           <ItemCarrinho
             nomeProduto="Pizza Portuguesa"
@@ -38,13 +60,11 @@ const DetalhePedido = () => {
             <h3>Total</h3>
             <h3>R$ 308,87</h3>
           </div>
-
-          {/* Quando o pedido não foi entregue ainda */}
-          <button className="btn-nao-entregue">Enviar Pedido</button>
-
-
-          {/* Quando o pedido foi entregue  */}
-          <button className="btn-entregue">Enviar Pedido</button>
+          {pedidosFiltrados ? (
+            <button className="btn-entregue">Enviar Pedido</button>
+          ) : (
+            <button className="btn-nao-entregue">Enviar Pedido</button>
+          )}
         </div>
       </div>
     </div>

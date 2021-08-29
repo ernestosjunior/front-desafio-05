@@ -17,6 +17,11 @@ export function FetchProvider({ children }) {
     []
   );
   const [abrirCard, setAbrirCard] = useState(false);
+  const [abrirPedido, setAbrirPedido] = useState(false);
+  const [pedidos, setPedidos] = useState([]);
+  const [filtro, setFiltro] = useState("naoentregues");
+  const [filtroBool, setFiltroBool] = useState(false);
+  const pedidosFiltrados = pedidos.filter((p) => p.entregue === filtroBool);
 
   async function handleLogin(data) {
     const body = JSON.stringify(data);
@@ -275,6 +280,15 @@ export function FetchProvider({ children }) {
         handleEditarPerfil,
         removeCategorias,
         handleListarPedidos,
+        abrirPedido,
+        setAbrirPedido,
+        pedidos,
+        setPedidos,
+        filtro,
+        setFiltro,
+        filtroBool,
+        setFiltroBool,
+        pedidosFiltrados,
       }}
     >
       {children}
@@ -301,6 +315,15 @@ export function UseFetch() {
     handleEditarPerfil,
     removeCategorias,
     handleListarPedidos,
+    abrirPedido,
+    setAbrirPedido,
+    pedidos,
+    setPedidos,
+    filtro,
+    setFiltro,
+    filtroBool,
+    setFiltroBool,
+    pedidosFiltrados,
   } = useContext(FetchContext);
 
   return {
@@ -321,5 +344,14 @@ export function UseFetch() {
     handleEditarPerfil,
     removeCategorias,
     handleListarPedidos,
+    abrirPedido,
+    setAbrirPedido,
+    pedidos,
+    setPedidos,
+    filtro,
+    setFiltro,
+    filtroBool,
+    setFiltroBool,
+    pedidosFiltrados,
   };
 }

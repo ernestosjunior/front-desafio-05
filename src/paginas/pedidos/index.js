@@ -1,31 +1,22 @@
 import "./styles.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Header from "../../componentes/Header";
 import SemPedidos from "../../componentes/SemPedidos";
-
+import info from "../../assets/info.png";
+import DetalhePedido from "../../componentes/DetalhePedido";
+import filtros from "../../utils/filtros";
 import { UseFetch } from "../../contexto/regraDeNegocio";
 
-const filtros = [
-  {
-    id: 1,
-    label: "Não Entregues",
-    valor: "naoentregues",
-    bool: false,
-  },
-  {
-    id: 2,
-    label: "Entregues",
-    valor: "entregues",
-    bool: true,
-  },
-];
-
 const Pedidos = () => {
-  const [filtro, setFiltro] = useState("naoentregues");
-  const [filtroBool, setFiltroBool] = useState(false);
-  const [pedidos, setPedidos] = useState([]);
-
-  const { handleListarPedidos } = UseFetch();
+  const {
+    handleListarPedidos,
+    setAbrirPedido,
+    setPedidos,
+    filtro,
+    setFiltro,
+    setFiltroBool,
+    pedidosFiltrados,
+  } = UseFetch();
 
   useEffect(async () => {
     const resposta = await handleListarPedidos();
@@ -34,8 +25,6 @@ const Pedidos = () => {
       return;
     }
   }, []);
-
-  const pedidosFiltrados = pedidos.filter((p) => p.entregue === filtroBool);
 
   return (
     <div className="pedidos">
@@ -71,7 +60,15 @@ const Pedidos = () => {
                 <>
                   <span className="grid-items">
                     {" "}
-                    <strong>{p.id}</strong>
+                    <div className="id-item">
+                      <img
+                        src={info}
+                        className="btn-info"
+                        alt="btn_info"
+                        onClick={() => setAbrirPedido(true)}
+                      />
+                      <span>{p.id}</span>
+                    </div>
                   </span>
                   <span className="grid-items">
                     {p.produtos.map((i) => (
@@ -99,6 +96,7 @@ const Pedidos = () => {
         </div>
         {!pedidosFiltrados.length && <SemPedidos />}
       </div>
+      <DetalhePedido />
     </div>
   );
 };
