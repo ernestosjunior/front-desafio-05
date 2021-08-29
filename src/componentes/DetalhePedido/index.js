@@ -11,12 +11,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 const DetalhePedido = () => {
-  const {
-    abrirPedido,
-    setAbrirPedido,
-    pedidoDetalhado,
-    handleEnviarPedido
-  } =
+  const { abrirPedido, setAbrirPedido, pedidoDetalhado, handleEnviarPedido } =
     UseFetch();
   const [total, setTotal] = useState(0);
   const [carregando, setCarregando] = useState(false);
@@ -65,7 +60,7 @@ const DetalhePedido = () => {
       return;
     }
     setCarregando(false);
-    history.push("/pedidos");
+    history.push("/");
     toast.success(`Pedido a caminho!`, {
       position: "top-right",
       autoClose: 5000,
@@ -114,17 +109,15 @@ const DetalhePedido = () => {
             <h3>R$ {total}</h3>
           </div>
           {pedidoDetalhado?.entregue ? (
-            <button
-              className="btn-entregue"
-              type="button"
-            >
+            <button className="btn-entregue" type="button">
               Enviar Pedido
             </button>
           ) : (
             <button
               onClick={() => handleEnviar(pedidoDetalhado?.id)}
               className="btn-nao-entregue"
-            >Enviar Pedido
+            >
+              Enviar Pedido
             </button>
           )}
         </div>
