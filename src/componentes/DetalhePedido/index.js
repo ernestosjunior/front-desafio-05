@@ -11,7 +11,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { makeStyles } from "@material-ui/core/styles";
 
 const DetalhePedido = () => {
-  const { abrirPedido, setAbrirPedido, pedidoDetalhado, handleEnviarPedido } =
+  const {
+    abrirPedido,
+    setAbrirPedido,
+    pedidoDetalhado,
+    handleEnviarPedido
+  } =
     UseFetch();
   const [total, setTotal] = useState(0);
   const [carregando, setCarregando] = useState(false);
@@ -43,7 +48,6 @@ const DetalhePedido = () => {
   }, [pedidoDetalhado]);
 
   const handleEnviar = async (data) => {
-    console.log("Oi");
     setCarregando(true);
     const resposta = await handleEnviarPedido(data);
 
@@ -71,6 +75,7 @@ const DetalhePedido = () => {
       draggable: true,
       progress: undefined,
     });
+    setAbrirPedido(false);
   };
 
   return (
@@ -93,7 +98,7 @@ const DetalhePedido = () => {
             ". " +
             pedidoDetalhado?.consumidor_endereco.cep}
         </p>
-        <div className="produtos">
+        <div className="pedido-produtos">
           {pedidoDetalhado?.produtos.map((pp) => (
             <ItemCarrinho
               nomeProduto={pp.nome}
@@ -111,13 +116,16 @@ const DetalhePedido = () => {
           {pedidoDetalhado?.entregue ? (
             <button
               className="btn-entregue"
-              onClick={() => handleEnviar(pedidoDetalhado?.id)}
               type="button"
             >
               Enviar Pedido
             </button>
           ) : (
-            <button className="btn-nao-entregue">Enviar Pedido</button>
+            <button
+              onClick={() => handleEnviar(pedidoDetalhado?.id)}
+              className="btn-nao-entregue"
+            >Enviar Pedido
+            </button>
           )}
         </div>
       </div>
