@@ -22,6 +22,7 @@ export function FetchProvider({ children }) {
   const [filtro, setFiltro] = useState("naoentregues");
   const [filtroBool, setFiltroBool] = useState(false);
   const pedidosFiltrados = pedidos.filter((p) => p.entregue === filtroBool);
+  const [pedidoDetalhado, setPedidoDetalhado] = useState();
 
   async function handleLogin(data) {
     const body = JSON.stringify(data);
@@ -261,6 +262,26 @@ export function FetchProvider({ children }) {
     return data;
   };
 
+  const handleEnviarPedido = async (id) => {
+    const corpo = {
+      entregue: true,
+    };
+
+    const response = await fetch(
+      `https://desafio5back.herokuapp.com/pedidos/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: `Bearer ${gravarUsuario.token}`,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(corpo),
+      }
+    );
+    const data = response.json();
+    return data;
+  };
+
   return (
     <FetchContext.Provider
       value={{
@@ -289,6 +310,9 @@ export function FetchProvider({ children }) {
         filtroBool,
         setFiltroBool,
         pedidosFiltrados,
+        pedidoDetalhado,
+        setPedidoDetalhado,
+        handleEnviarPedido,
       }}
     >
       {children}
@@ -324,6 +348,9 @@ export function UseFetch() {
     filtroBool,
     setFiltroBool,
     pedidosFiltrados,
+    pedidoDetalhado,
+    setPedidoDetalhado,
+    handleEnviarPedido,
   } = useContext(FetchContext);
 
   return {
@@ -353,5 +380,8 @@ export function UseFetch() {
     filtroBool,
     setFiltroBool,
     pedidosFiltrados,
+    pedidoDetalhado,
+    setPedidoDetalhado,
+    handleEnviarPedido,
   };
 }

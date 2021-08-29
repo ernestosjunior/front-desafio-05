@@ -1,3 +1,7 @@
+.produtos {
+  height: auto;
+}
+
 .produtos__btn__adicionar {
   display: flex;
   justify-content: flex-end;

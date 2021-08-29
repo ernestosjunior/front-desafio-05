@@ -63,16 +63,16 @@
   color: white;
 }
 
-.btn-nao-entregue {
-  all: unset;
-  cursor: pointer;
-  background-color: #d13201;
-}
-
 .btn-entregue {
   all: unset;
   cursor: not-allowed;
   background-color: #a8a8a8;
+}
+
+.btn-nao-entregue {
+  all: unset;
+  cursor: pointer;
+  background-color: #d13201;
 }
 
 .produtos {
