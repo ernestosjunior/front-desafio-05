@@ -67,7 +67,7 @@ export default function Login() {
     }
     setGravarUsuario(resposta);
     setCarregando(false);
-    history.push("/");
+    history.push("/pedidos");
     toast.success(`Olá, ${resposta.usuario.nome}`, {
       position: "top-right",
       autoClose: 5000,

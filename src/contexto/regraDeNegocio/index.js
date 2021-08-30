@@ -21,8 +21,9 @@ export function FetchProvider({ children }) {
   const [pedidos, setPedidos] = useState([]);
   const [filtro, setFiltro] = useState("naoentregues");
   const [filtroBool, setFiltroBool] = useState(false);
-  const pedidosFiltrados = pedidos.filter((p) => p.entregue === filtroBool);
   const [pedidoDetalhado, setPedidoDetalhado] = useState();
+  const pedidosOrdenados = pedidos.slice(0).reverse();
+  const pedidosFiltrados = pedidosOrdenados.filter((p) => p.entregue === filtroBool);
 
   async function handleLogin(data) {
     const body = JSON.stringify(data);
